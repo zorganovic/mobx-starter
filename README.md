@@ -11,7 +11,7 @@ Features:
 + MongoDB user auth / sessions
 + Decorators for accessing actions and state
 
-**This framework is no longer public. There's no source code.**
+**This framework is no longer public. There's no source code. Sorry :(**
 
 
 ## Goals
