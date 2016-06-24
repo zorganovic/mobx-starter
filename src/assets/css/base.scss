@@ -1,0 +1,185 @@
+@charset "UTF-8";
+
+div, span, object, iframe, blockquote, pre, a, abbr, cite, code, em, font, img, q, s, samp, small, strike, strong, sub, sup, b, u, i, center, ul, li, fieldset, form, label, legend, table, caption, tbody, tr, th, td {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    vertical-align: baseline;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    color: #334;
+    background: #F4F5F7;
+    font: 1rem/1.4 'Source Sans Pro', "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    overflow-x: hidden;
+    letter-spacing: 0.2px;
+}
+
+/* latin-ext */
+@font-face {
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Source Sans Pro'), local('SourceSansPro-Regular'), url(https://fonts.gstatic.com/s/sourcesanspro/v9/ODelI1aHBYDBqgeIAH2zlC2Q8seG17bfDXYR_jUsrzg.woff2) format('woff2');
+    unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Source Sans Pro'), local('SourceSansPro-Regular'), url(https://fonts.gstatic.com/s/sourcesanspro/v9/ODelI1aHBYDBqgeIAH2zlNV_2ngZ8dMf8fLgjYEouxg.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+}
+
+hr {
+    margin: 1em 0;
+    overflow: hidden;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid #985527;
+    animation: border-colors 20s ease-in-out infinite;
+}
+
+audio, canvas, progress, video {
+    vertical-align: baseline;
+    width: 100%;
+    -webkit-app-region: no-drag;
+}
+
+audio:not([controls]) {
+    display: none;
+}
+
+a {
+    color: #ccc;
+}
+
+a:active, a:hover {
+    outline: 0;
+}
+
+abbr[title] {
+    border-bottom: 1px dotted;
+}
+
+b, strong {
+    font-weight: bold;
+}
+
+cite {
+    color: #888;
+    font-style: normal;
+    margin: 0.5em 0;
+    display: block;
+}
+
+img {
+    user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+small {
+    font-size: 80%;
+}
+
+sub, sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+}
+
+sup { top: -0.5em; }
+sub { bottom: -0.25em; }
+pre { overflow: auto; }
+
+code, kbd, pre, samp {
+    font-family: monospace, monospace;
+    font-size: 1em;
+}
+
+button, input, optgroup, select, textarea {
+    color: inherit;
+    font: inherit;
+    letter-spacing: 0.4px;
+    margin: 0;
+}
+
+button {
+    margin: 0;
+    padding: 0.6em 1em;
+    line-height: 20px;
+    background: #054C69;
+    border: 0;
+    border-radius: 3px;
+    text-align: center;
+    width: 100%;
+    cursor: pointer;
+    -webkit-app-region: no-drag;
+    &:hover {
+        background-color: #007baf;
+    }
+}
+
+li {
+    list-style: none;
+}
+
+iframe {
+    border: 1px solid #ccc;
+    display: block;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    height: auto;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="search"]
+{
+    background: #0D0E0E;
+    border: 1px solid #464646;
+    padding: 0.6em 1em;
+    box-sizing: content-box;
+    -webkit-appearance: textfield;
+}
+
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+    -webkit-appearance: none;
+}
+
+fieldset {
+    border: 1px solid #c0c0c0;
+    margin: 0 2px;
+    padding: 0.35em 0.625em 0.75em;
+}
+
+legend {
+    border: 0;
+    padding: 0;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+td, th {
+    padding: 0;
+}

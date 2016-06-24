@@ -1,0 +1,38 @@
+menu {
+    margin: 0;
+    padding: 0 0 0 1.2rem;
+    width: 100%;
+    background-color: #0d5dbf;
+    z-index: 9550;
+
+    a {
+        color: #888;
+        font-size: 1.3rem;
+        padding: 0.2rem 0.4rem;
+        margin-top: 0.2rem;
+        text-decoration: none;
+        display: inline-block;
+        cursor: pointer;
+        transition: color 0.2s ease-in-out;
+
+        &:hover {
+            color: #fff;
+        }
+        &.selected {
+            color: #fff;
+            outline: none;
+        }
+    }
+
+    a.back-button {
+        vertical-align: top;
+        svg { fill: #888; }
+    }
+    a.back-button:hover {
+        svg { fill: #ddd; }
+    }
+    a.back-button-disabled {
+        color: #3a3a45;
+        svg { fill: #3a3a45; }
+    }
+}
