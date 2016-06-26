@@ -39,4 +39,4 @@ if (global.isClient) {
     document.getElementById('container'))
 }
 
-// if (module.hot) module.hot.accept();
+if (module.hot) module.hot.accept()

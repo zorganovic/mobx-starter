@@ -10,7 +10,11 @@ _.merge(config, {
     target: 'web',
     devtool: 'eval-source-map', // eval eval-cheap-module-source-map source-map
     entry: {
-        bundle: ['./client/client.js']
+        bundle: [
+            './client/client.js',
+            'webpack/hot/dev-server',
+            'webpack-dev-server/client?http://localhost:2002/'
+        ]
     },
     output: {
         libraryTarget: 'var'
@@ -18,6 +22,8 @@ _.merge(config, {
 })
 
 config.plugins.push(
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
         'global.isClient': true,
         'process.env.BLUEBIRD_WARNINGS': '0',
@@ -25,10 +31,16 @@ config.plugins.push(
     })
 )
 
+console.log('---------------------\n', JSON.stringify(config, null, 4))
+
 // Setup webpack for DEV
 //-------------------------------
 const compiler = webpack(config)
 const compilerConfig = {
+    hot: true,
+    contentBase: 'build',
+    filename: 'bundle.js',
+    //publicPath: './',
     publicPath: 'http://localhost:2002/build/',
     watchOptions: {
         //poll: 1400,

@@ -20,12 +20,11 @@ _.merge(config, {
 console.info('Running production build...')
 
 delete config.output.libraryTarget
-delete config.output.publicPath
 delete config.output.pathinfo
 
 // Save files to disk
 //-------------------------------
-config.output.path = path.join(__dirname, '../build')
+//config.output.path = path.join(__dirname, '../build')
 config.plugins.push(
 new webpack.optimize.OccurrenceOrderPlugin(),
 new webpack.optimize.DedupePlugin(),
