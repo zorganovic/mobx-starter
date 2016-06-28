@@ -4,9 +4,11 @@ export default {
     http: {
         port: 2000,
         favicon: path.join(__dirname, '../src/assets/favicon.ico'),
-        static: {
-            '/build': path.join(__dirname, '../build')
-        }
+        static: [
+            {
+                url: '/build', path: path.join(__dirname, '../build')
+            }
+        ]
     },
     session: {
         secret: 'SUPER_SECRET_KEY_KERE'

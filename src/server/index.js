@@ -15,10 +15,11 @@ const app = express()
 const MongoStore = connectMongo(session)
 
 // Serve static files
-if (config.http.static) {
-    fp.map(config.http.static, (staticPath, route) => {
-        app.use(route, express.static(staticPath))
-    })
+if (fp.size(config.http.static)) {
+    fp.map(route => {
+        console.debug('[Static] %s -', route.url, route.path)
+        app.use(route.url, express.static(route.path))
+    })(config.http.static)
 }
 
 // Middleware
