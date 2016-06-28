@@ -3,16 +3,22 @@
 The goal of this project is to provide a starting base for an mobx react project with OPTIONAL isomorphism.
 
 Features:
-+ A structure
 + `async/await` support
-+ Webpack middleware
-+ Optional Isomorphism/Universality
-+ SCSS compilation and bundling
++ Hot reload
++ Isomorphic
++ CSS and SCSS compilation
 + MongoDB user auth / sessions
 + Decorators for accessing actions and state
 
-**This framework is no longer public. There's no source code. Sorry :(**
+## How to run
 
+For development:
+
+    npm run dev
+
+For production:
+
+    npm run prod
 
 ## Goals
 
@@ -22,6 +28,6 @@ In the case of redux, you have actions, a dispatcher and reducers.
 
 Here we just have actions, which are just namespaced functions _(namespace = action filename)_ that affect the state.
 
-All the re-rendering is efficiently taken care by [MobX](https://github.com/mobxjs/mobx) so you can only focus on two things:
+All the re-rendering is efficiently taken care by [MobX](https://github.com/mobxjs/mobx) so you can focus on two things:
 
 `What to name your action?` and `what should it do?`

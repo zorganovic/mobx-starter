@@ -1,4 +1,4 @@
-import path from 'path'
+import fp from 'lodash/fp'
 import bodyParser from 'body-parser'
 import express from 'express'
 import session from 'express-session'
@@ -13,15 +13,16 @@ import render from './routes/render'
 
 const app = express()
 const MongoStore = connectMongo(session)
-const faviconPath = path.join(__dirname, '../assets/favicon.ico')
 
 // Serve static files
 if (config.http.static) {
-    app.use('/build', express.static(path.join(__dirname, '../../build')))
+    fp.map(config.http.static, (staticPath, route) => {
+        app.use(route, express.static(staticPath))
+    })
 }
 
 // Middleware
-app.use(favicon(faviconPath))
+app.use(favicon(config.http.favicon))
 app.use(bodyParser.json({ limit: '2mb', extended: true }))
 app.use(bodyParser.urlencoded({ limit: '2mb', extended: true }))
 app.use(session({

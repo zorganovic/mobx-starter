@@ -1,7 +1,12 @@
+import path from 'path'
+
 export default {
     http: {
         port: 2000,
-        static: true
+        favicon: path.join(__dirname, '../src/assets/favicon.ico'),
+        static: {
+            '/build': path.join(__dirname, '../build')
+        }
     },
     session: {
         secret: 'SUPER_SECRET_KEY_KERE'
