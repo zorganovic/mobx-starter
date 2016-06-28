@@ -17,7 +17,9 @@ _.merge(config, {
         ]
     },
     output: {
-        libraryTarget: 'var'
+        publicPath: 'http://localhost:2002/build/',
+        libraryTarget: 'var',
+        pathinfo: true
     }
 })
 
@@ -30,8 +32,6 @@ config.plugins.push(
         'process.env.NODE_ENV': JSON.stringify('development')
     })
 )
-
-console.log('---------------------\n', JSON.stringify(config, null, 4))
 
 // Setup webpack for DEV
 //-------------------------------

@@ -14,7 +14,7 @@ class Movie extends React.Component {
         return <article className="todo">
             <div>{item.text}</div>
             <div>
-                <button onClick={(e) => todos.delete(item._id)}>[delete]</button>
+                <i className="fa fa-close" onClick={(e) => todos.remove(item)}/>
             </div>
         </article>
     }

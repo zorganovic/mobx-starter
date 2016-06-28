@@ -60,10 +60,7 @@ const config = {
     },
     output: {
         filename: '[name].js',
-        //libraryTarget: 'commonjs2',
-        path: path.resolve(__dirname, '../build'),
-        publicPath: 'http://localhost:2002/build/'
-        //pathinfo: true
+        path: path.resolve(__dirname, '../build')
         //publicPath: './' // relative paths for CSS files
     },
     resolve: {

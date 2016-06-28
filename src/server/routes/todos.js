@@ -17,7 +17,6 @@ router.get('/api/todos/search', async(req, res) => {
                          .split(' ')
                          .map(part => ({ title: new RegExp(part, 'i') }))
 
-
     console.log('Searching for movie:', nameQuery)
     const body = await db.todos
                          .find({ $and: nameQuery })
@@ -33,7 +32,15 @@ router.get('/api/todos/:id', async(req, res) => {
 
     // Send output without waiting for the update
     const result = await db.todos.findOne({ _id: req.params.id })
+    return res.json(result)
+})
 
+router.post('/api/todos/remove', async(req, res) => {
+    console.warn('[deeleteee]', req.body)
+    if (_.isEmpty(req.body._id)) return res.status(404).send('[_id] not provided')
+
+
+    const result = await db.todos.remove({ _id: req.body._id })
     return res.json(result)
 })
 

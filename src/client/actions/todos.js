@@ -1,4 +1,4 @@
-//import { size, get } from 'lodash/fp'
+import { remove } from 'lodash/fp'
 
 export default (state, store) => {
 
@@ -11,6 +11,7 @@ export default (state, store) => {
         add() {
             // Add to list
             state.todos.items.push({
+                _id: Date.now(),
                 text: state.forms.addtodo.text
             })
             // Clear input box
@@ -18,12 +19,15 @@ export default (state, store) => {
             //return this.fetch(`api/todos/add`)
         }
 
-        delete() {
-            return this.fetch(`api/todos/delete`)
+        remove(item) {
+            console.warn('Removing', item._id)
+            return this.post(`api/todos/remove`, { item }).then(() => {
+                state.todos.items.remove(item)
+            })
         }
 
         browse() {
-            return this.fetch(`api/todos`)
+            return this.get(`api/todos`)
         }
     }
 }

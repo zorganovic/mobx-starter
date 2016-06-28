@@ -12,9 +12,10 @@ require('isomorphic-fetch')
 require('./src/server/index')
 
 // Compile bundles (stdio needed to see output)
+const file = (process.env.NODE_ENV === 'production') ? 'webpack.config.prod.js' : 'webpack.config.dev.js'
 const path = require('path');
 const spawn = require('child_process').spawn;
-const child = spawn('node', [path.join(__dirname, 'configuration/webpack.config.dev.js')])
+const child = spawn('node', [path.join(__dirname, `configuration/${file}`)])
 
 // Output stdout to screen
 child.stdout.on('data', data => process.stdout.write(data.toString()) )

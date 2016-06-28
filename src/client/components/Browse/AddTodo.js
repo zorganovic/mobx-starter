@@ -21,7 +21,7 @@ class AddTodo extends React.Component {
 
         return <article className="add-todo">
             <p>Add todo</p>
-            <p><input {...this.handleChange('text')}/></p>
+            <p><input type="text" {...this.handleChange('text')}/></p>
             <p><button onClick={store.todos.add}>Add todo</button></p>
         </article>
     }

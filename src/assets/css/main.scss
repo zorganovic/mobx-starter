@@ -31,4 +31,16 @@ main {
         color: #0664ff;
         text-decoration: none;
     }
+    .todo {
+        display: flex;
+        div:first-child {
+            flex: 4;
+        }
+        div:last-child {
+            flex: 1;
+        }
+        .fa-close {
+            cursor: pointer;
+        }
+    }
 }

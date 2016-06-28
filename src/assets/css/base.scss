@@ -113,7 +113,6 @@ code, kbd, pre, samp {
 
 button, input, optgroup, select, textarea {
     color: inherit;
-    font: inherit;
     letter-spacing: 0.4px;
     margin: 0;
 }
@@ -152,11 +151,21 @@ input[type="text"],
 input[type="password"],
 input[type="search"]
 {
-    background: #0D0E0E;
-    border: 1px solid #464646;
-    padding: 0.6em 1em;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #9e9e9e;
+    border-radius: 0;
+    outline: none;
+    height: 2rem;
+    width: 100%;
+    margin: 0 0 15px 0;
+    padding: 0;
+    box-shadow: none;
     box-sizing: content-box;
-    -webkit-appearance: textfield;
+    transition: all 0.3s;
+    &:focus {
+        border-bottom: 1px solid #26a69a;
+    }
 }
 
 input[type="search"]::-webkit-search-cancel-button,

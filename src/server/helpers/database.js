@@ -1,10 +1,11 @@
 import mongoose from 'mongoose'
+import config from '../../../configuration/server.config'
 
 // Use bluebird
 mongoose.Promise = global.Promise
 
 // Initialize our database
-mongoose.connect('mongodb://127.0.0.1:27017/todos')
+mongoose.connect(config.databases.mongo)
 
 const db = mongoose.connection
 db.on('error', console.error.bind(console, 'Mongodb error:'))

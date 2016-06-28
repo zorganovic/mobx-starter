@@ -6,13 +6,14 @@ const config = require('./webpack.config.base.js')
 // Merge with base configuration
 //-------------------------------
 _.merge(config, {
-    cache: !isProduction,
+    cache: false,
     target: 'web',
     devtool: 'source-map',
     entry: {
         bundle: ['./client/client.js']
     },
     output: {
+        publicPath: 'http://localhost:2000/build/',
         libraryTarget: 'var'
     }
 })

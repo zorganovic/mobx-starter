@@ -7,7 +7,7 @@ import state from '../../client/state'
 import routes from '../../client/routes'
 import actions from '../../client/actions'
 
-export default function renderHTML(req, res) {
+export default function render(req, res) {
 
     state.app.hostname = req.headers.host
 
