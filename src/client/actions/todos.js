@@ -9,25 +9,26 @@ export default (state, store) => {
     return class todos {
 
         add() {
-            // Add to list
-            state.todos.items.push({
-                _id: Date.now(),
-                text: state.forms.addtodo.text
+            return this.request(`api/todos/add`, { text: state.forms.addtodo.text }).then(() => {
+                // Add to list
+                state.todos.items.push({
+                    _id: Date.now(),
+                    text: state.forms.addtodo.text
+                })
+                // Clear input box
+                state.forms.addtodo.text = ''
             })
-            // Clear input box
-            state.forms.addtodo.text = ''
-            //return this.fetch(`api/todos/add`)
         }
 
         remove(item) {
             console.warn('Removing', item._id)
-            return this.post(`api/todos/remove`, { item }).then(() => {
+            return this.request(`api/todos/remove`, { _id: item._id }).then(() => {
                 state.todos.items.remove(item)
             })
         }
 
         browse() {
-            return this.get(`api/todos`)
+            return this.request(`api/todos`)
         }
     }
 }

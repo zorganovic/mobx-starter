@@ -61,7 +61,6 @@ const config = {
     output: {
         filename: '[name].js',
         path: path.resolve(__dirname, '../build')
-        //publicPath: './' // relative paths for CSS files
     },
     resolve: {
         extensions: ['', '.js'],
@@ -69,7 +68,6 @@ const config = {
         packageMains: ['webpack', 'browser', 'web', 'browserify', ['jam', 'main'], 'main']
     },
     plugins: [
-        //new webpack.ProvidePlugin({ 'Promise': 'bluebird' }),
         new ExtractCSS('[name].css', { allChunks: true })
     ]
 };

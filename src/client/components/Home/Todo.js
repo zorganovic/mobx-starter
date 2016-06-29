@@ -12,8 +12,9 @@ class Movie extends React.Component {
         const {item} = this.props
 
         return <article className="todo">
-            <div>{item.text}</div>
-            <div>
+            <div className="todo-checkbox"><input type="checkbox"/></div>
+            <div className="todo-desc">{item.text}</div>
+            <div className="todo-remove">
                 <i className="fa fa-close" onClick={(e) => todos.remove(item)}/>
             </div>
         </article>

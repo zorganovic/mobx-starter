@@ -24,7 +24,7 @@ if (fp.size(config.http.static)) {
 
 // Middleware
 app.use(favicon(config.http.favicon))
-app.use(bodyParser.json({ limit: '2mb', extended: true }))
+app.use(bodyParser.json({ limit: '2mb' }))
 app.use(bodyParser.urlencoded({ limit: '2mb', extended: true }))
 app.use(session({
     secret: config.session.secret,

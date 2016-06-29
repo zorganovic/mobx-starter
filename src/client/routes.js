@@ -9,7 +9,7 @@ import App from './components/App/App'
  */
 function requireAsync(main) {
     return function(location, next) {
-        next(null, require('./components/' + main))
+        next(null, require('./containers/' + main))
     }
 }
 

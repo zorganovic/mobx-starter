@@ -1,6 +1,6 @@
-import _ from 'lodash'
-import { Router } from 'express'
-import db from '../helpers/database'
+const _ = require('lodash')
+const { Router } = require('express')
+const db = require('../helpers/database')
 const router = Router();
 
 router.get('/api/todos', async(req, res) => {
@@ -8,36 +8,20 @@ router.get('/api/todos', async(req, res) => {
     res.json(body)
 })
 
-router.get('/api/todos/search', async(req, res) => {
+router.post('/api/todos/add', async(req, res) => {
+    console.warn('[add]', req.body)
+    if (_.isEmpty(req.body.text)) return res.status(400).send('[text] not provided')
 
-    if (_.isEmpty(req.query.text)) return res.status(404).send('[text] not provided')
-
-    const nameQuery = req.query.text
-                         .cleanString()
-                         .split(' ')
-                         .map(part => ({ title: new RegExp(part, 'i') }))
-
-    console.log('Searching for movie:', nameQuery)
-    const body = await db.todos
-                         .find({ $and: nameQuery })
-                         .sort({ text: 1 })
-                         .limit(10)
-                         .exec()
-    res.json(body)
-})
-
-router.get('/api/todos/:id', async(req, res) => {
-
-    if (_.isEmpty(req.params.id)) return res.status(404).send('[id] not provided')
-
-    // Send output without waiting for the update
-    const result = await db.todos.findOne({ _id: req.params.id })
+    const todo = new db.todos({
+        text: req.body.text
+    })
+    const result = await todo.save()
     return res.json(result)
 })
 
 router.post('/api/todos/remove', async(req, res) => {
-    console.warn('[deeleteee]', req.body)
-    if (_.isEmpty(req.body._id)) return res.status(404).send('[_id] not provided')
+    console.warn('[remove]', req.body)
+    if (_.isEmpty(req.body._id)) return res.status(400).send('[_id] not provided')
 
 
     const result = await db.todos.remove({ _id: req.body._id })

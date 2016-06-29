@@ -1,7 +1,8 @@
 import React from 'react'
 import { connect } from 'mobx-connect'
 import size from 'lodash/fp'
-import Browse from './Browse/Browse'
+import AddTodo from '../components/Home/AddTodo'
+import Todo from '../components/Home/Todo'
 
 @connect()
 class Home extends React.Component {
@@ -24,8 +25,14 @@ class Home extends React.Component {
     }
 
     render() {
-        return <main>
-            <Browse/>
+        const { state } = this.context
+
+        return <main className="home">
+            <h1>Todos</h1>
+            <section>
+                <AddTodo/>
+                {state.todos.items.map(item => <Todo key={item.text.hashCode()} item={item}/>)}
+            </section>
         </main>
     }
 }
