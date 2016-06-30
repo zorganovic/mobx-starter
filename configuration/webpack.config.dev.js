@@ -40,7 +40,7 @@ const compilerConfig = {
     hot: true,
     contentBase: 'build',
     filename: 'bundle.js',
-    //publicPath: './',
+    compress: true,
     publicPath: 'http://localhost:2002/build/',
     watchOptions: {
         //poll: 1400,

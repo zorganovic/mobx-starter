@@ -5,7 +5,14 @@ import { connect } from 'mobx-connect'
 class About extends React.Component {
     render() {
         return <main>
-            <p>Something about you</p>
+            <p>
+                Created for the javascript community. May your reign never end!
+            </p>
+            <p>
+                <a href="https://github.com/nightwolfz/mobx-starter">
+                    https://github.com/nightwolfz/mobx-starter
+                </a>
+            </p>
         </main>
     }
 }

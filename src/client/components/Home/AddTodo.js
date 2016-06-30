@@ -23,17 +23,15 @@ class AddTodo extends React.Component {
     render() {
         const { store } = this.context
         const { item } = this.props
-
-        return <form className="add-todo" onSubmit={e => this.handleSubmit(e)}>
+        /*
+        Make sure to either bind methods or use arrow syntax like below
+        otherwise `this` is going to be incorrect.
+        */
+        return <form className="header" onSubmit={e => this.handleSubmit(e)}>
             <p>
-                <input type="text" placeholder="What needs to be done?" {...this.handleChange('text')}/>
-            </p>
-            <p>
-                {/*
-                Make sure to either bind methods or use arrow syntax like below
-                otherwise `this` is going to be incorrect.
-                */}
-                <button onClick={e => this.handleSubmit(e)}>Add todo</button>
+                <input type="text"
+                       className="new-todo"
+                       placeholder="What needs to be done?" {...this.handleChange('text')}/>
             </p>
         </form>
     }

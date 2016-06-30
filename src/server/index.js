@@ -4,6 +4,7 @@ const express = require('express')
 const session = require('express-session')
 const connectMongo = require('connect-mongo')
 const favicon = require('serve-favicon')
+const compression = require('compression')
 const passport = require('passport')
 const config = require('../../configuration/server.config')
 const db = require('./helpers/database')
@@ -21,6 +22,10 @@ if (fp.size(config.http.static)) {
         app.use(route.url, express.static(route.path))
     })(config.http.static)
 }
+
+// Settings
+app.disable('x-powered-by')
+app.use(compression())
 
 // Middleware
 app.use(favicon(config.http.favicon))

@@ -60,7 +60,7 @@ audio:not([controls]) {
 }
 
 a {
-    color: #ccc;
+    color: #446bcc;
 }
 
 a:active, a:hover {
@@ -111,66 +111,8 @@ code, kbd, pre, samp {
     font-size: 1em;
 }
 
-button, input, optgroup, select, textarea {
-    color: inherit;
-    letter-spacing: 0.4px;
-    margin: 0;
-}
-
-button {
-    margin: 0;
-    padding: 0.6em 1em;
-    line-height: 20px;
-    background: #ebebeb;
-    border: 0;
-    border-radius: 3px;
-    text-align: center;
-    width: 100%;
-    cursor: pointer;
-    -webkit-app-region: no-drag;
-    &:hover {
-        background-color: #86d2ff;
-    }
-}
-
 li {
     list-style: none;
-}
-
-iframe {
-    border: 1px solid #ccc;
-    display: block;
-}
-
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-    height: auto;
-}
-
-input[type="text"],
-input[type="password"],
-input[type="search"]
-{
-    background-color: transparent;
-    border: none;
-    border-bottom: 1px solid #9e9e9e;
-    border-radius: 0;
-    outline: none;
-    height: 2rem;
-    width: 100%;
-    margin: 0 0 15px 0;
-    padding: 0;
-    box-shadow: none;
-    box-sizing: content-box;
-    transition: all 0.3s;
-    &:focus {
-        border-bottom: 1px solid #26a69a;
-    }
-}
-
-input[type="search"]::-webkit-search-cancel-button,
-input[type="search"]::-webkit-search-decoration {
-    -webkit-appearance: none;
 }
 
 fieldset {

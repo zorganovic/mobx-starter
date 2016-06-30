@@ -1,29 +1,5 @@
 // Typography
-h1, h2, h3, h4, h5 {
-    color: #000;
-    font-weight: normal;
-    letter-spacing: -.025rem;
-}
-h1 { font-size: 1.8rem; margin: 0 0 1.6rem 0; }
-h2 { font-size: 1.4rem; margin: 0 0 0.8rem 0; }
-h3 { font-size: 1.2rem; margin: 0 0 0.4rem 0; }
-h4 { font-size: 1.1rem; margin: 0 0 0.2rem 0; }
-
 main {
     width: 680px;
     margin: 0 auto;
-
-    p { margin: 0.5rem 0; }
-    a {
-        color: #476fff;
-        padding: 0.4rem 1rem 0.4rem 0;
-        text-decoration: none;
-        display: inline-block;
-        cursor: pointer;
-        outline: none;
-    }
-    a:hover {
-        color: #0664ff;
-        text-decoration: none;
-    }
 }

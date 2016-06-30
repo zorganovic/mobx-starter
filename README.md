@@ -31,3 +31,9 @@ Here we just have actions, which are just namespaced functions _(namespace = act
 All the re-rendering is efficiently taken care by [MobX](https://github.com/mobxjs/mobx) so you can focus on two things:
 
 `What to name your action?` and `what should it do?`
+
+## Author
+
+Ryan Megidov
+
+https://github.com/nightwolfz/mobx-starter

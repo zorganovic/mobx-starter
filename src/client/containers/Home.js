@@ -27,12 +27,17 @@ class Home extends React.Component {
     render() {
         const { state } = this.context
 
-        return <main className="home">
-            <h1>Todos</h1>
-            <section>
+        return <main>
+            <h1>todos</h1>
+            <div className="todoapp">
                 <AddTodo/>
-                {state.todos.items.map(item => <Todo key={item.text.hashCode()} item={item}/>)}
-            </section>
+                <section className="main">
+                    <ul className="todo-list">
+                        {state.todos.items.map(item => <Todo key={item.text.hashCode()} item={item}/>)}
+                    </ul>
+                </section>
+                <section className="footer"/>
+            </div>
         </main>
     }
 }

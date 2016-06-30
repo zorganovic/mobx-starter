@@ -33,6 +33,7 @@
     "babel-register": "6.9.0",
     "bluebird": "3.4.1",
     "body-parser": "1.15.2",
+    "compression": "^1.6.2",
     "connect-mongo": "^1.2.1",
     "cross-env": "^1.0.8",
     "css-loader": "0.23.1",
