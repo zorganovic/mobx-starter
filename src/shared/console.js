@@ -1,3 +1,6 @@
+/**
+ * You might want to replace console with your own logger here
+ */
 const stdout = process.stdout;
 const debug = console.log;
 const info = console.info;

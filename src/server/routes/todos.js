@@ -9,7 +9,6 @@ router.get('/api/todos', async(req, res) => {
 })
 
 router.post('/api/todos/add', async(req, res) => {
-    console.warn('[add]', req.body)
     if (_.isEmpty(req.body.text)) return res.status(400).send('[text] not provided')
 
     const todo = new db.todos({
@@ -20,9 +19,7 @@ router.post('/api/todos/add', async(req, res) => {
 })
 
 router.post('/api/todos/remove', async(req, res) => {
-    console.warn('[remove]', req.body)
     if (_.isEmpty(req.body._id)) return res.status(400).send('[_id] not provided')
-
 
     const result = await db.todos.remove({ _id: req.body._id })
     return res.json(result)
