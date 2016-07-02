@@ -10,6 +10,7 @@ const config = require('../../configuration/server.config')
 const db = require('./helpers/database')
 const seedTodos = require('./helpers/seedTodos')
 const todos = require('./routes/todos')
+const account = require('./routes/account')
 const render = require('./routes/render')
 
 const app = express()
@@ -33,15 +34,16 @@ app.use(bodyParser.json({ limit: '2mb' }))
 app.use(bodyParser.urlencoded({ limit: '2mb', extended: true }))
 app.use(session({
     secret: config.session.secret,
+    store: new MongoStore({ mongooseConnection: db.connection }),
     resave: false,
-    saveUninitialized: false,
-    store: new MongoStore({ mongooseConnection: db.connection })
+    saveUninitialized: true
 }))
 app.use(passport.initialize())
 app.use(passport.session())
 
 // Routes
 app.use(todos)
+app.use(account)
 app.use(render)
 
 // Add some data to db for testing purposes

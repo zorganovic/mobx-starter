@@ -15,5 +15,6 @@ db.once('open', console.info.bind(console, 'Mongodb started on port 27017'))
 export default {
     connection: db,
     session: db.model('Session', require('../models/Session')),
+    account: db.model('Account', require('../models/Account')),
     todos: db.model('Todo', require('../models/Todo'))
 }

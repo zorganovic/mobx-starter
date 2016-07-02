@@ -1,10 +1,10 @@
 import React from 'react'
 import { connect } from 'mobx-connect'
 import size from 'lodash/fp'
-import AddTodo from '../components/Home/AddTodo'
-import Todo from '../components/Home/Todo'
+import AddTodo from './Home/AddTodo'
+import Todo from './Home/Todo'
 
-@connect()
+@connect
 class Home extends React.Component {
 
     static fetchData({ store, state }) {

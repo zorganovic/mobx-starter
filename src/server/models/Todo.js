@@ -1,8 +1,6 @@
 const mongoose = require('mongoose')
 
-const Movie = {
+export default new mongoose.Schema({
     text: String,
     image: String
-}
-
-export default new mongoose.Schema(Movie)
+})

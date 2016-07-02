@@ -1,13 +1,14 @@
 import React from 'react'
 import ReactDOMServer from 'react-dom/server'
 import { match, RouterContext } from 'react-router'
+import { getAccount } from '../helpers/account';
 import fetchData from '../helpers/fetchData';
-import Html from '../../client/components/App/Html'
+import Html from '../../client/components/Common/Html'
 import state from '../../client/state'
 import routes from '../../client/routes'
 import actions from '../../client/actions'
 
-export default function render(req, res) {
+export default async function render(req, res) {
 
     state.app.hostname = req.headers.host
 
@@ -15,6 +16,9 @@ export default function render(req, res) {
         state: state,
         store: actions(state)
     }
+
+    // Add state & session data
+    context.state.account = await getAccount(req.session)
 
     // Create routing
     let matchRoutes = {

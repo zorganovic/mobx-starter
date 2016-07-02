@@ -1,6 +1,6 @@
-const _ = require('lodash')
-const { Router } = require('express')
-const db = require('../helpers/database')
+import _ from 'lodash'
+import { Router } from 'express'
+import db from '../helpers/database'
 const router = Router();
 
 router.get('/api/todos', async(req, res) => {

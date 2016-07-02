@@ -1,34 +1,29 @@
-import querystring from 'querystring'
+export default function request(state) {
+    return function(url, body) {
+        console.info(`Fetching: ${url}`)
 
-export function createAnimeSearchURL({ text, cats, filter, sort, order}) {
-
-    const cleanTerm = text.replace(/\((.*)\)/i, '')
-                          .replace(/ (1st|2nd|3rd|\d+th)/i, ' ')
-                          .replace(/ (Season)/i, ' ')
-                          .cleanString()
-                          .safeParam()
-
-    const remoteURL = 'http://www.nyaa.se/?' + querystring.stringify({
-        page: 'rss',
-        term: cleanTerm,
-        cats: cats || '1_37', // 1_0=all 1_11=raw 1_37=english
-        filter: filter || '0',
-        sort: sort || '2',
-        order: order || '1'
-    })
-    console.debug('createAnimeSearchURL:', cleanTerm)
-    return remoteURL
+        const options = { credentials: 'include' }
+        if (body) {
+            options.method = 'POST'
+            options.body = JSON.stringify(body)
+            options.headers = {
+                'Content-Type': 'application/json'
+            }
+        }
+        return fetch(`http://${state.app.hostname}/${url}`, options)
+        .then(handleResponse)
+    }
 }
 
-export function createMovieSearchURL({ text }) {
+/**
+ * Parse response
+ * @param resp
+ * @returns {Promise.<T>|Promise<U>|*}
+ * @private
+ */
+function handleResponse(resp) {
+    const isJSON = resp.headers && resp.headers.get('Content-Type').includes('json');
+    const response = resp[isJSON ? 'json' : 'text']();
 
-    const cleanTerm = text.replace(/\((.*)\)/i, '')
-                          .replace(/ (1st|2nd|3rd|\d+th)/i, ' ')
-                          .replace(/ (Season)/i, ' ')
-                          .cleanString()
-                          .safeParam()
-
-    const remoteURL = 'https://kat.cr/usearch/' + encodeURIComponent(text) + '/'
-    console.debug('createMovieSearchURL:', cleanTerm)
-    return remoteURL
+    return resp.ok ? response : response.then(err => {throw err});
 }

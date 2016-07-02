@@ -6,11 +6,12 @@ let defaultState = observable({
         title: 'Mobx-starter',
         statusCode: 200
     },
-    home: {
-        menu: {
-            index: 0,
-            items: {}
-        }
+    account: {
+        username: null
+    },
+    menu: {
+        index: 0,
+        items: {}
     },
     todos: {
         loading: false,
