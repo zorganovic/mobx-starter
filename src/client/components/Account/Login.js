@@ -54,23 +54,24 @@ class Login extends React.Component {
             return <Loading/>
         }
 
-        return <form onSubmit={e => this.handleLogin(e)}>
+        return <main>
             <h1>SIGN-IN</h1>
+            <form className="account" onSubmit={e => this.handleLogin(e)}>
+                <label>
+                    Username
+                    <input type="text" {...this.handleChange("username")} required="required"/>
+                </label>
 
-            <label>
-                Username
-                <input type="text" {...this.handleChange("username")} required="required"/>
-            </label>
+                <label>
+                    Password
+                    <input type="password" {...this.handleChange("password")} required="required"/>
+                </label>
 
-            <label>
-                Password
-                <input type="password" {...this.handleChange("password")} required="required"/>
-            </label>
+                {state.error && <Error text={state.error}/>}
 
-            {state.error && <Error text={state.error}/>}
-
-            <button onClick={e => this.handleLogin(e)}>Login</button>
-        </form>
+                <button onClick={e => this.handleLogin(e)}>Login</button>
+            </form>
+        </main>
     }
 }
 

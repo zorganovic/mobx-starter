@@ -46,23 +46,24 @@ class Register extends React.Component {
     render() {
         const { state } = this
 
-        return <form onSubmit={e => this.handleSubmit(e)}>
+        return <main>
             <h1>REGISTER</h1>
+            <form className="account" onSubmit={e => this.handleSubmit(e)}>
+                <label>
+                    Username
+                    <input type="text" {...this.handleChange("username")} required="required"/>
+                </label>
 
-            <label>
-                Username
-                <input type="text" {...this.handleChange("username")} required="required"/>
-            </label>
+                <label>
+                    Password
+                    <input type="password" {...this.handleChange("password")} required="required"/>
+                </label>
 
-            <label>
-                Password
-                <input type="password" {...this.handleChange("password")} required="required"/>
-            </label>
+                {state.errorMsg && <Error text={state.errorMsg}/>}
 
-            {state.errorMsg && <Error text={state.errorMsg}/>}
-
-            <button>Register</button>
-        </form>
+                <button>Register</button>
+            </form>
+        </main>
     }
 }
 

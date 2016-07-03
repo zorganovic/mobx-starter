@@ -30,8 +30,12 @@ app.use(compression())
 
 // Middleware
 app.use(favicon(config.http.favicon))
+
+// Parse POST requests
 app.use(bodyParser.json({ limit: '2mb' }))
 app.use(bodyParser.urlencoded({ limit: '2mb', extended: true }))
+
+// Enable sessions
 app.use(session({
     secret: config.session.secret,
     store: new MongoStore({ mongooseConnection: db.connection }),

@@ -31,9 +31,11 @@ class Logout extends React.Component {
             return <Loading/>
         }
 
-        return <center>
-            <h3>Signing out...</h3>
-        </center>
+        return <main>
+            <center className="account">
+                <h3>Signing out...</h3>
+            </center>
+        </main>
     }
 }
 

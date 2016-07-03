@@ -2,25 +2,25 @@ menu {
     margin: 0;
     padding: 0 0 0 1.2rem;
     width: 100%;
-    background-color: #0d5dbf;
+    background-color: #eee;
     z-index: 9550;
 
     a {
-        color: #bec6de;
-        font-size: 1.3rem;
-        padding: 0.2rem 0.4rem;
-        margin-top: 0.2rem;
-        text-decoration: none;
+        color: #959aab;
+        font-size: 1.1rem;
+        padding: 0.4rem;
         display: inline-block;
         cursor: pointer;
+        text-decoration: none;
         transition: color 0.2s ease-in-out;
 
         &:hover {
-            color: #fff;
+            color: #000;
         }
         &.selected {
-            color: #fff;
+            color: #000;
             outline: none;
+            border-bottom: 1px solid #000;
         }
     }
 

@@ -3,6 +3,7 @@ import ReactDOMServer from 'react-dom/server'
 import { match, RouterContext } from 'react-router'
 import { getAccount } from '../helpers/account';
 import fetchData from '../helpers/fetchData';
+import Context from '../../client/components/Common/Context'
 import Html from '../../client/components/Common/Html'
 import state from '../../client/state'
 import routes from '../../client/routes'
@@ -34,9 +35,12 @@ export default async function render(req, res) {
 
         fetchData(renderProps, context.state, context.store).then(() => {
 
-            const content = ReactDOMServer.renderToStaticMarkup(<Html context={context}>
-            <RouterContext {...renderProps}/>
-            </Html>)
+            const content = ReactDOMServer.renderToStaticMarkup(
+            <Context context={context}>
+                <Html>
+                    <RouterContext {...renderProps}/>
+                </Html>
+            </Context>)
 
             return res.status(200).send('<!DOCTYPE html>\n' + content)
         })

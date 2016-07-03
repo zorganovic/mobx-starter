@@ -64,10 +64,8 @@ class Edit extends React.Component {
         const { error, loading } = this.state
         const { store } = this.context
 
-        return <section>
-
-            <form onSubmit={e => this.handleSubmit(e)}>
-
+        return <main>
+            <form className="account" onSubmit={e => this.handleSubmit(e)}>
                 <label>
                     Change Username
                     <input type="text" {...this.handleEdit("username")}/>
@@ -82,7 +80,7 @@ class Edit extends React.Component {
 
                 <button>{loading ? 'Saving...' : 'Save Profile'}</button>
             </form>
-        </section>
+        </main>
     }
 }
 

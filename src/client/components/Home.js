@@ -8,9 +8,8 @@ import Todo from './Home/Todo'
 class Home extends React.Component {
 
     static fetchData({ store, state }) {
-        return store.todos.browse().then(data => {
-            state.todos.items = data
-            console.log('-----', data)
+        return store.todos.browse().then(items => {
+            state.todos.items = items
         })
     }
 
@@ -18,8 +17,8 @@ class Home extends React.Component {
         const { store, state } = this.context
 
         if (!size(state.todos.items)) {
-            store.todos.browse().then(data => {
-                state.todos.items.replace(data)
+            store.todos.browse().then(items => {
+                state.todos.items.replace(items)
             })
         }
     }
@@ -29,14 +28,13 @@ class Home extends React.Component {
 
         return <main>
             <h1>todos</h1>
-            <div className="todoapp">
+            <div className="home">
                 <AddTodo/>
                 <section className="main">
                     <ul className="todo-list">
                         {state.todos.items.map(item => <Todo key={item.text.hashCode()} item={item}/>)}
                     </ul>
                 </section>
-                <section className="footer"/>
             </div>
         </main>
     }

@@ -1,4 +1,7 @@
-import _ from 'lodash';
+import compose from 'lodash/fp/compose';
+import compact from 'lodash/fp/compact';
+import filter from 'lodash/fp/filter';
+import map from 'lodash/fp/map';
 
 /**
  * Execute fetchData methods for each component
@@ -9,11 +12,11 @@ import _ from 'lodash';
  */
 export default (renderProps, state, store) => {
     const params = renderProps.params
-    const fetchDataMethods = _.chain(renderProps.components)
-                              .map('fetchData')
-                              .compact()
-                              .map(method => method({ state, store, params }))
-                              .value();
+    const fetchDataMethods = compose(
+        map('fetchData'),
+        filter('fetchData'),
+        compact
+    )(renderProps.components)
 
-    return Promise.all(fetchDataMethods);
+    return Promise.all(fetchDataMethods.map(method => method({ state, store, params })));
 };

@@ -1,17 +1,11 @@
 import React from 'react'
-import { contextTypes } from 'mobx-connect'
+import { connect } from 'mobx-connect'
 
-
-export default class Html extends React.Component {
-
-    static childContextTypes = contextTypes;
-
-    getChildContext() {
-        return this.props.context
-    }
+@connect
+class Html extends React.Component {
 
     render() {
-        const { state } = this.props.context
+        const { state } = this.context
         const devServerURL = process.env.NODE_ENV === 'production' ? '' : `http://${state.app.hostname.replace(2000, 2002)}`
 
         return <html>
@@ -24,14 +18,14 @@ export default class Html extends React.Component {
                 {/* Favicons */}
                 <link rel="icon" href="/favicon.ico"/>
 
-                {/* Build */}
+                {/* Bundled assets */}
                 <link href={devServerURL + '/build/bundle.css'} rel="stylesheet"/>
                 <script dangerouslySetInnerHTML={{
                     __html: 'window.__STATE = ' + JSON.stringify(state) + ';'
                 }}/>
             </head>
             <body>
-                {/* And finally our content */}
+                {/* Our content rendered here */}
                 <div id="container">
                     {this.props.children}
                 </div>
@@ -40,3 +34,5 @@ export default class Html extends React.Component {
         </html>
     }
 }
+
+export default Html

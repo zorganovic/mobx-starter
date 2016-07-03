@@ -1,5 +1,6 @@
 /**
- * You might want to replace console with your own logger here
+ * Let's add some colors to our console.
+ * You might want to replace console with your own logger here.
  */
 const stdout = process.stdout;
 const debug = console.log;
