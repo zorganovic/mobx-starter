@@ -3,25 +3,38 @@
 The goal of this project is to provide a starting base for an mobx react project with OPTIONAL isomorphism.
 
 Features:
-+ A structure
 + `async/await` support
-+ Webpack middleware
-+ Optional Isomorphism/Universality
-+ SCSS compilation and bundling
++ Isomorphic
++ CSS and SCSS compilation
 + MongoDB user auth / sessions
 + Decorators for accessing actions and state
 
-**This framework is no longer public. There's no source code. Sorry :(**
+Coming soon:
++ Hot reload _(broken atm)_
 
+
+## How to run
+
+For development:
+
+    npm run dev
+
+For production:
+
+    npm run prod
 
 ## Goals
 
-This project is trying to emulate Flux/Redux's unidirectional flow in a different way.
+We have one state object. That object can be accessed by any React component decorated with `@connect`.
 
-In the case of redux, you have actions, a dispatcher and reducers.
+If we want to update the state, we execute `actions` which are just namespaced functions _(namespace = action filename)_ that affect the state.
 
-Here we just have actions, which are just namespaced functions _(namespace = action filename)_ that affect the state.
-
-All the re-rendering is efficiently taken care by [MobX](https://github.com/mobxjs/mobx) so you can only focus on two things:
+All the rendering is efficiently taken care by [MobX](https://github.com/mobxjs/mobx) so you can focus on two things:
 
 `What to name your action?` and `what should it do?`
+
+## Author
+
+Ryan Megidov
+
+https://github.com/nightwolfz/mobx-starter
