@@ -65,6 +65,7 @@ class Edit extends React.Component {
         const { store } = this.context
 
         return <main>
+            <h1>edit account</h1>
             <form className="account" onSubmit={e => this.handleSubmit(e)}>
                 <label>
                     Change Username

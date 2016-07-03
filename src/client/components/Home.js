@@ -9,6 +9,7 @@ class Home extends React.Component {
 
     static fetchData({ store, state }) {
         return store.todos.browse().then(items => {
+            // Server-side state being updated
             state.todos.items = items
         })
     }
@@ -18,6 +19,7 @@ class Home extends React.Component {
 
         if (!size(state.todos.items)) {
             store.todos.browse().then(items => {
+                // Since the client-side state is observable, we have to use .replace() for arrays
                 state.todos.items.replace(items)
             })
         }

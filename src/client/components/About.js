@@ -5,7 +5,7 @@ import { connect } from 'mobx-connect'
 class About extends React.Component {
     render() {
         return <main>
-            <h1>Mobx-starter</h1>
+            <h1>mobx-starter</h1>
             <section className="account">
                 <p>
                     <img src="https://avatars0.githubusercontent.com/u/805022?v=3&s=160"/>

@@ -55,7 +55,7 @@ class Login extends React.Component {
         }
 
         return <main>
-            <h1>SIGN-IN</h1>
+            <h1>sign-in</h1>
             <form className="account" onSubmit={e => this.handleLogin(e)}>
                 <label>
                     Username

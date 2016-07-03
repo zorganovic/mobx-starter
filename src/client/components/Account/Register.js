@@ -47,7 +47,7 @@ class Register extends React.Component {
         const { state } = this
 
         return <main>
-            <h1>REGISTER</h1>
+            <h1>register</h1>
             <form className="account" onSubmit={e => this.handleSubmit(e)}>
                 <label>
                     Username
