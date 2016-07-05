@@ -25,6 +25,6 @@ child.stderr.on('data', data => process.stderr.write(data.toString()) )
 process.on('exit', () => child.kill())
 
 // Memory leak detection
-if (process.argv.slice(2).includes('-m')) {
+if (process.argv.slice(2).indexOf('-m') !== -1) {
     require('./src/server/helpers/heapdump')
 }
