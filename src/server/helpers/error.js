@@ -4,6 +4,6 @@
  * @param err {String|Object}
  * @returns {Promise}
  */
-export default function(res, msg) {
+export default (res, msg) => {
     res.status(400).send(msg)
 }
