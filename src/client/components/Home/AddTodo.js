@@ -9,13 +9,13 @@ class AddTodo extends React.Component {
         this.context.store.todos.add()
     }
 
-    handleChange() {
+    handleChange(key) {
         const { state } = this.context
 
         return {
-            value: state.forms.addtodo.text,
+            value: state.forms.addtodo[key],
             onChange(e) {
-                state.forms.addtodo.text = e.target.value
+                state.forms.addtodo[key] = e.target.value
             }
         }
     }
