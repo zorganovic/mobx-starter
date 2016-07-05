@@ -26,6 +26,10 @@ For production:
 
     npm run prod
 
+## Requirements
+
+    Node 6 or Node 4 with additional babel plugins
+
 ## Goals
 
 We have one state object. That object can be accessed by any React component decorated with `@connect`.
