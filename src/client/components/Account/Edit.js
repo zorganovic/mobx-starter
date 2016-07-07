@@ -1,26 +1,24 @@
-import _ from 'lodash'
 import React from 'react'
+import { observable } from 'mobx'
 import { connect } from 'mobx-connect'
 
+/**
+ * This route is not implemented yet
+ */
 @connect
 class Edit extends React.Component {
 
-    constructor(props) {
-        super(props)
-        this.state = {
-            error: null,
-            username: '',
-            description: '',
-            loading: false
-        }
+    @observable form = {
+        username: '',
+        description: '',
+        error: null,
+        loading: false
     }
 
-    handleEdit(key) {
-        return {
-            value: this.state[key],
-            onChange: e => this.setState({ [key]: e.target.value })
-        }
-    }
+    handleChange = (key) => ({
+        value: this.form[key],
+        onChange: e => this.form[key] = e.target.value
+    })
 
     handleSubmit(e) {
         e.preventDefault()
@@ -28,27 +26,31 @@ class Edit extends React.Component {
     }
 
     handleSave() {
-        const {username, description, picture} = this.state
-        const {store} = this.context
+        const { username, description, picture } = this.form
+        const { store } = this.context
 
         if (picture) {
             this.setState({ loading: true })
         }
 
-        store.user.update({username, description, picture})
+        store.user.update({ username, description, picture })
              .then(() => {
                  // The human eye needs a delay
                  setTimeout(() => {
-                     this.setState({ loading: false })
+                     this.form.loading = false
                  }, 300)
              })
-             .catch(error => this.setState({ error, loading: false }))
+             .catch(error => {
+                 this.form.error = error
+                 this.form.loading = false
+             })
     }
 
     componentDidMount() {
-        const {store, state} = this.context
+        const { store } = this.context
+        const { form } = this
         const requestData = {
-            username: state.user.username
+            username: form.username
         }
 
         store.user.get(requestData)

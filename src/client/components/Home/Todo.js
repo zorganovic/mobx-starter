@@ -9,7 +9,7 @@ class Movie extends React.Component {
 
     render() {
         const { todos } = this.context.store
-        const {item} = this.props
+        const { item } = this.props
 
         return <li className="todo">
             <div className="view">

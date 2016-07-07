@@ -9,18 +9,9 @@ let defaultState = observable({
     account: {
         username: null
     },
-    menu: {
-        index: 0,
-        items: {}
-    },
     todos: {
         loading: false,
         items: asFlat([])
-    },
-    forms: {
-        addtodo: {
-            text: ''
-        }
     }
 })
 

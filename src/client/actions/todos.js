@@ -7,15 +7,13 @@ export default (state, store) => {
      */
     return class todos {
 
-        add() {
-            return this.request(`api/todos/add`, { text: state.forms.addtodo.text }).then(result => {
+        add(text) {
+            return this.request(`api/todos/add`, { text }).then(result => {
                 // Add to list
                 state.todos.items.push({
                     _id: result._id,
                     text: result.text
                 })
-                // Clear input box
-                state.forms.addtodo.text = ''
             })
         }
 

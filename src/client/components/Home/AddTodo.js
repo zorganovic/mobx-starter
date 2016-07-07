@@ -1,37 +1,36 @@
 import React from 'react'
+import { observable } from 'mobx'
 import { connect } from 'mobx-connect'
 
 @connect
 class AddTodo extends React.Component {
 
-    handleSubmit(e) {
+    @observable inputText = ''
+
+    handleSubmit = (e) => {
         e.preventDefault()
-        this.context.store.todos.add()
+        this.context.store.todos.add(this.inputText)
+            .then(() => {
+                // Clear input text on sucess
+                this.inputText = ''
+            })
     }
 
-    handleChange(key) {
-        const { state } = this.context
-
-        return {
-            value: state.forms.addtodo[key],
-            onChange(e) {
-                state.forms.addtodo[key] = e.target.value
-            }
-        }
+    handleChange = (e) => {
+        this.inputText = e.target.value
     }
 
     render() {
         const { store } = this.context
         const { item } = this.props
-        /*
-        Make sure to either bind methods or use arrow syntax like below
-        otherwise `this` is going to be incorrect.
-        */
-        return <form className="header" onSubmit={e => this.handleSubmit(e)}>
+
+        return <form className="header" onSubmit={this.handleSubmit}>
             <p>
                 <input type="text"
                        className="new-todo"
-                       placeholder="What needs to be done?" {...this.handleChange('text')}/>
+                       placeholder="What needs to be done?"
+                       value={this.inputText}
+                       onChange={this.handleChange}/>
             </p>
         </form>
     }

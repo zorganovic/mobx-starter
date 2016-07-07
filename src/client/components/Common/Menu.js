@@ -1,41 +1,39 @@
 import size from 'lodash/fp/size'
 import React from 'react'
+import { observable } from 'mobx'
 import { connect } from 'mobx-connect'
 
 @connect
 class Menu extends React.Component {
 
+    @observable menu = {
+        index: 0,
+        items: {}
+    }
+
     componentWillUnmount() {
-        const { menu } = this.context.state
-        menu.items = {}
+        this.menu.items = {}
     }
 
     getItem(index) {
-        const { menu } = this.context.state
-        return menu.items[index]
+        return this.menu.items[index]
     }
 
     setIndex(newIndex, resetIndex = 0) {
-        const { menu } = this.context.state
+        if (newIndex < 0) newIndex = size(this.menu.items) - 1
+        if (newIndex > size(this.menu.items) - 1) newIndex = 0
 
-        if (newIndex < 0) newIndex = size(menu.items) - 1
-        if (newIndex > size(menu.items) - 1) newIndex = 0
-
-        menu.index = this.getItem(newIndex) ? newIndex : resetIndex
+        this.menu.index = this.getItem(newIndex) ? newIndex : resetIndex
     }
 
     render() {
-        const { menu } = this.context.state
-
         const children = React.Children.map(this.props.children, (child, index) => {
             return React.cloneElement(child, {
                 tabIndex: index,
                 activeClassName: 'selected',
                 //className: menu.index === index ? 'selected' : '',
-                onClick: e => {
-                    this.setIndex(e.target.tabIndex)
-                },
-                ref: c => menu.items[index] = c
+                onClick: e => this.setIndex(e.target.tabIndex),
+                ref: c => this.menu.items[index] = c
             })
         })
 

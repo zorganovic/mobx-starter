@@ -1,28 +1,23 @@
 import React from 'react'
+import { observable } from 'mobx'
 import { connect } from 'mobx-connect'
-import _ from 'lodash'
 import Error from '../Common/Error'
 
 @connect
 class Register extends React.Component {
 
-    constructor(props) {
-        super(props)
-        this.state = {
-            username: 'test',
-            password: 'test',
-            errorMsg: null
-        }
+    @observable form = {
+        username: 'test',
+        password: 'test',
+        errorMsg: null
     }
 
-    handleChange(key) {
-        return {
-            value: this.state[key],
-            onChange: e => this.setState({ [key]: e.target.value })
-        }
-    }
+    handleChange = (key) => ({
+        value: this.form[key],
+        onChange: e => this.form[key] = e.target.value
+    })
 
-    handleSubmit(e) {
+    handleSubmit = (e) => {
         e.preventDefault()
         this.handleRegister()
     }
@@ -30,7 +25,7 @@ class Register extends React.Component {
     handleRegister() {
         const { account } = this.context.store
         const { router } = this.context
-        const { username, password } = this.state
+        const { username, password } = this.form
 
         account.register({ username, password })
             .then(() => {
@@ -39,16 +34,14 @@ class Register extends React.Component {
                 })
             })
             .catch(() => {
-                this.setState({ errorMsg: 'Error registering' })
+                this.form.errorMsg = 'Error registering'
             })
     }
 
     render() {
-        const { state } = this
-
         return <main>
             <h1>register</h1>
-            <form className="account" onSubmit={e => this.handleSubmit(e)}>
+            <form className="account" onSubmit={this.handleSubmit}>
                 <label>
                     Username
                     <input type="text" {...this.handleChange("username")} required="required"/>
@@ -59,7 +52,7 @@ class Register extends React.Component {
                     <input type="password" {...this.handleChange("password")} required="required"/>
                 </label>
 
-                {state.errorMsg && <Error text={state.errorMsg}/>}
+                {this.form.errorMsg && <Error text={this.form.errorMsg}/>}
 
                 <button>Register</button>
             </form>

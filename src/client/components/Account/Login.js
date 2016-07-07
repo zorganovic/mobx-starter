@@ -1,4 +1,5 @@
 import React from 'react'
+import { observable } from 'mobx'
 import { connect } from 'mobx-connect'
 import Loading from '../Common/Loading'
 import Error from '../Common/Error'
@@ -6,22 +7,17 @@ import Error from '../Common/Error'
 @connect
 class Login extends React.Component {
 
-    constructor(props) {
-        super(props)
-        this.state = {
-            username: 'test',
-            password: 'test',
-            loading: false,
-            error: null
-        }
+    @observable form = {
+        username: 'test',
+        password: 'test',
+        loading: false,
+        error: null
     }
 
-    handleChange(key) {
-        return {
-            value: this.state[key],
-            onChange: e => this.setState({ [key]: e.target.value })
-        }
-    }
+    handleChange = (key) => ({
+        value: this.form[key],
+        onChange: e => this.form[key] = e.target.value
+    })
 
     handleLogin(e) {
         e.preventDefault()
@@ -29,28 +25,24 @@ class Login extends React.Component {
         const { router } = this.context
 
         account.login({
-                username: this.state.username,
-                password: this.state.password
+                username: this.form.username,
+                password: this.form.password
             })
             .then(() => {
-                this.setState({
-                    error: null,
-                    loading: true
-                })
+                this.form.error = null
+                this.form.loading = true
                 setTimeout(() => router.push('/'), 500)
             })
             .catch(error => {
-                this.setState({
-                    error: error,
-                    loading: false
-                })
+                this.form.error = error
+                this.form.loading = false
             })
     }
 
     render() {
-        const { state } = this
+        const { form } = this
 
-        if (state.loading) {
+        if (form.loading) {
             return <Loading/>
         }
 
@@ -67,7 +59,7 @@ class Login extends React.Component {
                     <input type="password" {...this.handleChange("password")} required="required"/>
                 </label>
 
-                {state.error && <Error text={state.error}/>}
+                {form.error && <Error text={form.error}/>}
 
                 <button onClick={e => this.handleLogin(e)}>Login</button>
             </form>
