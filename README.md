@@ -8,9 +8,7 @@ Features:
 + CSS and SCSS compilation
 + MongoDB user auth / sessions
 + Decorators for accessing actions and state
-
-Coming soon:
-+ Hot reload _(broken atm)_
++ Hot reload _(browser only)_
 
 
 ![Preview](https://raw.githubusercontent.com/nightwolfz/mobx-starter/master/preview.png)
@@ -40,17 +38,21 @@ All the rendering is efficiently taken care by [MobX](https://github.com/mobxjs/
 
 `What to name your action?` and `what should it do?`
 
+
+
 # F.A.Q.
 
-#### How to add mongoose models ?
-
+##### How to add mongoose models ?
+---
 1. Goto `src/server/models`
 2. Add `[Name].js`
 3. Goto `src/helpers/database`
 4. Add a new key to the `export default` and require your model there.
 
-#### How to add a new action
 
+
+##### How to add a new action
+---
 Goto `src/client/actions`.
 
 If you want to add a new action to an
@@ -60,12 +62,16 @@ ex: add `clearAll()` method to `todos.js`
 If you want to add a new set of actions, create a new file
 ex: `settings.js` and add a reference to that file to `const actions` in `index.js`
 
-#### My components are not updating!
 
+
+##### My components are not updating!
+---
 Make sure you added the `@connect` decorator to your component.
 
-#### My stateless component doesn't have access to this.context !
 
+
+##### My stateless component doesn't have access to this.context !
+---
 You cannot use decorators on stateless components.
 You should instead wrap your component like this:
 
@@ -75,10 +81,34 @@ const MyStatelessComponent = connect(function(props, context) {
 })
 ````
 
-#### How do I execute async actions on the server instead of client ?
 
+
+##### Should I use @observer on all components ?
+---
+`@connect` only enhances the component you are decorating, not the components used inside it.
+So usually all your components should be decorated.
+Don't worry, this is not inefficient, in contrast, more observer components make rendering more efficient.
+
+
+
+##### The propType of an observable array is object
+---
+Observable arrays are actually objects, so they comply to propTypes.object instead of array.
+
+
+
+##### How do I execute async actions on the server instead of client ?
+---
 Checkout `src/client/components/Home.js`.
 The `fetchData` method there only runs on the server.
+
+
+
+##### Where can I find more help ?
+---
+`@connect` uses the amazing library [MobX](https://github.com/mobxjs/mobx), go check out their
+[wiki page](https://mobxjs.github.io/mobx/best/pitfalls.html) for more information!
+
 
 
 ## Author

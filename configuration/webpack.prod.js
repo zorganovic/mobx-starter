@@ -1,7 +1,7 @@
 const _ = require('lodash')
 const path = require('path')
 const webpack = require('webpack')
-const config = require('./webpack.config.base.js')
+const config = require('./webpack.config.js')
 
 // Merge with base configuration
 //-------------------------------

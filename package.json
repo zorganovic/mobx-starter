@@ -1,15 +1,14 @@
 {
   "name": "mobx-starter",
   "main": "index.js",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "Ryan Megidov <ryan@megidov.com>",
   "description": "Mobx + React + React-router + Webpack hot-reload starter kit",
   "license": "MIT",
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development node ./index.js",
-    "prod": "cross-env NODE_ENV=production node ./index.js",
-    "memory": "node --expose-gc ./index.js -m"
+    "prod": "cross-env NODE_ENV=production node ./index.js"
   },
   "dependencies": {
     "babel-loader": "6.2.4",
@@ -62,6 +61,9 @@
     "webpack": "2.1.0-beta.14"
   },
   "devDependencies": {
-    "webpack-dev-server": "2.1.0-beta.0"
+    "babel-preset-react-hmre": "^1.1.1",
+    "webpack-dev-middleware": "^1.6.1",
+    "webpack-dev-server": "2.1.0-beta.0",
+    "webpack-hot-middleware": "^2.12.1"
   }
 }

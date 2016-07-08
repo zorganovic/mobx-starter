@@ -11,15 +11,16 @@ const config = {
         fs: 'empty'
     },
     module: {
-        //noParse: ['localforage', 'video.js'],
         loaders: [
             {
-                test: /\.js$/,
+                test: /\.jsx?$/,
                 loader: 'babel-loader',
                 include: sources,
+                exclude: /node_modules|\.git/,
                 babelrc: false,
                 query: {
                     cacheDirectory: true,
+                    presets: ["react-hmre"],
                     plugins: [
                         "add-module-exports",
                         "transform-decorators-legacy",
@@ -44,31 +45,33 @@ const config = {
             {
                 test: /\.json$/,
                 loader: 'json-loader',
-                include: sources
+                include: sources,
+                exclude: /\.git$/
             },
             {
                 test: /\.(jpg|png|ttf|otf|eot|svg|woff2?)(\?.+)?$/,
                 loader: 'file-loader',
-                include: path.join(sources, 'assets')
+                include: path.join(sources, 'assets'),
+                exclude: /\.git$/
             },
             {
                 test: /\.(css|scss)(\?.+)?$/,
                 loader: ExtractCSS.extract(['css', 'sass']),
-                include: path.join(sources, 'assets')
+                include: path.join(sources, 'assets'),
+                exclude: /\.git$/
             }
         ]
     },
     output: {
-        filename: '[name].js',
-        path: path.resolve(__dirname, '../build')
+        filename: 'bundle.js',
+        path: path.join(__dirname, '../build')
     },
     resolve: {
-        extensions: ['', '.js'],
-        modulesDirectories: [],
+        extensions: ['', '.js', '.jsx'],
         packageMains: ['webpack', 'browser', 'web', 'browserify', ['jam', 'main'], 'main']
     },
     plugins: [
-        new ExtractCSS('[name].css', { allChunks: true })
+        new ExtractCSS('bundle.css', { allChunks: true })
     ]
 };
 
