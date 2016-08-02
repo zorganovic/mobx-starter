@@ -2,7 +2,7 @@
  * Bootstrap our server
  */
 
-//require('source-map-support').install()
+require('source-map-support').install()
 require('./src/shared/polyfills')
 require('./src/shared/bootstrap')
 require('./src/shared/console')

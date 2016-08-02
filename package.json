@@ -59,7 +59,8 @@
     "sass-loader": "4.0.0",
     "serve-favicon": "2.3.0",
     "style-loader": "0.13.1",
-    "webpack": "^1.13.1"
+    "webpack": "^1.13.1",
+    "source-map-support": "latest"
   },
   "devDependencies": {
     "babel-preset-react-hmre": "^1.1.1",
