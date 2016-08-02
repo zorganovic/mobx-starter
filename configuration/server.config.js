@@ -11,6 +11,7 @@ export default {
         ]
     },
     session: {
+        salt: 'SUPER_SALTY_YES?',
         secret: 'SUPER_SECRET_KEY_KERE'
     },
     databases: {

@@ -46,7 +46,7 @@
     "lodash": "4.14.1",
     "min": "^0.1.15",
     "mobx": "2.4.1",
-    "mobx-connect": "0.2.6",
+    "mobx-connect": "0.3.0",
     "mobx-react": "^3.5.3",
     "mongoose": "4.5.8",
     "node-sass": "3.8.0",

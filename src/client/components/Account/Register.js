@@ -33,9 +33,7 @@ class Register extends React.Component {
                     router.push('/')
                 })
             })
-            .catch(() => {
-                this.form.errorMsg = 'Error registering'
-            })
+            .catch(error => this.form.errorMsg = error)
     }
 
     render() {
