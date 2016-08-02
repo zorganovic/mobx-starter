@@ -1,4 +1,4 @@
-export default function request(state) {
+export default (state) => {
     return function(url, body) {
         console.info(`Fetching: ${url}`)
 

@@ -10,7 +10,7 @@ _.merge(config, {
     target: 'web',
     devtool: 'source-map',
     entry: {
-        bundle: ['./client/client.js']
+        bundle: path.join(__dirname, '../src/client/client.js')
     },
     output: {
         publicPath: 'http://localhost:2000/build/',

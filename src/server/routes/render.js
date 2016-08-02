@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOMServer from 'react-dom/server'
 import { match, RouterContext } from 'react-router'
-import { getAccount } from '../helpers/account';
+import { getAccount } from '../actions/account';
 import fetchData from '../helpers/fetchData';
 import Context from '../../client/components/Common/Context'
 import Html from '../../client/components/Common/Html'

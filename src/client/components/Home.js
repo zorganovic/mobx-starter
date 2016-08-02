@@ -7,9 +7,9 @@ import Todo from './Home/Todo'
 @connect
 class Home extends React.Component {
 
+    // Server-side state being updated
     static fetchData({ store, state, params }) {
         return store.todos.browse().then(items => {
-            // Server-side state being updated
             state.todos.items = items
         })
     }

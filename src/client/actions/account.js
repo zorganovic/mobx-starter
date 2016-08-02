@@ -1,41 +1,43 @@
 import fp from 'lodash/fp'
 
-export default (state, store) => {
-    /**
-     * @name account
-     * @class account
-     */
-    return class account {
+/**
+ * @name Account
+ * @class Account
+ */
+export default class Account {
 
-        isLoggedIn() {
-            return !!state.account
-        }
+    constructor(state, request) {
+        this.state = state
+        this.request = request
+    }
 
-        find(username) {
-            return fp.find(state.users, { username })
-        }
+    isLoggedIn() {
+        return !!this.state.account
+    }
 
-        login(params) {
-            return this.request('api/account/login', params)
-                       .then(result => {
-                           state.account = result
-                           //window.location.href = '/'
-                       })
-        }
+    find(username) {
+        return fp.find(this.state.users, { username })
+    }
 
-        logout() {
-            return this.request('api/account/logout')
-                       .then(() => {
-                           state.account._id = null
-                           window.location.href = '/'
-                       })
-        }
+    login(params) {
+        return this.request('api/account/login', params)
+                   .then(result => {
+                        this.state.account = result
+                    })
+    }
 
-        register(params)
-        {
-            return this.request('api/account/register', params)
-                       .then(result => fp.assign(state.account, result))
-        }
+    logout() {
+        return this.request('api/account/logout')
+                   .then(() => {
+                        this.state.account._id = null
+                       window.location.href = '/'
+                   })
+    }
+
+    register(params)
+    {
+        return this.request('api/account/register', params)
+                   .then(result => fp.assign(this.state.account, result))
     }
 }
 

@@ -1,10 +1,11 @@
-const { observable, asFlat, toJS } = require('mobx')
+import { observable, asFlat, toJS, toJSON } from 'mobx'
 
 // Default state structure
 let defaultState = observable({
     app: {
         title: 'Mobx-starter',
-        statusCode: 200
+        statusCode: 200,
+        hostname: 'localhost'
     },
     account: {
         username: null
@@ -16,4 +17,4 @@ let defaultState = observable({
 })
 
 // Export an instance of our state
-module.exports = global.isClient ? defaultState : toJS(defaultState)
+module.exports = global.isClient ? defaultState : (toJS ? toJS(defaultState) : toJSON(defaultState))

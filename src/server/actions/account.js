@@ -1,4 +1,4 @@
-import db from './database'
+import db from '../helpers/database'
 
 export async function getAccount(session) {
     if (!session.id) return true

@@ -1,4 +1,5 @@
 const _ = require('lodash')
+const path = require('path')
 const express = require('express')
 const webpack = require('webpack')
 const webpackDevMiddleware = require('webpack-dev-middleware')
@@ -14,7 +15,7 @@ _.merge(config, {
     entry: {
         bundle: [
             'webpack-hot-middleware/client?reload=true&path=http://localhost:2002/__webpack_hmr',
-            './client/client.js'
+            path.join(__dirname, '../src/client/client.js')
         ]
     },
     output: {

@@ -1,11 +1,12 @@
 require('./../src/shared/bootstrap')
 require('./../src/shared/console')
+
 const path = require('path')
-const sources = path.join(__dirname, '../src')
 const ExtractCSS = require('extract-text-webpack-plugin')
+
+const sources = path.join(__dirname, '../src')
 const config = {
     entry: {},
-    context: sources,
     node: {
         global: true,
         fs: 'empty'
@@ -16,7 +17,6 @@ const config = {
                 test: /\.jsx?$/,
                 loader: 'babel-loader',
                 include: sources,
-                exclude: /node_modules|\.git/,
                 babelrc: false,
                 query: {
                     cacheDirectory: true,
@@ -45,20 +45,17 @@ const config = {
             {
                 test: /\.json$/,
                 loader: 'json-loader',
-                include: sources,
-                exclude: /\.git$/
+                include: sources
             },
             {
                 test: /\.(jpg|png|ttf|otf|eot|svg|woff2?)(\?.+)?$/,
                 loader: 'file-loader',
-                include: path.join(sources, 'assets'),
-                exclude: /\.git$/
+                include: path.join(sources, 'assets')
             },
             {
                 test: /\.(css|scss)(\?.+)?$/,
                 loader: ExtractCSS.extract(['css', 'sass']),
-                include: path.join(sources, 'assets'),
-                exclude: /\.git$/
+                include: path.join(sources, 'assets')
             }
         ]
     },
