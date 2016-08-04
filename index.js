@@ -1,8 +1,9 @@
 /**
  * Bootstrap our server
  */
+const sourceMaps = require('source-map-support')
+sourceMaps.install()
 
-require('source-map-support').install()
 require('./src/shared/polyfills')
 require('./src/shared/bootstrap')
 require('./src/shared/console')
@@ -17,3 +18,7 @@ if (process.env.NODE_ENV === 'production') {
 } else {
     require('./configuration/webpack.dev.js')
 }
+
+process.on('unhandledRejection', function(err) {
+    console.error(err)
+})
