@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'mobx-connect'
 
 @connect
-class Movie extends React.Component {
+class Todo extends React.Component {
 
     componentDidMount() {
     }
@@ -20,4 +20,4 @@ class Movie extends React.Component {
     }
 }
 
-export default Movie
+export default Todo
