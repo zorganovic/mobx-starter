@@ -2,7 +2,6 @@ require('./../src/shared/bootstrap')
 require('./../src/shared/console')
 
 const path = require('path')
-const webpack = require('webpack')
 const ExtractCSS = require('extract-text-webpack-plugin')
 
 const sources = path.join(__dirname, '../src')
@@ -68,11 +67,7 @@ const config = {
         extensions: ['', '.js', '.jsx']
     },
     plugins: [
-        new ExtractCSS('bundle.css', { allChunks: true }),
-        new webpack.BannerPlugin(`
-        const sourceMaps = require('source-map-support');
-        sourceMaps.install();
-        `, { raw: true, entryOnly: true })
+        new ExtractCSS('bundle.css', { allChunks: true })
     ]
 };
 
