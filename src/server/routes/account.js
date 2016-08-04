@@ -4,20 +4,6 @@ import error from '../helpers/error'
 import db from '../helpers/database'
 const router = Router();
 
-router.get('/api/account/user', async(req, res) => {
-    if (!req.session.id) return true
-
-    let user = await db.account.findOne({ session: req.session.id })
-
-    // no errors since we also want anonymous users
-    res.json({
-        _id: generateUserId(req.session),
-        username: generateUsername(req.session),
-        contacts: [],
-        picture: null
-    })
-})
-
 router.post('/api/account/login', async(req, res) => {
     const { username, password } = req.body
     const user = await loginAction(username, password, req.session.id)
