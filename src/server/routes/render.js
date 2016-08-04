@@ -5,21 +5,24 @@ import { getAccount } from '../actions/account';
 import fetchData from '../helpers/fetchData';
 import Context from '../../client/components/Common/Context'
 import Html from '../../client/components/Common/Html'
-import state from '../../client/state'
+import createState from '../../client/state'
 import routes from '../../client/routes'
 import actions from '../../client/actions'
 
 export default async function render(req, res) {
 
+    // Add state & session data
+    const state = createState()
     state.app.hostname = req.headers.host
+
+    // Check if logged in
+    const account = await getAccount(req.session)
+    if (account) state.account = account
 
     const context = {
         state: state,
         store: actions(state)
     }
-
-    // Add state & session data
-    context.state.account = await getAccount(req.session)
 
     // Create routing
     let matchRoutes = {

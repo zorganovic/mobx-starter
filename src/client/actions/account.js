@@ -29,7 +29,7 @@ export default class Account {
     logout() {
         return this.request('api/account/logout')
                    .then(() => {
-                        this.state.account._id = null
+                       this.state.account.username = null
                        window.location.href = '/'
                    })
     }

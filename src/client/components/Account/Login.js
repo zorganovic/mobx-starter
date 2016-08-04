@@ -19,7 +19,7 @@ class Login extends React.Component {
         onChange: e => this.form[key] = e.target.value
     })
 
-    handleLogin(e) {
+    handleLogin = (e) => {
         e.preventDefault()
         const { account } = this.context.store
         const { router } = this.context

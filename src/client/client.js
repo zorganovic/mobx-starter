@@ -4,26 +4,23 @@ import 'isomorphic-fetch'
 import React from 'react'
 import { render } from 'react-dom'
 import { Router, RouterContext, browserHistory } from 'react-router'
-import { extendObservable } from 'mobx'
 import Context from './components/Common/Context'
 import routes from './routes'
-import state from './state'
+import createState from './state'
 import actions from './actions'
 
 // This is the entry point for our client-side logic
 // The server-side has a similar configuration in `src/server/routes/render.js`
-if (global.isClient) {
+if (process.env.BROWSER) {
 
     // Import our styles
     require('../assets/css/index.scss')
 
-    // For Electron
-    window.__STATE = extendObservable(state, window.__STATE)
-
     // Initialize stores & inject server-side state into front-end
+    const state = createState(window.__STATE)
     const context = {
-        state: window.__STATE,
-        store: actions(window.__STATE)
+        state,
+        store: actions(state)
     }
 
     function createElement(props) {

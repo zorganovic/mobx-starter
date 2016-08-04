@@ -6,7 +6,7 @@ import Menu from './Common/Menu'
 const App = connect(function() {
     const { account } = this.context.state
     return <div>
-        {account ? <LoggedInMenu/> : <LoggedOutMenu/>}
+        {account.username ? <LoggedInMenu/> : <LoggedOutMenu/>}
         {this.props.children}
     </div>
 })

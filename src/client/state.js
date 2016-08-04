@@ -1,4 +1,4 @@
-import { observable, asFlat, toJS, toJSON } from 'mobx'
+import { observable, extendObservable, asFlat, toJS } from 'mobx'
 
 // Default state structure
 let defaultState = observable({
@@ -17,4 +17,6 @@ let defaultState = observable({
 })
 
 // Export an instance of our state
-module.exports = global.isClient ? defaultState : (toJS ? toJS(defaultState) : toJSON(defaultState))
+module.exports = function createState(state) {
+    return process.env.BROWSER ? extendObservable(defaultState, state) : toJS(defaultState)
+}

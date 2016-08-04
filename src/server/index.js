@@ -8,7 +8,6 @@ const compression = require('compression')
 const passport = require('passport')
 const config = require('../../configuration/server.config')
 const db = require('./helpers/database')
-const seedTodos = require('./helpers/seedTodos')
 const todos = require('./routes/todos')
 const account = require('./routes/account')
 const render = require('./routes/render')
@@ -49,10 +48,6 @@ app.use(passport.session())
 app.use(todos)
 app.use(account)
 app.use(render)
-
-// Add some data to db for testing purposes
-// You can remove this when you don't need it anymore
-seedTodos()
 
 app.listen(config.http.port, function() {
     console.info('HTTP Server listening on port', config.http.port)
