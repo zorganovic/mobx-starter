@@ -9,10 +9,11 @@ import { checkAuthorized } from '../actions/account'
  */
 export default function(req, res, next) {
     checkAuthorized(req.token).then(auth => {
-        logger('inferno:authorized')(auth)
+        logger('server:authorized')(auth)
         req.authorized = true
         next()
     }).catch(error => {
+        logger('server:error')(error)
         if (req.headers['user-agent'].includes('node-fetch')) {
             req.authorized = false
             next()
