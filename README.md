@@ -99,10 +99,11 @@ Observable arrays are actually objects, so they comply to propTypes.object inste
 
 
 
-##### How do I execute async actions on the server instead of client ?
+##### How do I execute async actions on the server and/or client ?
 ---
 Checkout `src/client/components/Home.js`.
-The `fetchData` method there only runs on the server.
+Checkout `src/client/components/Home.js`.
+The `fetchData` method is smart, it will be executed either on the server or on the browser depending on how you access the website.
 
 
 
