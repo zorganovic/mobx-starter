@@ -1,12 +1,13 @@
 # React + Mobx Quick Starter project
 
-The goal of this project is to provide a starting base for an mobx react project with OPTIONAL isomorphism.
+The goal of this project is to provide a starting base for an isomorphic (universal) mobx react project.
 
 Features:
 + `async/await` support
 + Isomorphic
 + CSS and SCSS compilation
-+ MongoDB user auth / sessions
++ MongoDB user register/login/logout
++ Token based authentication
 + Decorators for accessing actions and state
 + Hot reload _(browser only)_
 
@@ -27,6 +28,7 @@ For production:
 ## Requirements
 
     Node 6 or Node 4 with additional babel plugins
+    MongoDB server
 
 ## Goals
 
