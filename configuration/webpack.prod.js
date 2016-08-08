@@ -1,11 +1,12 @@
-const _ = require('lodash')
 const path = require('path')
+const logger = require('debug')
+const merge = require('lodash/merge')
 const webpack = require('webpack')
-const config = require('./webpack.config.js')
+const config = require('./webpack.js')
 
 // Merge with base configuration
 //-------------------------------
-_.merge(config, {
+merge(config, {
     cache: false,
     target: 'web',
     devtool: 'source-map',
@@ -18,7 +19,7 @@ _.merge(config, {
     }
 })
 
-console.info('Running production build...')
+logger('server:webpack')('Environment: Production')
 
 delete config.output.libraryTarget
 delete config.output.pathinfo
@@ -39,11 +40,11 @@ new webpack.optimize.UglifyJsPlugin({
 // Set some environment variables
 //-------------------------------
 config.plugins.push(
-    new webpack.DefinePlugin({
-        'process.env.BROWSER': true,
-        'process.env.BLUEBIRD_WARNINGS': '0',
-        'process.env.NODE_ENV': JSON.stringify('production')
-    })
+new webpack.DefinePlugin({
+    'process.env.BROWSER': true,
+    'process.env.BLUEBIRD_WARNINGS': '0',
+    'process.env.NODE_ENV': JSON.stringify('production')
+})
 )
 
 // Sanity checks
@@ -68,11 +69,7 @@ compiler.run(function(err, stats) {
     }))
 
     if (stats.hasErrors()) {
-        console.warn('Finished compiling webpack with errors...')
-        console.warn(stats.compilation.errors.toString())
-    } else {
-        console.info('Finished compiling webpack')
+        logger('server:webpackError')(stats.compilation.errors.toString())
     }
+    logger('server:webpack')('Finished compiling')
 })
-
-module.exports = config

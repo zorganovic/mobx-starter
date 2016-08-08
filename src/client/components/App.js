@@ -4,9 +4,9 @@ import { IndexLink, Link } from 'react-router'
 import Menu from './Common/Menu'
 
 const App = connect(function() {
-    const { account } = this.context.state
+    const { account } = this.context.store
     return <div>
-        {account.username ? <LoggedInMenu/> : <LoggedOutMenu/>}
+        {account.isLoggedIn() ? <LoggedInMenu/> : <LoggedOutMenu/>}
         {this.props.children}
     </div>
 })

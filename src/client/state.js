@@ -7,9 +7,7 @@ let defaultState = observable({
         statusCode: 200,
         hostname: 'localhost'
     },
-    account: {
-        username: null
-    },
+    account: {},
     todos: {
         loading: false,
         items: asFlat([])

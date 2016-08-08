@@ -1,11 +1,8 @@
-require('./../src/shared/bootstrap')
-require('./../src/shared/console')
-
 const path = require('path')
 const ExtractCSS = require('extract-text-webpack-plugin')
-
 const sources = path.join(__dirname, '../src')
-const config = {
+
+export default {
     entry: {},
     node: {
         global: true,
@@ -20,7 +17,7 @@ const config = {
                 babelrc: false,
                 query: {
                     cacheDirectory: true,
-                    presets: ["react-hmre"],
+                    presets: [],
                     plugins: [
                         "add-module-exports",
                         "transform-decorators-legacy",
@@ -36,9 +33,8 @@ const config = {
                         "transform-es2015-parameters",
                         "transform-es2015-shorthand-properties",
                         "transform-es2015-spread",
-                        "transform-react-jsx",
-                        "syntax-async-functions",
-                        "fast-async"
+                        "transform-async-to-generator",
+                        "transform-react-jsx"
                     ]
                 }
             },
@@ -48,7 +44,7 @@ const config = {
                 include: sources
             },
             {
-                test: /\.(jpg|png|ttf|otf|eot|svg|woff2?)(\?.+)?$/,
+                test: /\.(jpg|png|ttf|svg|woff2?)(\?.+)?$/,
                 loader: 'file-loader',
                 include: path.join(sources, 'assets')
             },
@@ -70,6 +66,3 @@ const config = {
         new ExtractCSS('bundle.css', { allChunks: true })
     ]
 };
-
-
-module.exports = config

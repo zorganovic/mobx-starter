@@ -1,40 +1,102 @@
+import jwt from 'jwt-simple'
 import crypto from 'crypto'
 import db from '../helpers/database'
-import config from '../../../configuration/server.config'
+import config from '../../../configuration/server'
 
-export async function getAccount(session) {
-    if (!session.id) return true
-    let account = await db.account.findOne({ session: session.id })
-    if (!account) return null
-    return account.toJSON()
+/**
+ * Get account by token
+ * @param token {string}
+ * @returns {object}
+ */
+export async function getAccount(token) {
+    if (token) {
+        const account = await db.account.findOne({ token })
+        if (!account) return null
+        return account.toJSON()
+    }
 }
 
-export async function loginAction(username, password, session) {
-    const user = await db.account.findOneAndUpdate(
-    {
-        username,
-        password: sha512(password)
-    },
-    { session },
-    { new: true })
-
-    return user ? user.toJSON() : false
-}
-
-export async function registerAction(username, password) {
-    const user = new db.account({
+export async function loginAccount(username, password, token) {
+    const account = await db.account.findOne({
         username,
         password: sha512(password)
     })
+    if (!account) return null
 
-    await user.save()
-    return user.toJSON()
+    account.token = createAuthToken(account._id)
+    await account.save()
+    return account.toJSON()
+}
+
+export async function registerAccount(username, password) {
+    const account = new db.account({
+        username,
+        password: sha512(password)
+    })
+    account.token = createAuthToken(account._id)
+    await account.save()
+    return account
+}
+
+export async function updateAccount(body, file, token) {
+    const query = {}
+
+    const userExists = await db.account.findOne({ username: body.username }, '_id').lean()
+    if (userExists) return false
+
+    if (body.username) query.username = body.username
+    if (body.description) query.description = body.description
+
+    const user = await db.account.findOneAndUpdate(
+    { token },
+    { $set: query },
+    { new: true }
+    ).lean()
+
+    return {
+        username: user.username,
+        description: user.description,
+        picture: user.picture
+    }
+}
+
+
+/**
+ * Check if we're logged in
+ * @param token {string}
+ * @returns {boolean}
+ */
+export async function checkAuthorized(token) {
+    if (!token) return Promise.reject('Token not provided')
+    const account = await db.account.findOne({ token }, 'token')
+    if (account) {
+        const decoded = jwt.decode(account.token, config.session.secret)
+        if (Date.now() < decoded.expires) {
+            return Promise.resolve(account)
+        }
+    }
+    return Promise.reject('Invalid token')
+}
+
+/**
+ * Create a new token with a timestamp
+ * @private
+ * @param accountID
+ * @returns {string|*}
+ */
+function createAuthToken(accountID) {
+    const payload = {
+        accountID,
+        expires: Date.now() + config.session.expires
+    }
+    return jwt.encode(payload, config.session.secret)
 }
 
 /**
  * Hash the password
+ * @private
  * @param str
- * @returns {String}
+ * @returns {string}
  */
 function sha512(str) {
     return crypto.createHmac('sha512', config.session.salt).update(str).digest('hex')

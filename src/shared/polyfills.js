@@ -1,12 +1,4 @@
 /**
- * Return a SEO frieldly version of a string
- * @returns {string}
- */
-String.prototype.seoName = function() {
-    return this.toLowerCase().replace(/[\s\uFEFF\xA0]+/g, '_');
-}
-
-/**
  * Returns a numeric hash of a string
  * Usefull for generating keys on the spot for your React loops
  * @returns {number}
