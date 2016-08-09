@@ -1,5 +1,5 @@
 import logger from 'debug'
-import fp from 'lodash/fp'
+import isArray from 'lodash/fp/isArray'
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import express from 'express'
@@ -14,14 +14,14 @@ import account from './routes/account'
 const app = express()
 
 // Serve static files
-if (fp.size(config.http.static)) {
-    fp.map(route => {
-        logger('inferno:static')(route.path)
-        app.use(route.url, express.static(route.path))
-    })(config.http.static)
+if (isArray(config.http.static)) {
+    config.http.static.forEach(staticRoute => {
+        logger('inferno:static')(staticRoute.path)
+        app.use(staticRoute.url, express.static(staticRoute.path))
+    })
 }
 
-// Settings
+// Config
 app.disable('x-powered-by')
 app.use(compression())
 
