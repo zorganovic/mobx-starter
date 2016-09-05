@@ -10,6 +10,7 @@ Features:
 + Token based authentication
 + Decorators for accessing actions and state
 + Hot reload _(browser only)_
++ Automatic restarts _(when server code changes)_
 
 
 ![Preview](https://raw.githubusercontent.com/nightwolfz/mobx-starter/master/preview.png)

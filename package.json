@@ -7,7 +7,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development node ./index.js",
+    "dev": "nodemon ./index.js",
     "prod": "cross-env NODE_ENV=production node ./index.js"
   },
   "dependencies": {
@@ -62,6 +62,7 @@
   },
   "devDependencies": {
     "babel-preset-react-hmre": "^1.1.1",
+    "nodemon": "^1.10.2",
     "webpack-dev-middleware": "^1.6.1",
     "webpack-dev-server": "2.1.0-beta.0",
     "webpack-hot-middleware": "^2.12.2"

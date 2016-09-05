@@ -9,7 +9,7 @@ import { checkAuthorized } from '../actions/account'
  */
 export default function(req, res, next) {
     checkAuthorized(req.token).then(auth => {
-        logger('server:authorized')(auth.token)
+        logger('server:authorized')(auth._id)
         req.authorized = true
         next()
     }).catch(error => {
