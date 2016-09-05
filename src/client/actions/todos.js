@@ -29,6 +29,8 @@ export default class Todos {
     }
 
     browse() {
-        return this.request(`api/todos`)
+        return this.request(`api/todos`).then(items => {
+            this.state.todos.items = items
+        })
     }
 }

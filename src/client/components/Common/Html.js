@@ -1,11 +1,11 @@
 import React from 'react'
-import { connect } from 'mobx-connect'
+import { observer } from 'mobx-react'
 
-@connect
+@observer(['state','actions'])
 class Html extends React.Component {
 
     render() {
-        const { state } = this.context
+        const { state } = this.props
         const devServerURL = process.env.NODE_ENV === 'production' ? '' : `http://${state.app.hostname.replace(2000, 2002)}`
 
         return <html>

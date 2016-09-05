@@ -34,6 +34,30 @@ if (!String.prototype.startsWith) {
     };
 }
 
+if (!Array.prototype.find) {
+    Array.prototype.find = function(predicate) {
+        'use strict';
+        if (this == null) {
+            throw new TypeError('Array.prototype.find called on null or undefined');
+        }
+        if (typeof predicate !== 'function') {
+            throw new TypeError('predicate must be a function');
+        }
+        var list = Object(this);
+        var length = list.length >>> 0;
+        var thisArg = arguments[1];
+        var value;
+
+        for (var i = 0; i < length; i++) {
+            value = list[i];
+            if (predicate.call(thisArg, value, i, list)) {
+                return value;
+            }
+        }
+        return undefined;
+    };
+}
+
 if (!Array.prototype.includes) {
     Array.prototype.includes = function(searchElement /*, fromIndex*/) {
         'use strict';
@@ -87,4 +111,24 @@ if (typeof Object.assign != 'function') {
         }
         return target;
     };
+}
+
+if (!String.prototype.includes) {
+    String.prototype.includes = function includes(str) {
+        return this.indexOf(str) !== -1;
+    };
+}
+if (!String.prototype.trimLeft) {
+    String.prototype.trimLeft = function trimLeft(str) {
+        return remove(this, str ? new RegExp(`/^${str}+/`) : /^\s+/);
+    };
+}
+if (!String.prototype.trimRight) {
+    String.prototype.trimRight = function trimRight(str) {
+        return remove(this, str ? new RegExp(`/${str}+$/`) : /\s+$/);
+    };
+}
+
+function remove(str, rx) {
+    return str.replace(rx, '');
 }

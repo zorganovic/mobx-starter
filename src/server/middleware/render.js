@@ -1,8 +1,8 @@
 import React from 'react'
 import ReactDOMServer from 'react-dom/server'
-import { match, RouterContext } from 'react-router'
+import { match, RouterContext, browserHistory } from 'react-router'
+import { Provider } from 'mobx-react'
 import fetchData from '../../shared/fetchData';
-import Context from '../../client/components/Common/Context'
 import Html from '../../client/components/Common/Html'
 import routes from '../../client/routes'
 
@@ -11,7 +11,7 @@ import routes from '../../client/routes'
  * @param req
  * @param res
  */
-export default async function render(req, res) {
+export default function render(req, res) {
 
     // Create routing
     const matchRoutes = {
@@ -25,11 +25,11 @@ export default async function render(req, res) {
 
     function renderComponent(renderProps) {
         return (
-            <Context context={req.context}>
+            <Provider router={browserHistory} {...(req.context)}>
                 <Html>
                     <RouterContext {...renderProps}/>
                 </Html>
-            </Context>
+            </Provider>
         )
     }
 

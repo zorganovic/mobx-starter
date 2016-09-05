@@ -1,8 +1,8 @@
 import React from 'react'
-import { connect } from 'mobx-connect'
+import { observer } from 'mobx-react'
 import Loading from '../Common/Loading'
 
-@connect
+@observer(['state','actions','router'])
 class Logout extends React.Component {
 
     constructor(props) {
@@ -13,8 +13,8 @@ class Logout extends React.Component {
     }
 
     componentDidMount() {
-        const { account } = this.context.store
-        const { state, router } = this.context
+        const { account } = this.props.actions
+        const { state, router } = this.props
 
         account.logout().then(() => {
             this.setState({
@@ -25,7 +25,7 @@ class Logout extends React.Component {
     }
 
     render() {
-        const { state } = this.context
+        const { state } = this.props
 
         if (state.loading) {
             return <Loading/>

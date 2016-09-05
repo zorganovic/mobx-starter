@@ -1,30 +1,56 @@
-import { observable, extendObservable, asFlat, toJS } from 'mobx'
+import {
+    observable, asFlat, isObservableArray,
+    isObservableMap, isObservableObject, toJS
+} from 'mobx'
 
 // Default state structure
-let defaultState = observable({
+// Everything that defines our application and that could be
+// shared between components should be declared here.
+const defaultState = observable({
+
     app: {
         title: 'Mobx-starter',
         statusCode: 200,
         hostname: 'localhost'
     },
+
     account: {},
+
     todos: {
         loading: false,
         items: asFlat([])
     }
 })
 
-// Export function that creates our state
+/**
+ * Helper function that supports merging maps
+ * @param obj
+ * @param other
+ */
+function mergeObservables(obj, other) {
+    Object.keys(obj).forEach(key => {
+        if (typeof obj[key] === 'object') {
+            if (isObservableMap(obj[key])) return obj[key].merge(other[key])
+            if (isObservableArray(obj[key])) return obj[key].replace(other[key])
+            if (isObservableObject(obj[key])) return mergeObservables(obj[key], other[key])
+            obj[key] = other[key]
+        } else {
+            obj[key] = other[key]
+        }
+    })
+}
+
+// Export function that creates our server tate
 export function createServerState() {
     return toJS(defaultState)
 }
 
+// Export function that creates our client state
 export function createClientState() {
     if (process.env.BROWSER) {
         // Update our state
-        Object.keys(window.__STATE).forEach(key => {
-            extendObservable(defaultState[key], window.__STATE[key])
-        })
+        mergeObservables(defaultState, window.__STATE)
+
         // For debugging purposes
         window.__STATE = defaultState
 

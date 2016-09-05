@@ -42,4 +42,4 @@ function createRoutes({ state }) {
     </Route>
 }
 
-export default  createRoutes
+export default createRoutes

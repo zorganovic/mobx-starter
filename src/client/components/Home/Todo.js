@@ -1,14 +1,14 @@
 import React from 'react'
-import { connect } from 'mobx-connect'
+import { observer } from 'mobx-react'
 
-@connect
+@observer(['state','actions'])
 class Todo extends React.Component {
 
     componentDidMount() {
     }
 
     render() {
-        const { todos } = this.context.store
+        const { todos } = this.props.actions
         const { item } = this.props
 
         return <li className="todo">

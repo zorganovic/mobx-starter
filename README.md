@@ -62,7 +62,7 @@ existing file, just add a new method to one of the classes
 ex: add `clearAll()` method to `todos.js`
 
 If you want to add a new set of actions, create a new file
-ex: `settings.js` and add a reference to that file to `const actions` in `index.js`
+ex: `settings.js` and add a reference to that file in `index.js`
 
 
 

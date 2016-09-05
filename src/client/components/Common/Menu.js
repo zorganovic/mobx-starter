@@ -1,9 +1,9 @@
 import size from 'lodash/fp/size'
 import React from 'react'
 import { observable } from 'mobx'
-import { connect } from 'mobx-connect'
+import { observer } from 'mobx-react'
 
-@connect
+@observer(['state','actions'])
 class Menu extends React.Component {
 
     @observable menu = {

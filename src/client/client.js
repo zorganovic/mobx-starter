@@ -4,29 +4,28 @@ import 'isomorphic-fetch'
 import React from 'react'
 import { render } from 'react-dom'
 import { Router, RouterContext, browserHistory } from 'react-router'
-import Context from './components/Common/Context'
+import { Provider } from 'mobx-react'
 import routes from './routes'
 import { createClientState } from './state'
 import actions from './actions'
 
 // This is the entry point for our client-side logic
 // The server-side has a similar configuration in `src/server/routes/render.js`
-if (process.env.BROWSER) {
-    // Import our styles
-    require('../assets/css/index.scss')
-}
+
+// Import our styles
+require('../assets/css/index.scss')
 
 // Initialize stores & inject server-side state into front-end
 const state = createClientState()
 const context = {
     state,
-    store: actions(state)
+    actions: actions(state)
 }
 
 function createElement(props) {
-    return <Context context={context}>
+    return <Provider router={browserHistory} {...context}>
         <RouterContext {...props} />
-    </Context>
+    </Provider>
 }
 
 function renderApp() {

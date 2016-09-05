@@ -1,15 +1,15 @@
 import React from 'react'
-import { connect } from 'mobx-connect'
+import { observer } from 'mobx-react'
 import { IndexLink } from 'react-router'
 
-@connect
+@observer(['state','actions'])
 class NotFound extends React.Component {
     constructor(props) {
         super(props)
     }
     render() {
-        const { router } = this.context
-        
+        const { router } = this.props
+
         return <main className="">
             <h3>Page not found. Are you lost ?</h3>
 

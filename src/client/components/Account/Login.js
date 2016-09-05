@@ -1,10 +1,10 @@
 import React from 'react'
 import { observable } from 'mobx'
-import { connect } from 'mobx-connect'
+import { observer } from 'mobx-react'
 import Loading from '../Common/Loading'
 import Error from '../Common/Error'
 
-@connect
+@observer(['state','actions','router'])
 class Login extends React.Component {
 
     @observable form = {
@@ -21,8 +21,8 @@ class Login extends React.Component {
 
     handleLogin = (e) => {
         e.preventDefault()
-        const { account } = this.context.store
-        const { router } = this.context
+        const { account } = this.props.actions
+        const { router } = this.props
 
         account.login({
                 username: this.form.username,

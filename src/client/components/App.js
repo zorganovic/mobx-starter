@@ -1,10 +1,10 @@
 import React from 'react'
-import { connect } from 'mobx-connect'
+import { observer } from 'mobx-react'
 import { IndexLink, Link } from 'react-router'
 import Menu from './Common/Menu'
 
-const App = connect(function() {
-    const { account } = this.context.store
+const App = observer(['state','actions'], function() {
+    const { account } = this.props.actions
     return <div>
         {account.isLoggedIn() ? <LoggedInMenu/> : <LoggedOutMenu/>}
         {this.props.children}

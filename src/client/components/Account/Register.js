@@ -1,9 +1,9 @@
 import React from 'react'
 import { observable } from 'mobx'
-import { connect } from 'mobx-connect'
+import { observer } from 'mobx-react'
 import Error from '../Common/Error'
 
-@connect
+@observer(['state','actions','router'])
 class Register extends React.Component {
 
     @observable form = {
@@ -23,8 +23,8 @@ class Register extends React.Component {
     }
 
     handleRegister() {
-        const { account } = this.context.store
-        const { router } = this.context
+        const { account } = this.props.actions
+        const { router } = this.props
         const { username, password } = this.form
 
         account.register({ username, password })
