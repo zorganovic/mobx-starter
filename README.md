@@ -33,7 +33,7 @@ For production:
 
 ## Goals
 
-We have one state object. That object can be accessed by any React component decorated with `@connect`.
+We have one state object. That object can be accessed by any React component decorated with `@observer`.
 
 If we want to update the state, we execute `actions` which are just namespaced functions _(namespace = action filename)_ that affect the state.
 
@@ -45,14 +45,10 @@ All the rendering is efficiently taken care by [MobX](https://github.com/mobxjs/
 
 # F.A.Q.
 
-##### How to add mongoose models ?
+##### How to edit the state object ?
 ---
-1. Goto `src/server/models`
-2. Add `[Name].js`
-3. Goto `src/helpers/database`
-4. Add a new key to the `export default` and require your model there.
 
-
+Goto `src/client/state` and edit the constant `defaultState`
 
 ##### How to add a new action
 ---
@@ -66,21 +62,28 @@ If you want to add a new set of actions, create a new file
 ex: `settings.js` and add a reference to that file in `index.js`
 
 
+##### How to add mongoose models ?
+---
+1. Goto `src/server/models`
+2. Add `[Name].js`
+3. Goto `src/helpers/database`
+4. Add a new key to the `export default` and require your model there.
+
 
 ##### My components are not updating!
 ---
-Make sure you added the `@connect` decorator to your component.
+Make sure you added the `@observer` decorator to your component.
 
 
 
-##### My stateless component doesn't have access to this.context !
+##### My stateless components don't have access to this.context !
 ---
 You cannot use decorators on stateless components.
 You should instead wrap your component like this:
 
 ```js
-const MyStatelessComponent = connect(function(props, context) {
-  return <p>{context.state.something} !</p>
+const MyStatelessComponent = observer(['state'], function({ state }) {
+  return <p>{state.something} !</p>
 })
 ````
 
@@ -88,7 +91,7 @@ const MyStatelessComponent = connect(function(props, context) {
 
 ##### Should I use @observer on all components ?
 ---
-`@connect` only enhances the component you are decorating, not the components used inside it.
+`@observer` only enhances the component you are decorating, not the components used inside it.
 So usually all your components should be decorated.
 Don't worry, this is not inefficient, in contrast, more observer components make rendering more efficient.
 
@@ -110,7 +113,7 @@ The `fetchData` method is smart, it will be executed either on the server or on 
 
 ##### Where can I find more help ?
 ---
-`@connect` uses the amazing library [MobX](https://github.com/mobxjs/mobx), go check out their
+`@observer` uses the amazing library [MobX](https://github.com/mobxjs/mobx), go check out their
 [wiki page](https://mobxjs.github.io/mobx/best/pitfalls.html) for more information!
 
 
