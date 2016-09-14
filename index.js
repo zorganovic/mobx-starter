@@ -15,7 +15,7 @@ process.on('unhandledRejection', console.error.bind(console))
 
 // Compile files on PROD or launch DEV server
 if (process.env.NODE_ENV === 'production') {
-    require('./configuration/webpack.prod.js')
+    require('./config/webpack.prod.js')
 } else {
-    require('./configuration/webpack.dev.js')
+    require('./config/webpack.dev.js')
 }

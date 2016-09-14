@@ -1,3 +1,9 @@
+// Enable source-maps
+import sourceMaps from 'source-map-support'
+sourceMaps.install()
+
+// This is the entry point for our client-side logic
+// The server-side has a similar configuration in `src/server/routes/render.js`
 import '../shared/polyfills'
 import '../shared/console'
 import 'isomorphic-fetch'
@@ -8,9 +14,6 @@ import { Provider } from 'mobx-react'
 import routes from './routes'
 import { createClientState } from './state'
 import actions from './actions'
-
-// This is the entry point for our client-side logic
-// The server-side has a similar configuration in `src/server/routes/render.js`
 
 // Import our styles
 require('../assets/css/index.scss')

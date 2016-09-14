@@ -43,6 +43,7 @@ const compiler = webpack(config)
 const port = 2002
 const wdm = webpackDevMiddleware(compiler, {
     publicPath: config.output.publicPath,
+    headers: { 'Access-Control-Expose-Headers': 'SourceMap,X-SourceMap' },
     stats: {
         colors: true,
         hash: false,
