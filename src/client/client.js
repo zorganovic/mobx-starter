@@ -1,6 +1,5 @@
 // This is the entry point for our client-side logic
 // The server-side has a similar configuration in `src/server/routes/render.js`
-import sourceMaps from 'source-map-support'
 import '../shared/polyfills'
 import '../shared/console'
 import '../assets/css/index.scss'
@@ -8,12 +7,9 @@ import 'isomorphic-fetch'
 import React from 'react'
 import { render } from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
-import App from './components/Common/App'
 import { createClientState } from './state'
 import actions from './actions'
-
-// Enable source-maps
-sourceMaps.install()
+import App from './components/Common/App'
 
 // Initialize stores & inject server-side state into front-end
 const state = createClientState()
