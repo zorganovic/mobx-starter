@@ -1,7 +1,5 @@
-import {
-    observable, asFlat, isObservableArray,
-    isObservableMap, isObservableObject, toJS
-} from 'mobx'
+import { observable, asFlat, toJS } from 'mobx'
+import mergeObservables from './helpers/mergeObservables'
 
 // Default state structure
 // Everything that defines our application and that could be
@@ -22,39 +20,8 @@ const defaultState = observable({
     }
 })
 
-/**
- * Helper function that supports merging maps
- * @param obj
- * @param other
- */
-function mergeObservables(obj, other) {
-    Object.keys(obj).forEach(key => {
-        if (typeof obj[key] === 'object') {
-            if (isObservableMap(obj[key])) return obj[key].merge(other[key])
-            if (isObservableArray(obj[key])) return obj[key].replace(other[key])
-            if (isObservableObject(obj[key])) return mergeObservables(obj[key], other[key])
-            obj[key] = other[key]
-        } else {
-            obj[key] = other[key]
-        }
-    })
-}
-
 // Export function that creates our server tate
-export function createServerState() {
-    return toJS(defaultState)
-}
+export const createServerState = () => toJS(defaultState)
 
 // Export function that creates our client state
-export function createClientState() {
-    if (process.env.BROWSER) {
-        // Update our state
-        mergeObservables(defaultState, window.__STATE)
-
-        // For debugging purposes
-        if (process.env.NODE_ENV === 'development') {
-            window.__STATE = defaultState
-        }
-        return defaultState
-    }
-}
+export const createClientState = () => mergeObservables(defaultState, window.__STATE)
