@@ -1,25 +1,22 @@
-import { isObservableArray, isObservableMap, isObservableObject } from 'mobx'
+import { isObservableArray, isObservableMap } from 'mobx'
 
 /**
  * Helper function that supports merging maps
- * @param obj
- * @param other
+ * @param target
+ * @param source
  */
-function mergeObservables(obj, other) {
-    Object.keys(obj).forEach(key => {
-        if (typeof obj[key] === 'object') {
-            if (isObservableMap(obj[key])) return obj[key].merge(other[key])
-            if (isObservableArray(obj[key])) return obj[key].replace(other[key])
-            if (isObservableObject(obj[key])) return mergeObservables(obj[key], other[key])
-            obj[key] = other[key]
+function mergeObservables(target, source) {
+    Object.keys(target).forEach(key => {
+        if (typeof target[key] === 'object') {
+            if (isObservableMap(target[key])) return target[key].merge(source[key])
+            if (isObservableArray(target[key])) return target[key].replace(source[key])
+            target[key] = source[key]
         } else {
-            obj[key] = other[key]
+            target[key] = source[key]
         }
     })
-    // For debugging purposes
-    window.__STATE = obj
 
-    return obj
+    return window.__STATE = target
 }
 
 export default mergeObservables
