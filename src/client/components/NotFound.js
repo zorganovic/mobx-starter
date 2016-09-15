@@ -4,16 +4,13 @@ import { IndexLink } from 'react-router'
 
 @observer(['state','actions'])
 class NotFound extends React.Component {
-    constructor(props) {
-        super(props)
-    }
     render() {
-        const { router } = this.props
+        const { history } = this.props
 
         return <main className="">
             <h3>Page not found. Are you lost ?</h3>
 
-            <a onClick={router.goBack}>Go back</a>
+            <a onClick={history.goBack}>Go back</a>
             <IndexLink to="/">Main menu</IndexLink>
         </main>
     }

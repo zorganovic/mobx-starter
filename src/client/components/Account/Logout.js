@@ -2,7 +2,7 @@ import React from 'react'
 import { observer } from 'mobx-react'
 import Loading from '../Common/Loading'
 
-@observer(['state','actions','router'])
+@observer(['state', 'actions', 'history'])
 class Logout extends React.Component {
 
     constructor(props) {
@@ -14,13 +14,13 @@ class Logout extends React.Component {
 
     componentDidMount() {
         const { account } = this.props.actions
-        const { state, router } = this.props
+        const { state, history } = this.props
 
         account.logout().then(() => {
             this.setState({
                 loading: false
             })
-            setTimeout(() => router.push('/'), 200)
+            setTimeout(() => history.push('/'), 200)
         })
     }
 
