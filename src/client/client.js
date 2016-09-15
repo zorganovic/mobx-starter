@@ -8,7 +8,7 @@ import 'isomorphic-fetch'
 import React from 'react'
 import { render } from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
-import App from './components/Common/App'
+import App from './components/App'
 import { createClientState } from './state'
 import actions from './actions'
 
@@ -34,8 +34,8 @@ function renderApp() {
 renderApp()
 
 if (module.hot) {
-    module.hot.accept('./components/Common/App', () => {
-        const NextApp = require('./components/Common/App')
+    module.hot.accept('./components/App', () => {
+        const NextApp = require('./components/App')
         render(<AppContainer>
             <NextApp context={context}/>
         </AppContainer>, container)
