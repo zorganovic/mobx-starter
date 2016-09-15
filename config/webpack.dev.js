@@ -38,6 +38,7 @@ config.plugins.push(
     new webpack.NoErrorsPlugin(),
     new webpack.NamedModulesPlugin(),
     new webpack.DefinePlugin({
+        'process.env.DEV': true,
         'process.env.BROWSER': true,
         'process.env.BLUEBIRD_WARNINGS': '0',
         'process.env.NODE_ENV': JSON.stringify('development')

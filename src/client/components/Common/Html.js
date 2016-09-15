@@ -6,7 +6,7 @@ class Html extends React.Component {
 
     render() {
         const { state } = this.props
-        const devServerURL = process.env.NODE_ENV === 'production' ? '' : `http://${state.app.hostname.replace(2000, 2002)}`
+        const devServerURL = !process.env.DEV ? '' : `http://${state.app.hostname.replace(2000, 2002)}`
 
         return <html>
             <head>
@@ -20,9 +20,7 @@ class Html extends React.Component {
 
                 {/* Bundled assets */}
                 <link href={devServerURL + '/build/bundle.css'} rel="stylesheet"/>
-                <script dangerouslySetInnerHTML={{
-                    __html: 'window.__STATE = ' + JSON.stringify(state) + ';'
-                }}/>
+                <script dangerouslySetInnerHTML={insertState(state)}/>
             </head>
             <body>
                 {/* Our content rendered here */}
@@ -32,6 +30,12 @@ class Html extends React.Component {
                 <script async src={devServerURL + '/build/bundle.js'}/>
             </body>
         </html>
+    }
+}
+
+function insertState(state) {
+    return {
+        __html: 'window.__STATE = ' + JSON.stringify(state, null, process.env.DEV ? 2 : 0) + ';'
     }
 }
 
