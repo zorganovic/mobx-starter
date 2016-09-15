@@ -52,8 +52,9 @@ export function createClientState() {
         mergeObservables(defaultState, window.__STATE)
 
         // For debugging purposes
-        window.__STATE = defaultState
-
+        if (process.env.NODE_ENV === 'development') {
+            window.__STATE = defaultState
+        }
         return defaultState
     }
 }

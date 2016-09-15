@@ -25,7 +25,7 @@ export default function render(req, res) {
 
     function renderComponent(renderProps) {
         return (
-            <Provider router={browserHistory} {...(req.context)}>
+            <Provider history={browserHistory} {...(req.context)}>
                 <Html>
                     <RouterContext {...renderProps}/>
                 </Html>

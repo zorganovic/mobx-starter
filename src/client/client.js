@@ -1,22 +1,19 @@
-// Enable source-maps
-import sourceMaps from 'source-map-support'
-sourceMaps.install()
-
 // This is the entry point for our client-side logic
 // The server-side has a similar configuration in `src/server/routes/render.js`
+import sourceMaps from 'source-map-support'
 import '../shared/polyfills'
 import '../shared/console'
+import '../assets/css/index.scss'
 import 'isomorphic-fetch'
 import React from 'react'
 import { render } from 'react-dom'
-import { Router, RouterContext, browserHistory } from 'react-router'
-import { Provider } from 'mobx-react'
-import routes from './routes'
+import { AppContainer } from 'react-hot-loader'
+import App from './components/Common/App'
 import { createClientState } from './state'
 import actions from './actions'
 
-// Import our styles
-require('../assets/css/index.scss')
+// Enable source-maps
+sourceMaps.install()
 
 // Initialize stores & inject server-side state into front-end
 const state = createClientState()
@@ -24,26 +21,23 @@ const context = {
     state,
     actions: actions(state)
 }
-
-function createElement(props) {
-    return <Provider router={browserHistory} {...context}>
-        <RouterContext {...props} />
-    </Provider>
-}
+// We render our react app into this element
+const container = document.getElementById('container')
 
 function renderApp() {
-    render(<Router
-        history={browserHistory}
-        render={createElement}
-        routes={routes(context)}
-    />,
-    document.getElementById('container'))
+    render(<AppContainer>
+        <App context={context}/>
+    </AppContainer>, container)
 }
 
 // Render HTML on the browser
 renderApp()
 
-// Use hot-reloading if available
 if (module.hot) {
-    module.hot.accept(() => renderApp())
+    module.hot.accept('./components/Common/App', () => {
+        const NextApp = require('./components/Common/App')
+        render(<AppContainer>
+            <NextApp context={context}/>
+        </AppContainer>, container)
+    })
 }

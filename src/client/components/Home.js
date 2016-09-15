@@ -27,7 +27,9 @@ class Home extends React.Component {
         const { state } = this.props
 
         return <main>
-            <h1>todos</h1>
+            <h1>
+                todos
+            </h1>
             <div className="home">
                 <AddTodo/>
                 <section className="main">

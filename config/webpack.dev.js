@@ -1,10 +1,8 @@
 const path = require('path')
 const logger = require('debug')
 const merge = require('lodash/merge')
-const express = require('express')
 const webpack = require('webpack')
-const webpackDevMiddleware = require('webpack-dev-middleware')
-const webpackHotMiddleware = require('webpack-hot-middleware')
+const WebpackDevServer = require('webpack-dev-server')
 const config = require('./webpack.base.js')
 
 // Merge with base configuration
@@ -15,7 +13,9 @@ merge(config, {
     devtool: 'eval-source-map', // eval eval-cheap-module-source-map source-map
     entry: {
         bundle: [
-            'webpack-hot-middleware/client?reload=true&path=http://localhost:2002/__webpack_hmr',
+            'react-hot-loader/patch',
+            'webpack-dev-server/client?http://localhost:2002',
+            'webpack/hot/only-dev-server',
             path.join(__dirname, '../src/client/client.js')
         ]
     },
@@ -26,24 +26,37 @@ merge(config, {
     }
 })
 
-config.plugins.push(
-new webpack.HotModuleReplacementPlugin(),
-new webpack.NoErrorsPlugin(),
-new webpack.DefinePlugin({
-    'process.env.BROWSER': true,
-    'process.env.BLUEBIRD_WARNINGS': '0',
-    'process.env.NODE_ENV': JSON.stringify('development')
+config.module.loaders.forEach(loader => {
+    if (loader.loader === 'babel-loader') {
+        loader.query.plugins.unshift('react-hot-loader/babel')
+        console.log(loader.query.plugins)
+    }
 })
+
+config.plugins.push(
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin(),
+    new webpack.NamedModulesPlugin(),
+    new webpack.DefinePlugin({
+        'process.env.BROWSER': true,
+        'process.env.BLUEBIRD_WARNINGS': '0',
+        'process.env.NODE_ENV': JSON.stringify('development')
+    })
 )
 
 // Run DEV server for hot-reloading
 //---------------------------------
-const app = express()
 const compiler = webpack(config)
 const port = 2002
-const wdm = webpackDevMiddleware(compiler, {
+
+new WebpackDevServer(compiler, {
     publicPath: config.output.publicPath,
-    headers: { 'Access-Control-Expose-Headers': 'SourceMap,X-SourceMap' },
+    headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Expose-Headers': 'SourceMap,X-SourceMap'
+    },
+    hot: true,
+    historyApiFallback: true,
     stats: {
         colors: true,
         hash: false,
@@ -54,21 +67,8 @@ const wdm = webpackDevMiddleware(compiler, {
         children: false,
         chunkModules: false
     }
-})
+}).listen(port, 'localhost', function (err, result) {
+    if (err) return logger('webpack:error', err);
 
-app.use(wdm)
-app.use(webpackHotMiddleware(compiler));
-
-// Launch DEV server
-//-------------------------------
-const devServer = app.listen(port, 'localhost', err => {
-    if (err) return console.error(err)
-
-    logger('server:webpack')('Running on port ' + port)
-})
-
-process.on('SIGTERM', () => {
-    logger('server:webpack')('Stopping...')
-    wdm.close()
-    devServer.close(() => process.exit(0))
+    logger('webpack:compiler')('Running on port ' + port)
 })

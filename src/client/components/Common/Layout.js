@@ -1,15 +1,19 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import { IndexLink, Link } from 'react-router'
-import Menu from './Common/Menu'
+import { Provider } from 'mobx-react'
+import Menu from './Menu'
 
-const App = observer(['state','actions'], function() {
-    const { account } = this.props.actions
-    return <div>
-        {account.isLoggedIn() ? <LoggedInMenu/> : <LoggedOutMenu/>}
-        {this.props.children}
-    </div>
-})
+@observer(['state','actions'])
+class Layout extends React.Component {
+    render() {
+        const { account } = this.props.actions
+        return <div>
+            {account.isLoggedIn() ? <LoggedInMenu/> : <LoggedOutMenu/>}
+            {this.props.children}
+        </div>
+    }
+}
 
 function LoggedInMenu() {
     return <Menu>
@@ -28,4 +32,4 @@ function LoggedOutMenu() {
     </Menu>
 }
 
-export default App
+export default Layout
