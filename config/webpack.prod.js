@@ -71,5 +71,5 @@ compiler.run(function(err, stats) {
     if (stats.hasErrors()) {
         logger('server:webpackError')(stats.compilation.errors.toString())
     }
-    logger('server:webpack')('Finished compiling')
+    logger('webpack:compiler')('Finished compiling')
 })

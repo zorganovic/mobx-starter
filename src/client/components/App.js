@@ -1,31 +1,18 @@
 import React from 'react'
-import { observer } from 'mobx-react'
-import { IndexLink, Link } from 'react-router'
-import Menu from './Common/Menu'
+import { Router, browserHistory } from 'react-router'
+import { Provider } from 'mobx-react'
 
-const App = observer(['state','actions'], function() {
-    const { account } = this.props.actions
-    return <div>
-        {account.isLoggedIn() ? <LoggedInMenu/> : <LoggedOutMenu/>}
-        {this.props.children}
-    </div>
-})
-
-function LoggedInMenu() {
-    return <Menu>
-        <IndexLink to="/">Browse</IndexLink>
-        <Link to="/about">About</Link>
-        <Link to="/logout">Logout</Link>
-    </Menu>
-}
-
-function LoggedOutMenu() {
-    return <Menu>
-        <IndexLink to="/">Browse</IndexLink>
-        <Link to="/about">About</Link>
-        <Link to="/register">Register</Link>
-        <Link to="/login">Login</Link>
-    </Menu>
+class App extends React.Component {
+    render() {
+        const { context, history, routes } = this.props
+        return (
+            <Provider {...context}>
+                <Router history={browserHistory}>
+                    {routes(context)}
+                </Router>
+            </Provider>
+        )
+    }
 }
 
 export default App

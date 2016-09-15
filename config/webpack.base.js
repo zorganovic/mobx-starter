@@ -63,6 +63,6 @@ export default {
         extensions: ['', '.js', '.jsx']
     },
     plugins: [
-        new ExtractCSS('bundle.css', { allChunks: true })
+        new ExtractCSS({ filename: 'bundle.css', allChunks: true })
     ]
 };

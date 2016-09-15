@@ -1,6 +1,6 @@
 import React from 'react'
 import { Route, IndexRoute } from 'react-router'
-import App from './components/App'
+import Layout from './components/Layout'
 
 /**
  * Asynchronously load a file
@@ -26,7 +26,7 @@ function createRoutes({ state }) {
         next()
     }
 
-    return <Route component={App}>
+    return <Route component={Layout}>
 
         <Route path="/">
             <IndexRoute getComponent={requireAsync('Home')}/>
