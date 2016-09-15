@@ -8,10 +8,9 @@ import 'isomorphic-fetch'
 import React from 'react'
 import { render } from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
-import App from './components/App'
+import App from './components/Common/App'
 import { createClientState } from './state'
 import actions from './actions'
-import routes from './routes'
 
 // Enable source-maps
 sourceMaps.install()
@@ -27,25 +26,18 @@ const container = document.getElementById('container')
 
 function renderApp() {
     render(<AppContainer>
-        <App routes={routes} context={context}/>
+        <App context={context}/>
     </AppContainer>, container)
 }
 
 // Render HTML on the browser
 renderApp()
 
-// Use hot-reloading if available
-/*if (module.hot) {
-    //module.hot.accept();
-    module.hot.accept('./components/App', () => renderApp())
-}*/
-
 if (module.hot) {
-    //module.hot.accept();
-    module.hot.accept('./components/App', () => {
-        const NextApp = require('./components/App')
+    module.hot.accept('./components/Common/App', () => {
+        const NextApp = require('./components/Common/App')
         render(<AppContainer>
-            <NextApp routes={routes} context={context}/>
+            <NextApp context={context}/>
         </AppContainer>, container)
     })
 }

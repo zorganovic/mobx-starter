@@ -2,7 +2,7 @@ import React from 'react'
 import { observer } from 'mobx-react'
 import { IndexLink, Link } from 'react-router'
 import { Provider } from 'mobx-react'
-import Menu from './Common/Menu'
+import Menu from './Menu'
 
 @observer(['state','actions'])
 class Layout extends React.Component {
