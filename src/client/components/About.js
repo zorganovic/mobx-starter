@@ -1,7 +1,7 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 
-@observer(['state','actions'])
+@observer(['state', 'actions'])
 class About extends React.Component {
     render() {
         return <main>

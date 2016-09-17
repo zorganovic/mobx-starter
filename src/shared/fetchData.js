@@ -6,9 +6,11 @@ import map from 'lodash/fp/map';
  * @param context - contains our state and actions
  * @returns {Promise} - returns a promise
  */
-export default ({ components, params }, { state, actions }) => {
+export default (component, params, { state, actions }) => {
 
-    const accumulate = map('fetchData')(components).filter(x => x)
+    //console.log(component.props.children)
+
+    const accumulate = map('fetchData')(component.props.children).filter(x => x)
     const fetchDataMethods = accumulate.map(method => method({ state, actions, params }))
 
     return Promise.all(fetchDataMethods);

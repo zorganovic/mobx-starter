@@ -10,7 +10,7 @@ const config = require('./webpack.base.js')
 merge(config, {
     cache: true,
     target: 'web',
-    devtool: 'eval-source-map', // eval eval-cheap-module-source-map source-map
+    devtool: 'source-map', // eval eval-cheap-module-source-map source-map
     entry: {
         bundle: [
             'react-hot-loader/patch',

@@ -8,36 +8,40 @@ import 'isomorphic-fetch'
 import React from 'react'
 import { render } from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
+import { BrowserRouter } from 'react-router'
 import App from './components/App'
 import { createClientState } from './state'
-import actions from './actions'
+import createActions from './actions'
 
 // Enable source-maps
 sourceMaps.install()
 
 // Initialize stores & inject server-side state into front-end
 const state = createClientState()
-const context = {
-    state,
-    actions: actions(state)
-}
+const actions = createActions(state)
+
 // We render our react app into this element
 const container = document.getElementById('container')
 
-function renderApp() {
+function renderApp(RootComponent) {
     render(<AppContainer>
-        <App context={context}/>
+        <BrowserRouter>
+            {(props) => {
+                return <RootComponent
+                state={state}
+                actions={actions}
+                history={props.router}
+                />
+            }}
+        </BrowserRouter>
     </AppContainer>, container)
 }
 
 // Render HTML on the browser
-renderApp()
+renderApp(App)
 
 if (module.hot) {
     module.hot.accept('./components/App', () => {
-        const NextApp = require('./components/App')
-        render(<AppContainer>
-            <NextApp context={context}/>
-        </AppContainer>, container)
+        renderApp(require('./components/App'), container)
     })
 }

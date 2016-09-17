@@ -2,7 +2,7 @@ import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 //import { match, RouterContext, browserHistory } from 'react-router'
 import { Provider } from 'mobx-react'
-import { ServerRouter } from 'react-router'
+import ServerRouter from './ServerRouter'
 import createServerRenderContext from 'react-router/createServerRenderContext'
 import fetchData from '../../shared/fetchData';
 import Html from '../../client/components/Common/Html'
@@ -15,22 +15,22 @@ import App from '../../client/components/App'
  */
 function render(req, res) {
 
-    function sendResponse(statusCode, content) {
-        res.status(statusCode).send('<!DOCTYPE html>\n' + renderToStaticMarkup(content))
-    }
-
     const renderContext = createServerRenderContext()
 
     function renderComponent() {
         return (
-            <Provider history={() => {}} {...(req.context)}>
-                <Html>
-                    <ServerRouter location={req.originalUrl} context={renderContext}>
-                        <App/>
-                    </ServerRouter>
-                </Html>
-            </Provider>
+            <Html context={req.context}>
+                <ServerRouter location={req.originalUrl} context={renderContext}>
+                    <App context={req.context}/>
+                </ServerRouter>
+            </Html>
         )
+    }
+
+    function sendResponse(statusCode, content) {
+        fetchData(content, req.params, req.context).then(() => {
+            res.status(statusCode).send('<!DOCTYPE html>\n' + renderToStaticMarkup(content))
+        })
     }
 
     const result = renderContext.getResult()

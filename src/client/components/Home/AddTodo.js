@@ -2,7 +2,7 @@ import React from 'react'
 import { observable } from 'mobx'
 import { observer } from 'mobx-react'
 
-@observer(['state','actions'])
+@observer(['state', 'actions'])
 class AddTodo extends React.Component {
 
     @observable inputText = ''

@@ -2,7 +2,7 @@ import React from 'react'
 import { observer } from 'mobx-react'
 import { IndexLink } from 'react-router'
 
-@observer(['state','actions'])
+@observer(['state', 'actions'])
 class NotFound extends React.Component {
     render() {
         const { history } = this.props

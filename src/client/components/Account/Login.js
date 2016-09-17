@@ -24,14 +24,11 @@ class Login extends React.Component {
         const { account } = this.props.actions
         const { history } = this.props
 
-        account.login({
-                username: this.form.username,
-                password: this.form.password
-            })
+        account.login(this.form)
             .then(() => {
                 this.form.error = null
                 this.form.loading = true
-                setTimeout(() => history.push('/'), 500)
+                setTimeout(() => window.location.href = '/', 500)
             })
             .catch(error => {
                 this.form.error = error

@@ -25,18 +25,18 @@ class Register extends React.Component {
     handleRegister() {
         const { account } = this.props.actions
         const { history } = this.props
-        const { username, password } = this.form
 
-        account.register({ username, password })
+        account.register(this.form)
             .then(() => {
-                account.login({ username, password }).then(() => {
-                    history.push('/')
+                account.login(this.form).then(() => {
+                    setTimeout(() => window.location.href = '/', 500)
                 })
             })
             .catch(error => this.form.errorMsg = error)
     }
 
     render() {
+        console.log(this.props)
         return <main>
             <h1>register</h1>
             <form className="account" onSubmit={this.handleSubmit}>

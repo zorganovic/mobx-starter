@@ -1,26 +1,14 @@
 import React from 'react'
 import { observer } from 'mobx-react'
-import size from 'lodash/fp'
 import AddTodo from './Home/AddTodo'
 import Todo from './Home/Todo'
 
-@observer(['state','actions'])
+@observer(['state', 'actions'])
 class Home extends React.Component {
 
-    // Server-side state being updated
-    static fetchData({ actions, state, params }) {
+    componentWillMount() {
+        const { actions } = this.props
         return actions.todos.browse()
-    }
-
-    componentDidMount() {
-        const { store, state } = this.props
-
-        if (!size(state.todos.items)) {
-            store.todos.browse().then(items => {
-                // Since the client-side state is observable, we have to use .replace() for arrays
-                state.todos.items.replace(items)
-            })
-        }
     }
 
     render() {
@@ -34,7 +22,9 @@ class Home extends React.Component {
                 <AddTodo/>
                 <section className="main">
                     <ul className="todo-list">
-                        {state.todos.items.map(item => <Todo key={item.text.hashCode()} item={item}/>)}
+                        {state.todos.items.map((item, index) => {
+                            return <Todo key={index} item={item}/>
+                        })}
                     </ul>
                 </section>
             </div>
