@@ -1,8 +1,7 @@
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-//import { match, RouterContext, browserHistory } from 'react-router'
+import { ServerRouter } from 'react-router'
 import { Provider } from 'mobx-react'
-import ServerRouter from './ServerRouter'
 import createServerRenderContext from 'react-router/createServerRenderContext'
 import fetchData from '../../shared/fetchData';
 import Html from '../../client/components/Common/Html'
@@ -15,20 +14,21 @@ import App from '../../client/components/App'
  */
 function render(req, res) {
 
+    const stores = req.context
     const renderContext = createServerRenderContext()
 
     function renderComponent() {
         return (
-            <Html context={req.context}>
-                <ServerRouter location={req.originalUrl} context={renderContext}>
-                    <App context={req.context}/>
-                </ServerRouter>
-            </Html>
+            <ServerRouter location={req.url} context={renderContext}>
+                <Html stores={stores}>
+                    <App stores={stores}/>
+                </Html>
+            </ServerRouter>
         )
     }
 
     function sendResponse(statusCode, content) {
-        fetchData(content, req.params, req.context).then(() => {
+        fetchData(content, req.params, stores).then(() => {
             res.status(statusCode).send('<!DOCTYPE html>\n' + renderToStaticMarkup(content))
         })
     }

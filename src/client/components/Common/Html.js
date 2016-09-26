@@ -1,10 +1,9 @@
 import React from 'react'
-import { observer } from 'mobx-react'
 
 class Html extends React.Component {
 
     render() {
-        const { state } = this.props.context
+        const { state } = this.props.stores
         const devServerURL = !process.env.DEV ? '' : `http://${state.app.hostname.replace(2000, 2002)}`
 
         return <html>

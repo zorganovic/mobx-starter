@@ -22,17 +22,12 @@ const actions = createActions(state)
 
 // We render our react app into this element
 const container = document.getElementById('container')
+const stores = {state, actions, history: {}}
 
 function renderApp(RootComponent) {
     render(<AppContainer>
         <BrowserRouter>
-            {(props) => {
-                return <RootComponent
-                state={state}
-                actions={actions}
-                history={props.router}
-                />
-            }}
+            <RootComponent stores={stores}/>
         </BrowserRouter>
     </AppContainer>, container)
 }

@@ -11,9 +11,8 @@ import Menu from './Common/Menu'
 
 class App extends React.Component {
     render() {
-        console.warn(this.props)
         return (
-        <Provider {...this.props}>
+        <Provider {...this.props.stores}>
             <div>
                 <Match pattern="*" component={Menu}/>
 
