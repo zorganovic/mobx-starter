@@ -14,7 +14,6 @@ export default {
                 test: /\.jsx?$/,
                 loader: 'babel-loader',
                 include: sources,
-                babelrc: false,
                 query: {
                     cacheDirectory: true,
                     presets: [],
@@ -60,7 +59,7 @@ export default {
         path: path.join(__dirname, '../build')
     },
     resolve: {
-        extensions: ['', '.js', '.jsx']
+        extensions: ['*', '.js', '.jsx']
     },
     plugins: [
         new ExtractCSS({ filename: 'bundle.css', allChunks: true })
