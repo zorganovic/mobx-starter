@@ -29,7 +29,6 @@ merge(config, {
 config.module.loaders.forEach(loader => {
     if (loader.loader === 'babel-loader') {
         loader.query.plugins.unshift('react-hot-loader/babel')
-        console.log(loader.query.plugins)
     }
 })
 

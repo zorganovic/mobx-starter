@@ -26,7 +26,6 @@ delete config.output.pathinfo
 
 // Save files to disk
 //-------------------------------
-//config.output.path = path.join(__dirname, '../build')
 config.plugins.push(
 new webpack.optimize.OccurrenceOrderPlugin(),
 new webpack.optimize.DedupePlugin(),

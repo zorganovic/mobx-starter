@@ -1,9 +1,6 @@
 /**
  * Bootstrap our server
  */
-const sourceMaps = require('source-map-support')
-sourceMaps.install()
-
 require('./src/shared/polyfills')
 require('./src/shared/console')
 
