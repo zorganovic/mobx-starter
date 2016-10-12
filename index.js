@@ -1,19 +1,20 @@
 /**
  * Bootstrap our server
  */
-require('./src/shared/polyfills')
-require('./src/shared/console')
-
-require('babel-register')
 require('isomorphic-fetch')
-require('./src/server/index')
-
-process.on('unhandledRejection', console.error.bind(console))
+require('./core/console')
+require('./core/polyfills')
 
 // Compile files on PROD or launch DEV server
 if (process.env.NODE_ENV === 'production') {
-    require('./config/webpack.prod.js')
+    require('./core/webpack.prod.js')
 } else {
     process.env.DEV = true
-    require('./config/webpack.dev.js')
+    require('./core/webpack.dev.js')
 }
+
+require('babel-register')
+require('./src/server/server')
+
+process.on('uncaughtException', console.error.bind(console))
+process.on('unhandledRejection', console.error.bind(console))

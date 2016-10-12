@@ -1,42 +1,42 @@
 // This is the entry point for our client-side logic
-// The server-side has a similar configuration in `src/server/routes/render.js`
-import sourceMaps from 'source-map-support'
-import '../shared/polyfills'
-import '../shared/console'
 import '../assets/css/index.scss'
 import 'isomorphic-fetch'
+import 'core/polyfills'
+import 'core/console'
+import 'isomorphic-fetch'
+import sourceMaps from 'source-map-support'
+sourceMaps.install()
+
 import React from 'react'
 import { render } from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
 import { BrowserRouter } from 'react-router'
+//import fetchData from 'core/helpers/fetchData';
+import actions from './actions'
+import autorun from './autorun'
 import App from './components/App'
-import { createClientState } from './state'
-import createActions from './actions'
-
-// Enable source-maps
-sourceMaps.install()
-
-// Initialize stores & inject server-side state into front-end
-const state = createClientState()
-const actions = createActions(state)
 
 // We render our react app into this element
 const container = document.getElementById('container')
-const stores = {state, actions, history: {}}
 
-function renderApp(RootComponent) {
-    render(<AppContainer>
-        <BrowserRouter>
-            <RootComponent stores={stores}/>
-        </BrowserRouter>
-    </AppContainer>, container)
-}
+// Initialize actions and state
+const stores = actions(window.__STATE)
+
+// React to changes
+autorun(stores)
+
+const renderProps = (<App stores={stores}/>)
 
 // Render HTML on the browser
-renderApp(App)
+//fetchData(renderProps, {}, stores).then(() => {
+    render(<AppContainer>
+        <BrowserRouter>
+            {renderProps}
+        </BrowserRouter>
+    </AppContainer>, container)
+//})
 
+// Hot-reloading
 if (module.hot) {
-    module.hot.accept('./components/App', () => {
-        renderApp(require('./components/App'), container)
-    })
+    module.hot.accept()
 }
