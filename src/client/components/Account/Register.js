@@ -3,7 +3,7 @@ import { observable } from 'mobx'
 import { observer } from 'mobx-react'
 import Error from '../Common/Error'
 
-@observer(['state', 'actions', 'history'])
+@observer(['account'])
 class Register extends React.Component {
 
     @observable form = {
@@ -23,8 +23,7 @@ class Register extends React.Component {
     }
 
     handleRegister() {
-        const { account } = this.props.actions
-        const { history } = this.props
+        const { account } = this.props
 
         account.register(this.form)
             .then(() => {
@@ -36,7 +35,6 @@ class Register extends React.Component {
     }
 
     render() {
-        console.log(this.props)
         return <main>
             <h1>register</h1>
             <form className="account" onSubmit={this.handleSubmit}>

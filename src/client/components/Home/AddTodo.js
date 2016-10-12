@@ -2,14 +2,14 @@ import React from 'react'
 import { observable } from 'mobx'
 import { observer } from 'mobx-react'
 
-@observer(['state', 'actions'])
+@observer(['todos'])
 class AddTodo extends React.Component {
 
     @observable inputText = ''
 
     handleSubmit = (e) => {
         e.preventDefault()
-        this.props.actions.todos.add(this.inputText)
+        this.props.todos.add(this.inputText)
             .then(() => {
                 // Clear input text on sucess
                 this.inputText = ''
@@ -21,9 +21,6 @@ class AddTodo extends React.Component {
     }
 
     render() {
-        const { store } = this.props
-        const { item } = this.props
-
         return <form className="header" onSubmit={this.handleSubmit}>
             <p>
                 <input type="text"

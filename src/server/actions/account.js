@@ -1,7 +1,14 @@
 import jwt from 'jwt-simple'
 import crypto from 'crypto'
+import router from 'koa-router'
+import config from '../config'
 import db from '../helpers/database'
-import config from '../../../config/server'
+
+export default router()
+.get('/api/account/logout', logoutAccount)
+.post('/api/account/login', loginAccount)
+.post('/api/account/register', registerAccount)
+
 
 /**
  * Get account by token
@@ -11,55 +18,56 @@ import config from '../../../config/server'
 export async function getAccount(token) {
     if (token) {
         const account = await db.account.findOne({ token })
-        if (!account) return null
-        return account.toJSON()
+        return account && account.toJSON()
     }
 }
 
-export async function loginAccount(username, password) {
+async function loginAccount(ctx) {
+    const { username, password } = ctx.request.fields
     const account = await db.account.findOne({
         username,
-        password: sha512(password)
+        password: sha512(password, { salt: username })
     })
-    if (!account) return null
+    if (!account) throw new Error('Wrong credentials')
 
     account.token = createAuthToken(account._id)
     await account.save()
-    return account.toJSON()
+
+    ctx.cookies.set('token', account.token)
+    ctx.body = account.toJSON()
 }
 
-export async function registerAccount(username, password) {
+async function logoutAccount(ctx) {
+    if (!ctx.token) return ctx.res.json(false)
+
+    const user = await db.account
+                         .findOneAndUpdate({ token: ctx.token }, { token: null })
+                         .lean() // clear in db
+
+    ctx.cookies.set('token', null)
+    ctx.body = user
+}
+
+async function registerAccount(ctx) {
+    const { username, password, email } = ctx.request.fields
+
+    if (!isValidUsername(username)) {
+        throw new Error('Username cannot contain special characters')
+    }
+    const exists = await db.account.count({ username })
+    if (exists) throw new Error('Username already taken')
+
     const account = new db.account({
         username,
-        password: sha512(password)
+        password: sha512(password, { salt: username }),
+        email
     })
     account.token = createAuthToken(account._id)
     await account.save()
-    return account
+
+    ctx.cookies.set('token', account.token)
+    ctx.body = account
 }
-
-export async function updateAccount(body, file, token) {
-    const query = {}
-
-    const userExists = await db.account.findOne({ username: body.username }, '_id').lean()
-    if (userExists) return false
-
-    if (body.username) query.username = body.username
-    if (body.description) query.description = body.description
-
-    const user = await db.account.findOneAndUpdate(
-    { token },
-    { $set: query },
-    { new: true }
-    ).lean()
-
-    return {
-        username: user.username,
-        description: user.description,
-        picture: user.picture
-    }
-}
-
 
 /**
  * Check if we're logged in
@@ -67,15 +75,18 @@ export async function updateAccount(body, file, token) {
  * @returns {boolean}
  */
 export async function checkAuthorized(token) {
-    if (!token) return Promise.reject('Token not provided')
+    if (!token) throw new Error('Token not provided')
     const account = await db.account.findOne({ token }, 'token')
     if (account) {
         const decoded = jwt.decode(account.token, config.session.secret)
         if (Date.now() < decoded.expires) {
-            return Promise.resolve(account)
+            return account
+        } else {
+            // Add renew or redirect functionality
+            throw new Error('Token expired: ' + new Date(decoded.expires))
         }
     }
-    return Promise.reject('Invalid token')
+    throw new Error('Invalid token')
 }
 
 /**
@@ -95,9 +106,19 @@ function createAuthToken(accountID) {
 /**
  * Hash the password
  * @private
- * @param str
+ * @param str {string}
+ * @param options {object}
  * @returns {string}
  */
-function sha512(str) {
-    return crypto.createHmac('sha512', config.session.salt).update(str).digest('hex')
+function sha512(str, options) {
+    return crypto.createHmac('sha512', options.salt).update(str).digest('hex')
+}
+
+/**
+ * Check for special characters
+ * @param username
+ * @returns {boolean}
+ */
+function isValidUsername(username) {
+    return /^[a-z0-9_-]+$/i.test(username)
 }
