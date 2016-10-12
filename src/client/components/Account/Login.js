@@ -4,7 +4,7 @@ import { observer } from 'mobx-react'
 import Loading from '../Common/Loading'
 import Error from '../Common/Error'
 
-@observer(['state', 'actions', 'history'])
+@observer(['account'])
 class Login extends React.Component {
 
     @observable form = {
@@ -21,8 +21,7 @@ class Login extends React.Component {
 
     handleLogin = (e) => {
         e.preventDefault()
-        const { account } = this.props.actions
-        const { history } = this.props
+        const { account } = this.props
 
         account.login(this.form)
             .then(() => {

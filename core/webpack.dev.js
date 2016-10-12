@@ -1,6 +1,6 @@
 const path = require('path')
 const logger = require('debug')
-const merge = require('lodash/merge')
+const { merge } = require('lodash')
 const webpack = require('webpack')
 const WebpackDevServer = require('webpack-dev-server')
 const config = require('./webpack.base.js')
@@ -10,7 +10,7 @@ const config = require('./webpack.base.js')
 merge(config, {
     cache: true,
     target: 'web',
-    devtool: 'source-map', // eval eval-cheap-module-source-map source-map
+    devtool: '#source-map', // eval eval-cheap-module-source-map source-map
     entry: {
         bundle: [
             'react-hot-loader/patch',
@@ -26,16 +26,13 @@ merge(config, {
     }
 })
 
-config.module.loaders.forEach(loader => {
-    if (loader.loader === 'babel-loader') {
-        loader.query.plugins.unshift('react-hot-loader/babel')
-    }
-})
-
 config.plugins.push(
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new webpack.NamedModulesPlugin(),
+    new webpack.WatchIgnorePlugin([
+        path.join(__dirname, '../src/shared')
+    ]),
     new webpack.DefinePlugin({
         'process.env.DEV': true,
         'process.env.BROWSER': true,
@@ -57,6 +54,10 @@ new WebpackDevServer(compiler, {
     },
     hot: true,
     historyApiFallback: true,
+    watchOptions: {
+        aggregateTimeout: 300,
+        poll: false
+    },
     stats: {
         colors: true,
         hash: false,
@@ -70,5 +71,5 @@ new WebpackDevServer(compiler, {
 }).listen(port, 'localhost', function (err, result) {
     if (err) return logger('webpack:error', err);
 
-    logger('webpack:compiler')('Running on port ' + port)
+    logger('webpack:info')('Running on port ' + port)
 })

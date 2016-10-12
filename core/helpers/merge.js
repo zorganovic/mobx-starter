@@ -1,4 +1,4 @@
-import { isObservableArray, isObservableMap } from 'mobx'
+import { isObservableArray, isObservableMap, extendObservable } from 'mobx'
 
 /**
  * Helper function that supports merging maps
@@ -10,13 +10,14 @@ function mergeObservables(target, source) {
         if (typeof target[key] === 'object') {
             if (isObservableMap(target[key])) return target[key].merge(source[key])
             if (isObservableArray(target[key])) return target[key].replace(source[key])
-            target[key] = source[key]
+            extendObservable(target[key], source[key])
         } else {
             target[key] = source[key]
         }
     })
+    window.__STATE = target
 
-    return window.__STATE = target
+    return target
 }
 
 export default mergeObservables

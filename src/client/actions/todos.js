@@ -1,19 +1,24 @@
+import { extendObservable } from 'mobx'
+
 /**
  * @name Todos
  * @class Todos
  */
 export default class Todos {
 
-    constructor(state, request) {
-        this.state = state
+    constructor(request, state = {}) {
         this.request = request
+        extendObservable(this, {
+            loading: false,
+            items: []
+        }, state)
     }
 
     add(text) {
         return this.request(`api/todos/add`, { text })
                    .then(result => {
                         // Add to list
-                        this.state.todos.items.push({
+                        this.items.push({
                             _id: result._id,
                             text: result.text
                         })
@@ -24,13 +29,14 @@ export default class Todos {
         console.warn('Removing', item._id)
         return this.request(`api/todos/remove`, { _id: item._id })
                    .then(() => {
-                        this.state.todos.items.remove(item)
+                        this.items.remove(item)
                     })
     }
 
     browse() {
         return this.request(`api/todos`).then(items => {
-            this.state.todos.items = items
+            this.items = items
+            console.warn('this.items:', items)
         })
     }
 }

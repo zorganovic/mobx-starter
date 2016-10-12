@@ -2,12 +2,12 @@ import React from 'react'
 import { observer } from 'mobx-react'
 import { Link } from 'react-router'
 
-@observer(['actions'])
+@observer(['account'])
 class Menu extends React.Component {
     render() {
-        const { actions } = this.props
+        const { account } = this.props
         return <div>
-            {actions.account.isLoggedIn()
+            {account.isLoggedIn()
                 ? <LoggedInMenu/>
                 : <LoggedOutMenu/>
             }
