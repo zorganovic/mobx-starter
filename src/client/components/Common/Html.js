@@ -1,11 +1,10 @@
 import _ from 'lodash'
 import React from 'react'
-import fetchData from 'core/helpers/fetchData';
 import App from '../App'
 
 class Html extends React.Component {
     render() {
-        const { stores, dataPromise } = this.props
+        const { stores, children, dataPromise } = this.props
         const devServerURL = !process.env.DEV ? '' : `http://${stores.common.hostname.replace(2000, 2002)}`
 
         return <html>
@@ -27,7 +26,9 @@ class Html extends React.Component {
             <body>
                 {/* Our content rendered here */}
                 <div id="container">
-                    <App stores={stores} dataPromise={dataPromise}/>
+                    <App stores={stores} dataPromise={dataPromise}>
+                        {children}
+                    </App>
                 </div>
 
                 {/* Bundled JS */}
@@ -39,8 +40,7 @@ class Html extends React.Component {
 
 export default Html
 
-function insertState(props) {
-    const stores = _.omit(props, 'children')
+function insertState(stores) {
     return {
         __html: 'window.__STATE = ' + JSON.stringify(stores, null, process.env.DEV ? 4 : 0) + ';'
     }

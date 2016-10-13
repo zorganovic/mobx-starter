@@ -1,13 +1,12 @@
-import { getAccount } from '../actions/account';
+import { getAccount } from '../routes/account';
 import actions from '../../client/actions'
 
 /**
  * Middleware for creating the context
- * @param req
- * @param res
+ * @param ctx
  * @param next
  */
-export default async function(ctx, next) {
+export default async(ctx, next) => {
     // Get our token from headers (server) or cookies (client)
     ctx.token = ctx.headers['token'] || ctx.cookies.get('token')
 

@@ -5,7 +5,7 @@ import _ from 'lodash'
 import { getAccount } from './account'
 
 export default router()
-.get('/api/todos', authorize, getTodos)
+.get('/api/todos', getTodos)
 .post('/api/todos/add', authorize, addTodos)
 .post('/api/todos/remove', authorize, removeTodos)
 

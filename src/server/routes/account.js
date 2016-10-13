@@ -88,6 +88,21 @@ export async function checkAuthorized(token) {
     }
     throw new Error('Invalid token')
 }
+/*
+export async function checkAuthorized(token) {
+    if (!token) return console.error('Token not provided')
+    const account = await db.account.findOne({ token }, 'token')
+    if (account) {
+        const decoded = jwt.decode(account.token, config.session.secret)
+        if (Date.now() < decoded.expires) {
+            return account
+        } else {
+            // Add renew or redirect functionality
+            console.error('Token expired: ' + new Date(decoded.expires))
+        }
+    }
+    console.error('Invalid token')
+}*/
 
 /**
  * Create a new token with a timestamp
