@@ -6,23 +6,7 @@ import Todo from './Home/Todo'
 @observer(['todos'])
 class Home extends React.Component {
 
-    /*componentWillReact() {
-        console.warn(this)
-    }*/
-
-    /*componentWillMount() {
-        const { todos } = this.props
-        // Server-side call
-        if (this.updater.transaction && this.updater.transaction.renderToStaticMarkup) {
-            Home.fetchData({ todos }).then(() => {
-                this.forceUpdate()
-                console.debug('componentWillMount')
-            })
-        }
-    }*/
-
     static fetchData({ todos }) {
-        console.debug('static.fetchData')
         return todos.browse()
     }
 

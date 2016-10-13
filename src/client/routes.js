@@ -13,18 +13,30 @@ import NotFound from './components/NotFound'
  * Paths are relative to the "components" directory.
  * @param {Object}
  * @returns {Object}
+
+
  */
-export default <Route component={Layout}>
+const router = (stores) => {
 
-    <Route path="/">
-        <IndexRoute component={Home}/>
-        <Route path="about" component={About}/>
+    function requireLogin(nextState, replaceState, next) {
+        //if (!state.user._id) replaceState(null, '/user/login')
+        next()
+    }
 
-        {/* User management */}
-        <Route path="login" component={Login}/>
-        <Route path="logout" component={Logout}/>
-        <Route path="register" component={Register}/>
+    return <Route component={Layout}>
+        <Route path="/">
+            <IndexRoute component={Home}/>
+            <Route path="about" component={About}/>
+
+            {/* User management */}
+            <Route path="login" component={Login}/>
+            <Route path="logout" component={Logout} onEnter={requireLogin}/>
+            <Route path="register" component={Register}/>
+        </Route>
+
+        <Route path="*" component={NotFound}/>
     </Route>
+}
 
-    <Route path="*" component={NotFound}/>
-</Route>
+export default router
+

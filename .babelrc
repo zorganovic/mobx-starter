@@ -10,6 +10,10 @@
     ["babel-plugin-webpack-alias", {"config": "./core/webpack.base.js"}],
     ["fast-async", {
       "env": {"dontMapStackTraces": true},
+      "compiler":{
+        "promises": false,
+        "generators": true
+      },
       "runtimePattern": "index\\.js"
     }]
   ]

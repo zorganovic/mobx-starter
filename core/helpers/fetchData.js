@@ -6,12 +6,7 @@ import { map } from 'lodash';
  * @param context - contains our state and actions
  * @returns {Promise} - returns a promise
  */
-export default function(component, params, stores) {
-
-    console.log(component)
-
-    const accumulate = map(component.props.children, 'fetchData').filter(x => x)
-    const fetchDataMethods = accumulate.map(method => method(stores, params))
-
-    return Promise.all(fetchDataMethods);
+export default async(components, params, stores) => {
+    const accumulate = map(components, 'fetchData').filter(x => x)
+    return accumulate.map(method => method(stores, params))
 }
