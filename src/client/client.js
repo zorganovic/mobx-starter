@@ -4,9 +4,6 @@ import 'isomorphic-fetch'
 import 'core/polyfills'
 import 'core/console'
 import 'isomorphic-fetch'
-import sourceMaps from 'source-map-support'
-sourceMaps.install()
-
 import React from 'react'
 import { render } from 'react-dom'
 import { AppContainer } from 'react-hot-loader'

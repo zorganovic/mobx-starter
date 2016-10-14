@@ -59,7 +59,6 @@
     "react-router": "4.0.0-alpha.4",
     "sass-loader": "4.0.2",
     "serve-favicon": "2.3.0",
-    "source-map-support": "0.4.3",
     "style-loader": "0.13.1",
     "underscore": "^1.8.3",
     "webpack": "2.1.0-beta.25"

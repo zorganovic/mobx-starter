@@ -1,44 +1,44 @@
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { match, RouterContext } from 'react-router'
-import fetchData from 'core/helpers/fetchData';
+import { ServerRouter } from 'react-router'
+import createServerRenderContext from 'react-router/createServerRenderContext'
+import preload from '../../client/preload'
 import Html from '../../client/components/Common/Html'
-import routes from '../../client/routes'
 
 // Server-side render
 export default async(ctx, next) => {
 
-    // Create routing
-    const matchRoutes = {
-        routes: routes(ctx.stores),
-        location: ctx.url
+    const renderContext = createServerRenderContext()
+
+    function renderComponent() {
+        return preload(ctx.stores).then(() => {
+            return <ServerRouter location={ctx.url} context={renderContext}>
+                <Html stores={ctx.stores}/>
+            </ServerRouter>
+        })
     }
 
     function sendResponse(statusCode, output) {
+        ctx.status = statusCode
         ctx.body = '<!DOCTYPE html>\n' + output
-        next()
     }
 
-    function renderComponent(renderProps) {
-        try {
-            return renderToStaticMarkup(<Html stores={ctx.stores}>
-                <RouterContext {...renderProps}/>
-            </Html>)
-        } catch (error) {
-            console.error(error)
-        }
+    const result = renderContext.getResult()
+
+    // Handle redirects
+    if (result.redirect) {
+        ctx.status = 301
+        ctx.redirect(result.redirect.pathname)
+        ctx.body = '<!DOCTYPE html>\n' + 'redirecting'
+        return await next()
     }
 
-    match(matchRoutes, async(error, redirectLocation, renderProps) => {
-
-        if (error) return sendResponse(500, error.message)
-        if (redirectLocation) return ctx.redirect(redirectLocation.pathname + redirectLocation.handleInput)
-        if (!renderProps) return sendResponse(404, 'RenderProps not found')
-
-        fetchData(renderProps.components, renderProps.params, ctx.stores).then(() => {
-            sendResponse(200, renderComponent(renderProps))
-        }).catch(error => {
-            sendResponse(404, error)
-        })
-    })
+    // 404 Route not found !
+    if (result.missed) {
+        const markup = await renderComponent()
+        sendResponse(404, markup)
+    } else {
+        const markup = await renderComponent()
+        sendResponse(200, renderToStaticMarkup(markup))
+    }
 }

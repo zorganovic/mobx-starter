@@ -10,7 +10,7 @@ const config = require('./webpack.base.js')
 merge(config, {
     cache: true,
     target: 'web',
-    devtool: '#source-map', // eval eval-cheap-module-source-map source-map
+    devtool: 'eval-source-map', // eval eval-cheap-module-source-map source-map
     entry: {
         bundle: [
             'react-hot-loader/patch',
@@ -68,7 +68,7 @@ new WebpackDevServer(compiler, {
         children: false,
         chunkModules: false
     }
-}).listen(port, 'localhost', function (err, result) {
+}).listen(port, 'localhost', (err, result) => {
     if (err) return logger('webpack:error', err);
 
     logger('webpack:info')('Running on port ' + port)
