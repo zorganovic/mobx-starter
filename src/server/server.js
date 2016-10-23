@@ -29,11 +29,6 @@ app.use(context)
 app.use(todos.routes())
 app.use(account.routes())
 app.use(render)
-/*app.use(async(ctx, next) => {
-    logger(`app:+++++`)('DONE!')
-    //ctx.body = '<!DOCTYPE html>\n' + 'done'
-    await next()
-})*/
 
 // Serve static files
 _.each(config.http.static, staticRoute => {

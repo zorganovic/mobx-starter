@@ -13,8 +13,6 @@ import NotFound from './components/NotFound'
  * Paths are relative to the "components" directory.
  * @param {Object}
  * @returns {Object}
-
-
  */
 const router = (stores) => {
 

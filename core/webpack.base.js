@@ -25,8 +25,8 @@ module.exports = {
                         "transform-object-rest-spread",
                         "transform-react-jsx",
                         ["fast-async", {
-                            "env": {"dontMapStackTraces": true},
-                            "runtimePattern": "index\\.js"
+                            "env": { "asyncStackTrace": true },
+                            "runtimePattern": "client\\.js"
                         }]
                     ]
                 }
