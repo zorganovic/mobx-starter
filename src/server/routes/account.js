@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import { registerAccount, loginAccount, updateAccount } from '../actions/account'
 import authorize from '../middleware/authorize'
+import config from '../../../config/server'
 import db from '../helpers/database'
 const router = Router();
 
@@ -10,6 +11,9 @@ router.post('/api/account/login', async(req, res) => {
     if (!auth) {
         return res.status(400).send('Wrong credentials')
     }
+
+    // Set authentication cookie
+    res.cookie('token', auth.token, config.session)
     return res.json(auth)
 })
 
@@ -20,6 +24,8 @@ router.get('/api/account/logout', async(req, res) => {
     const user = await db.account
                          .findOneAndUpdate({ token: req.token }, { token: null })
                          .lean() // clear in db
+
+    res.cookie('token', null)
     res.json(user)
 })
 

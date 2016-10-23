@@ -24,7 +24,6 @@ export default class Account {
         return this.request('api/account/login', params)
                    .then(account => {
                        this.state.account = account
-                       document.cookie = 'token=' + account.token;
                    })
     }
 
@@ -33,9 +32,8 @@ export default class Account {
                    .then(() => {
                        if (this.state.account) {
                            this.state.account = null
-                           document.cookie = 'token='
                        }
-                       window.location.href = '/'
+                       setTimeout(() => window.location.href = '/', 1000)
                    })
     }
 

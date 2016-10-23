@@ -71,7 +71,7 @@ export async function checkAuthorized(token) {
     const account = await db.account.findOne({ token }, 'token')
     if (account) {
         const decoded = jwt.decode(account.token, config.session.secret)
-        if (Date.now() < decoded.expires) {
+        if (Date.now() < decoded.maxAge) {
             return Promise.resolve(account)
         }
     }
@@ -87,7 +87,7 @@ export async function checkAuthorized(token) {
 function createAuthToken(accountID) {
     const payload = {
         accountID,
-        expires: Date.now() + config.session.expires
+        maxAge: Date.now() + config.session.maxAge
     }
     return jwt.encode(payload, config.session.secret)
 }
