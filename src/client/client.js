@@ -8,8 +8,7 @@ import React from 'react'
 import { render } from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
 import { BrowserRouter } from 'react-router'
-//import fetchData from 'core/helpers/fetchData';
-import actions from './actions'
+import createStores from './stores'
 import autorun from './autorun'
 import App from './components/App'
 
@@ -17,7 +16,7 @@ import App from './components/App'
 const container = document.getElementById('container')
 
 // Initialize actions and state
-const stores = actions(window.__STATE)
+const stores = createStores(window.__STATE)
 
 // React to changes
 autorun(stores)
@@ -25,13 +24,11 @@ autorun(stores)
 const renderProps = (<App stores={stores}/>)
 
 // Render HTML on the browser
-//fetchData(renderProps, {}, stores).then(() => {
-    render(<AppContainer>
-        <BrowserRouter>
-            {renderProps}
-        </BrowserRouter>
-    </AppContainer>, container)
-//})
+render(<AppContainer>
+    <BrowserRouter>
+        {renderProps}
+    </BrowserRouter>
+</AppContainer>, container)
 
 // Hot-reloading
 if (module.hot) {

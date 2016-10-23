@@ -7,12 +7,10 @@ import Todo from './Home/Todo'
 class Home extends React.Component {
 
     static fetchData({ todos }) {
-        console.debug('static.fetchData')
         return todos.browse()
     }
 
     render() {
-        console.debug('Home.render')
         const { todos } = this.props
         return <main>
             <h1>

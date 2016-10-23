@@ -17,6 +17,6 @@ export default {
         expires: 4 * 3600 * 1000 // 4 hours
     },
     databases: {
-        mongo: 'mongodb://127.0.0.1:27017/todos'
+        mongo: 'mongodb://127.0.0.1:27017/mobx-starter'
     }
 }
