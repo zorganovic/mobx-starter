@@ -25,7 +25,7 @@ module.exports = {
                         "transform-object-rest-spread",
                         "transform-decorators-legacy",
                         "transform-class-properties",
-                        "inferno",
+                        "transform-react-jsx",
                         ["fast-async", {
                             "env": { "dontMapStackTraces": true }
                         }]

@@ -2,7 +2,7 @@
 import '../assets/css/index.scss'
 import 'isomorphic-fetch'
 import 'core/polyfills'
-import 'core/console'
+import 'core/logger'
 import 'isomorphic-fetch'
 import React from 'react'
 import { render } from 'react-dom'

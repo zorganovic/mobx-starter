@@ -8,7 +8,7 @@ import { map } from 'lodash';
  */
 export default async(components, params, stores) => {
 
-    const accumulate = map(components.props.children, 'fetchData').filter(x => x)
+    const accumulate = map(components.props.children, 'onEnter').filter(x => x)
     const fetchDataMethods = accumulate.map(method => method(stores, params))
 
     return Promise.all(fetchDataMethods);

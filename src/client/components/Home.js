@@ -6,7 +6,7 @@ import Todo from './Home/Todo'
 @observer(['todos'])
 class Home extends React.Component {
 
-    static fetchData({ todos }) {
+    static onEnter({ todos }) {
         return todos.browse()
     }
 
