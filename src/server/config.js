@@ -7,7 +7,7 @@ export default {
         static: [
             {
                 url: '/build',
-                path: path.join(__dirname, '../build')
+                path: path.join(__dirname, '../../build')
             }
         ]
     },

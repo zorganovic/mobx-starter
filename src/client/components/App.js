@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import React from 'react'
 import { Match, Miss } from 'react-router'
 import { Provider } from 'mobx-react'
@@ -31,7 +30,7 @@ const MatchWithFade = (props) => {
 
 class App extends React.Component {
     render() {
-        const { stores, dataPromise = _.noop } = this.props
+        const { stores } = this.props
 
         // Wrapping with provider gives children access to stores
         return <Provider {...stores}>

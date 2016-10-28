@@ -1,5 +1,5 @@
 import { getAccount } from '../routes/account';
-import createStores from '../../client/stores'
+import { stores } from '../../client/stores'
 
 /**
  * Middleware for creating the context
@@ -24,6 +24,6 @@ export default async(ctx, next) => {
     }
 
     // Finally initialize state. This should come last
-    ctx.stores = createStores(state, ctx.token)
+    ctx.stores = stores(state, ctx.token)
     await next()
 }

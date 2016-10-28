@@ -1,17 +1,15 @@
 const path = require('path')
-const { merge } = require('lodash')
 const logger = require('debug')
 const webpack = require('webpack')
 const config = require('./webpack.base.js')
 
 // Merge with base configuration
 //-------------------------------
-merge(config, {
+Object.assign(config, {
     cache: false,
-    target: 'web',
     devtool: 'source-map',
     entry: [
-        path.join(__dirname, '../src/client/client.js')
+        path.join(__dirname, '../../src/client/client.js')
     ],
     output: {
         publicPath: '/build/'
@@ -28,44 +26,27 @@ config.module.loaders.forEach(loader => {
         "transform-es2015-block-scoping",
         "transform-es2015-classes",
         "transform-es2015-computed-properties",
-        "transform-es2015-destructuring",
         "transform-es2015-literals",
-        "transform-es2015-modules-commonjs",
         "transform-es2015-parameters",
         "transform-es2015-shorthand-properties",
         "transform-es2015-spread",
-        "transform-es2015-template-literals",
-        "transform-decorators-legacy",
-        "transform-class-properties",
-        ["fast-async", {
-            "env": { "asyncStackTrace": true },
-            "runtimePattern": "index\\.js"
-        }]
+        "transform-es2015-template-literals"
         )
     }
 })
 
-logger('webpack:environment')('Production')
+logger('server:webpack')('Environment: Production')
 
 // Save files to disk
 //-------------------------------
+//config.output.path = path.join(__dirname, '../../build')
 config.plugins.push(
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({
         compressor: {
             screw_ie8: true,
-            warnings: false,
-            properties: true,
-            sequences: true,
-            dead_code: true,
-            booleans: true,
-            unused: true,
-            loops: true,
-            hoist_funs: true,
-            cascade: true,
-            if_return: true,
-            join_vars: true
+            warnings: false
         },
         output: {
             comments: false
@@ -77,8 +58,8 @@ config.plugins.push(
 //-------------------------------
 config.plugins.push(
     new webpack.DefinePlugin({
+        'process.env.DEV': false,
         'process.env.BROWSER': true,
-        'process.env.BLUEBIRD_WARNINGS': '0',
         'process.env.NODE_ENV': JSON.stringify('production')
     })
 )
@@ -111,7 +92,7 @@ compiler.run(function(err, stats) {
     if (stats.hasErrors()) {
         logger('webpack:error')(stats.compilation.errors.toString())
     }
-    logger('webpack:info')('Finished compiling')
+    logger('webpack:compiler')('Finished compiling')
 })
 
 
@@ -124,5 +105,5 @@ function writeWebpackStats(stats) {
     const { resolve } = require('path')
     const location = resolve(config.output.path, 'stats.json')
     require('fs').writeFileSync(location, JSON.stringify(stats.toJson()))
-    logger('webpack:debug')(`Wrote stats.json to ${location}`)
+    logger('webpack:compiler')(`Wrote stats.json to ${location}`)
 }

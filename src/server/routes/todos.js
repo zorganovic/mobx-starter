@@ -1,7 +1,6 @@
 import router from 'koa-router'
 import authorize from '../middleware/authorize'
-import db from '../helpers/database'
-import _ from 'lodash'
+import Todo from '../models/Todo'
 import { getAccount } from './account'
 
 export default router()
@@ -10,7 +9,7 @@ export default router()
 .post('/api/todos/remove', authorize, removeTodos)
 
 async function getTodos(ctx) {
-    const response = await db.todos.find({
+    const response = await Todo.find({
         createdBy: await getAccount(ctx.token)
     }).limit(50).exec()
 
@@ -20,9 +19,9 @@ async function getTodos(ctx) {
 async function addTodos(ctx) {
     const { text } = ctx.request.fields
 
-    if (_.isEmpty(text)) throw new Error('[text] not provided')
+    if (!text) throw new Error('[text] not provided')
 
-    const newTodo = new db.todos({
+    const newTodo = new Todo({
         text,
         createdBy: await getAccount(ctx.token)
     })
@@ -34,9 +33,9 @@ async function addTodos(ctx) {
 async function removeTodos(ctx) {
     const { _id } = ctx.request.fields
 
-    if (_.isEmpty(_id)) throw new Error('[_id] not provided')
+    if (!_id) throw new Error('[_id] not provided')
 
-    const response = await db.todos.remove({ _id })
+    const response = await Todo.remove({ _id })
 
-    ctx.body = response
+    ctx.body = response ? _id : false
 }

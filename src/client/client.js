@@ -8,15 +8,12 @@ import React from 'react'
 import { render } from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
 import { BrowserRouter } from 'react-router'
-import createStores from './stores'
+import stores from './stores'
 import autorun from './autorun'
 import App from './components/App'
 
 // We render our react app into this element
 const container = document.getElementById('container')
-
-// Initialize actions and state
-const stores = createStores(window.__STATE)
 
 // React to changes
 autorun(stores)

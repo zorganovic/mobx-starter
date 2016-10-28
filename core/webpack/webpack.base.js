@@ -1,7 +1,7 @@
 const path = require('path')
 const webpack = require('webpack')
 const ExtractCSS = require('extract-text-webpack-plugin')
-const sources = (location) => path.join(__dirname, '../src', location)
+const sources = (location) => path.join(__dirname, '../../src', location)
 
 module.exports = {
     entry: {},
@@ -23,10 +23,11 @@ module.exports = {
                         "transform-es2015-modules-commonjs",
                         "transform-es2015-destructuring",
                         "transform-object-rest-spread",
-                        "transform-react-jsx",
+                        "transform-decorators-legacy",
+                        "transform-class-properties",
+                        "inferno",
                         ["fast-async", {
-                            "env": { "asyncStackTrace": true },
-                            "runtimePattern": "client\\.js"
+                            "env": { "dontMapStackTraces": true }
                         }]
                     ]
                 }
@@ -52,12 +53,12 @@ module.exports = {
     output: {
         filename: 'bundle.js',
         sourcePrefix: '',
-        path: path.resolve(__dirname, '../build')
+        path: path.resolve(__dirname, '../../build')
     },
 
     resolve: {
         alias: {
-            'core': path.join(__dirname)
+            'core': path.join(__dirname, '../')
         }
     },
 
