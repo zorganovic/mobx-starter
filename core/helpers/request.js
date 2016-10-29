@@ -1,4 +1,4 @@
-import _ from 'underscore'
+import _ from 'lodash'
 
 /**
  * This is our overly complicated isomorphic "request"

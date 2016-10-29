@@ -1,4 +1,4 @@
-const _ = require('underscore')
+const _ = require('lodash')
 
 // For IE 11
 if (typeof Promise === 'undefined') {
