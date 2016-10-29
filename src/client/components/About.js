@@ -3,6 +3,12 @@ import { observer } from 'mobx-react'
 
 @observer
 class About extends React.Component {
+
+    // When route is loaded (isomorphic)
+    static onEnter({ common }) {
+        common.title = 'About'
+    }
+
     render() {
         return <main>
             <h1>mobx-starter</h1>

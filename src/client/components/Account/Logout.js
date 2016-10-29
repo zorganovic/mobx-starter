@@ -5,13 +5,13 @@ import Loading from '../Common/Loading'
 @observer(['account'])
 class Logout extends React.Component {
 
-    static contextTypes = {
-        router: React.PropTypes.any
-    }
-
     // When route is loaded (isomorphic)
     static onEnter({ common }) {
         common.title = 'Logout'
+    }
+
+    static contextTypes = {
+        router: React.PropTypes.any
     }
 
     state = {

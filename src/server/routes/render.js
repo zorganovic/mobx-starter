@@ -35,8 +35,7 @@ export default async(ctx, next) => {
 
     // 404 Route not found !
     if (result.missed) {
-        const markup = await renderComponent()
-        sendResponse(404, markup)
+        sendResponse(404, '404 Route not found !')
     } else {
         const markup = await renderComponent()
         sendResponse(200, renderToStaticMarkup(markup))
