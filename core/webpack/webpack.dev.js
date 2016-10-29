@@ -11,6 +11,7 @@ Object.assign(config, {
     devtool: 'source-map', // eval eval-cheap-module-source-map source-map
     entry: {
         bundle: [
+            'react-hot-loader/patch',
             'webpack-dev-server/client?http://localhost:2002',
             'webpack/hot/only-dev-server',
             path.join(__dirname, '../../src/client/client.js')

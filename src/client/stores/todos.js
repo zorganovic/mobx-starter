@@ -1,27 +1,31 @@
-import { extendObservable } from 'mobx'
+import { extendObservable, asFlat } from 'mobx'
 
 /**
- * @name Todos
  * @class Todos
  */
 export default class Todos {
 
     constructor(request, state = {}) {
         this.request = request
+        this.items = []
         extendObservable(this, {
             loading: false,
             items: []
         }, state)
     }
 
+    map(predicate) {
+        return this.items.map(predicate)
+    }
+
     add(text) {
         return this.request(`api/todos/add`, { text })
                    .then(result => {
-                        // Add to list
-                        this.items.push({
-                            _id: result._id,
-                            text: result.text
-                        })
+                       // Add to list
+                       this.items.push({
+                           _id: result._id,
+                           text: result.text
+                       })
                    })
     }
 

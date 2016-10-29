@@ -9,11 +9,11 @@ class AddTodo extends React.Component {
 
     handleSubmit = (e) => {
         e.preventDefault()
-        this.props.todos.add(this.inputText)
-            .then(() => {
-                // Clear input text on sucess
-                this.inputText = ''
-            })
+        const { todos } = this.props
+        todos.add(this.inputText).then(() => {
+            // Clear input text on sucess
+            this.inputText = ''
+        })
     }
 
     handleChange = (e) => {

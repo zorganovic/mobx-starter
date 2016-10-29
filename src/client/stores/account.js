@@ -1,7 +1,6 @@
 import { extendObservable, asFlat } from 'mobx'
 
 /**
- * @name Account
  * @class Account
  */
 export default class Account {
@@ -16,7 +15,7 @@ export default class Account {
     }
 
     isLoggedIn() {
-        return !this.username
+        return size(this.username)
     }
 
     find(username) {
@@ -25,9 +24,9 @@ export default class Account {
 
     login(params) {
         return this.request('api/account/login', params).then(account => {
-            extendObservable(this, account)
-            return Promise.resolve()
-        })
+           extendObservable(this, account)
+           return Promise.resolve()
+       })
     }
 
     logout() {

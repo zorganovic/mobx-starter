@@ -1,15 +1,42 @@
 import React from 'react'
 import { observer } from 'mobx-react'
+import Loading from '../Common/Loading'
 
 @observer(['account'])
 class Logout extends React.Component {
 
+    static contextTypes = {
+        router: React.PropTypes.any
+    }
+
+    // When route is loaded (isomorphic)
+    static onEnter({ common }) {
+        common.title = 'Logout'
+    }
+
+    state = {
+        loading: false
+    }
+
     handleLogout = () => {
         const { account } = this.props
-        account.logout()
+        const { router } = this.context
+
+        account.logout().then(() => {
+            this.setState({
+                loading: true
+            })
+            setTimeout(() => router.transitionTo('/'), 500)
+        })
     }
 
     render() {
+        const { loading } = this.state
+
+        if (loading) {
+            return <Loading/>
+        }
+
         return <main>
             <center className="account">
                 <h3>Do you want to log out ?</h3>

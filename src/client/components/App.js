@@ -23,7 +23,6 @@ import Menu from './Common/Menu'
 const MatchWithFade = (props) => {
     const { component, ...rest } = props
     return <Match {...rest} render={(matchProps) => {
-        console.warn(matchProps)
         return <component {...matchProps}/>
     }}/>
 }
@@ -38,12 +37,12 @@ class App extends React.Component {
                 <Menu/>
 
                 <Match exactly pattern="/" component={Home}/>
-                <Match exactly pattern="/about" component={About}/>
+                <Match exactly pattern="/page/about" component={About}/>
 
                 {/* User management */}
-                <Match exactly pattern="/login" component={Login}/>
-                <Match exactly pattern="/logout" component={Logout}/>
-                <Match exactly pattern="/register" component={Register}/>
+                <Match exactly pattern="/page/login" component={Login}/>
+                <Match exactly pattern="/page/logout" component={Logout}/>
+                <Match exactly pattern="/page/register" component={Register}/>
 
                 <Miss component={NotFound}/>
             </div>
