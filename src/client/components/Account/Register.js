@@ -3,7 +3,7 @@ import { observable } from 'mobx'
 import { observer } from 'mobx-react'
 import Error from '../Common/Error'
 
-@observer(['state', 'actions', 'history'])
+@observer(['account'])
 class Register extends React.Component {
 
     @observable form = {
@@ -23,14 +23,12 @@ class Register extends React.Component {
     }
 
     handleRegister() {
-        const { account } = this.props.actions
-        const { history } = this.props
-        const { username, password } = this.form
+        const { account } = this.props
 
-        account.register({ username, password })
+        account.register(this.form)
             .then(() => {
-                account.login({ username, password }).then(() => {
-                    history.push('/')
+                account.login(this.form).then(() => {
+                    setTimeout(() => window.location.href = '/', 500)
                 })
             })
             .catch(error => this.form.errorMsg = error)

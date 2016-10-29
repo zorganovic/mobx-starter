@@ -1,11 +1,10 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 
-@observer(['state','actions'])
+@observer(['todos'])
 class Todo extends React.Component {
     render() {
-        const { todos } = this.props.actions
-        const { item } = this.props
+        const { todos, item } = this.props
 
         return <li className="todo">
             <div className="view">

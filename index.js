@@ -1,22 +1,17 @@
 /**
  * Bootstrap our server
  */
-const sourceMaps = require('source-map-support')
-sourceMaps.install()
-
-require('./src/shared/polyfills')
-require('./src/shared/console')
-
-require('babel-register')
 require('isomorphic-fetch')
-require('./src/server/index')
-
-process.on('unhandledRejection', console.error.bind(console))
+require('./core/logger')
+require('./core/polyfills')
 
 // Compile files on PROD or launch DEV server
 if (process.env.NODE_ENV === 'production') {
-    require('./config/webpack.prod.js')
+    require('./core/webpack/webpack.prod.js')
 } else {
     process.env.DEV = true
-    require('./config/webpack.dev.js')
+    require('./core/webpack/webpack.dev.js')
 }
+
+require('babel-register')
+require('./src/server/server')

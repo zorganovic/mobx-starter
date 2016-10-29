@@ -1,67 +1,85 @@
 import React from 'react'
-import { observable } from 'mobx'
 import { observer } from 'mobx-react'
 import Loading from '../Common/Loading'
 import Error from '../Common/Error'
 
-@observer(['state', 'actions', 'history'])
+@observer(['account'])
 class Login extends React.Component {
 
-    @observable form = {
-        username: 'test',
-        password: 'test',
+    // When route is loaded (isomorphic)
+    static onEnter({ common }) {
+        common.title = 'Login'
+    }
+
+    static contextTypes = {
+        router: React.PropTypes.any
+    }
+
+    state = {
+        username: '',
+        password: '',
         loading: false,
         error: null
     }
 
-    handleChange = (key) => ({
-        value: this.form[key],
-        onChange: e => this.form[key] = e.target.value
-    })
+    handleChange = (key) => (e) => {
+        this.setState({
+            [key]: e.target.value
+        })
+    }
 
     handleLogin = (e) => {
         e.preventDefault()
-        const { account } = this.props.actions
-        const { history } = this.props
+        const { account } = this.props
+        const { router } = this.context
+        const { username, password } = this.state
 
-        account.login({
-                username: this.form.username,
-                password: this.form.password
-            })
-            .then(() => {
-                this.form.error = null
-                this.form.loading = true
-                setTimeout(() => history.push('/'), 500)
-            })
-            .catch(error => {
-                this.form.error = error
-                this.form.loading = false
-            })
+        account.login({ username, password })
+               .then(() => {
+                   this.setState({
+                       error: null,
+                       loading: true
+                   })
+                   setTimeout(() => router.transitionTo('/'), 500)
+               })
+               .catch(error => {
+                   this.setState({
+                       error,
+                       loading: false,
+                       password: ''
+                   })
+               })
     }
 
     render() {
-        const { form } = this
+        const { loading, error } = this.state
 
-        if (form.loading) {
+        if (loading) {
             return <Loading/>
         }
 
         return <main>
             <h1>sign-in</h1>
-            <form className="account" onSubmit={e => this.handleLogin(e)}>
+            <form className="account" onSubmit={(e) => this.handleLogin(e)}>
                 <label>
-                    Username
-                    <input type="text" {...this.handleChange("username")} required="required"/>
+                    Usernames
+                    <input type="text"
+                           value={this.state.username}
+                           onChange={this.handleChange('username')}
+                           required="required"/>
                 </label>
 
                 <label>
                     Password
-                    <input type="password" {...this.handleChange("password")} required="required"/>
+                    <input type="password"
+                           value={this.state.password}
+                           onChange={this.handleChange('password')}
+                           required="required"/>
                 </label>
 
-                {form.error && <Error text={form.error}/>}
+                {error && <Error text={error}/>}
 
-                <button onClick={e => this.handleLogin(e)}>Login</button>
+                <button onClick={(e) => this.handleLogin(e)}>Login</button>
             </form>
         </main>
     }

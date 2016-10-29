@@ -1,39 +1,33 @@
 // This is the entry point for our client-side logic
-// The server-side has a similar configuration in `src/server/routes/render.js`
-import '../shared/polyfills'
-import '../shared/console'
 import '../assets/css/index.scss'
+import 'isomorphic-fetch'
+import 'core/polyfills'
+import 'core/logger'
 import 'isomorphic-fetch'
 import React from 'react'
 import { render } from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
-import { createClientState } from './state'
-import actions from './actions'
-import App from './components/Common/App'
+import { BrowserRouter } from 'react-router'
+import stores from './stores'
+import autorun from './autorun'
+import App from './components/App'
 
-// Initialize stores & inject server-side state into front-end
-const state = createClientState()
-const context = {
-    state,
-    actions: actions(state)
-}
 // We render our react app into this element
 const container = document.getElementById('container')
 
-function renderApp() {
-    render(<AppContainer>
-        <App context={context}/>
-    </AppContainer>, container)
-}
+// React to changes
+autorun(stores)
+
+const renderProps = (<App stores={stores}/>)
 
 // Render HTML on the browser
-renderApp()
+render(<AppContainer>
+    <BrowserRouter>
+        {renderProps}
+    </BrowserRouter>
+</AppContainer>, container)
 
+// Hot-reloading
 if (module.hot) {
-    module.hot.accept('./components/Common/App', () => {
-        const NextApp = require('./components/Common/App')
-        render(<AppContainer>
-            <NextApp context={context}/>
-        </AppContainer>, container)
-    })
+    module.hot.accept()
 }
