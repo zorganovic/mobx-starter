@@ -1,7 +1,7 @@
 {
   "name": "mobx-starter",
   "main": "index.js",
-  "version": "0.5.0",
+  "version": "1.0.0",
   "author": "Ryan Megidov <ryan@megidov.com>",
   "description": "Mobx + React + React-router + Webpack hot-reload starter kit",
   "license": "MIT",
