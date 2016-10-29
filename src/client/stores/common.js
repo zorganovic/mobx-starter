@@ -8,7 +8,7 @@ export default class Common {
     constructor(request, state = {}) {
         this.request = request
         extendObservable(this, {
-            title: 'Inferno-starter',
+            title: 'Mobx-starter',
             statusCode: 200,
             hostname: 'localhost'
         }, state)

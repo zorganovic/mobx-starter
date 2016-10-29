@@ -45,22 +45,22 @@ For production:
 ```sh
 gb -G=4 -k=true -c 200 -n 10000 http://localhost:2000/about
 
-Document Path:          /about
-Document Length:        1436 bytes
+Document Path:          /page/about
+Document Length:        1374 bytes
 
 Concurrency Level:      200
-Time taken for tests:   3.06 seconds
+Time taken for tests:   26.03 seconds
 Complete requests:      10000
 Failed requests:        0
-HTML transferred:       14360000 bytes
-Requests per second:    3262.76 [#/sec] (mean)
-Time per request:       61.298 [ms] (mean)
-Time per request:       0.306 [ms] (mean, across all concurrent requests)
-HTML Transfer rate:     4575.37 [Kbytes/sec] received
+HTML transferred:       13740000 bytes
+Requests per second:    384.16 [#/sec] (mean)
+Time per request:       520.620 [ms] (mean)
+Time per request:       2.603 [ms] (mean, across all concurrent requests)
+HTML Transfer rate:     515.42 [Kbytes/sec] received
 
 Connection Times (ms)
               min       mean[+/-sd]     median  max
-Total:        1         0   12.07       59      246
+Total:        66        2   52.84       503     783
 ```
 Tested on i7-6700K @ 4.00GHz 16GB RAM. **Single** node.js instance.
 

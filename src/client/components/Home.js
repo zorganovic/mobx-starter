@@ -6,16 +6,16 @@ import Todo from './Home/Todo'
 @observer(['todos'])
 class Home extends React.Component {
 
-    static onEnter({ todos }) {
+    // When route is loaded (isomorphic)
+    static onEnter({ todos, common, params }) {
+        common.title = 'Home'
         return todos.browse()
     }
 
     render() {
         const { todos } = this.props
         return <main>
-            <h1>
-                todos
-            </h1>
+            <h1>todos</h1>
             <div className="home">
                 <AddTodo/>
                 <section className="main">
