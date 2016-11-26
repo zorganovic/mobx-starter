@@ -2,7 +2,9 @@ import logger from 'debug'
 import Koa from 'koa'
 import bodyParser from 'koa-better-body'
 import favicon from 'koa-favicon'
-import serve from 'koa-static2'
+import mount from 'koa-mount'
+import serve from 'koa-static'
+
 import config from './config'
 import context from './middleware/context'
 import catcher from './middleware/catcher'
@@ -27,13 +29,14 @@ app.use(context)
 // Routes
 app.use(todos.routes())
 app.use(account.routes())
-app.use(render)
-
 // Serve static files
 config.http.static.forEach(staticRoute => {
     logger('app:static')(staticRoute.path)
-    app.use(serve(staticRoute.url, staticRoute.path))
+    app.use(mount(staticRoute.url, serve(staticRoute.path)))
 })
+app.use(render)
+
+
 
 app.listen(config.http.port, function() {
     logger('app:start')('Listening on port ' + config.http.port)
