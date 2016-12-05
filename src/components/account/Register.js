@@ -1,7 +1,7 @@
 import React from 'react'
 import { observable } from 'mobx'
 import { observer } from 'mobx-react'
-import Error from '../Common/Error'
+import Error from '../common/Error'
 
 @observer(['account'])
 class Register extends React.Component {

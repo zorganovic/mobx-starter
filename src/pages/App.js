@@ -1,38 +1,20 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import { Match, Miss } from 'react-router'
 import { Provider } from 'mobx-react'
 import Home from './Home'
 import About from './About'
-import Login from './Account/Login'
-import Logout from './Account/Logout'
-import Register from './Account/Register'
+import Login from '../components/account/Login'
+import Logout from '../components/account/Logout'
+import Register from '../components/account/Register'
 import NotFound from './NotFound'
-import Menu from './Common/Menu'
-
-/**
- * Idea: Execute just the matches, wrap component prop with fetchData
- * that will add promises to an array and then return the array to server
- *
- * Execute promises and render again for real
- *
- * @param component
- * @param rest
- * @returns {XML}
- * @constructor
- */
-const MatchWithFade = (props) => {
-    const { component, ...rest } = props
-    return <Match {...rest} render={(matchProps) => {
-        return <component {...matchProps}/>
-    }}/>
-}
+import Menu from '../components/common/Menu'
 
 class App extends React.Component {
     render() {
         const { stores } = this.props
 
         // Wrapping with provider gives children access to stores
-        return <Provider {...stores}>
+        return (<Provider {...stores}>
             <div>
                 <Menu/>
 
@@ -46,7 +28,7 @@ class App extends React.Component {
 
                 <Miss component={NotFound}/>
             </div>
-        </Provider>
+        </Provider>)
     }
 }
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { observer } from 'mobx-react'
-import Loading from '../Common/Loading'
+import Loading from '../common/Loading'
 
 @observer(['account'])
 class Logout extends React.Component {
