@@ -2,8 +2,8 @@
  * Bootstrap our server
  */
 require('isomorphic-fetch')
-require('./core/logger')
-require('./core/polyfills')
+require('./core/helpers/logger')
+require('./core/helpers/polyfills')
 
 // Compile files on PROD or launch DEV server
 if (process.env.NODE_ENV === 'production') {

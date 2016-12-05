@@ -1,7 +1,7 @@
 import React from 'react'
 import { observer } from 'mobx-react'
-import Loading from '../Common/Loading'
-import Error from '../Common/Error'
+import Loading from '../common/Loading'
+import Error from '../common/Error'
 
 @observer(['account'])
 class Login extends React.Component {

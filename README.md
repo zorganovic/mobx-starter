@@ -137,7 +137,7 @@ The `onEnter` method is smart, it will be executed either on the server or on th
 It also passes all your stores and url params as arguments as a convenience.
 
 
-## Usefull links
+## Useful links
 
 [MobX](https://mobxjs.github.io/mobx/)
 

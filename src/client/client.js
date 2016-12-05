@@ -1,8 +1,8 @@
 // This is the entry point for our client-side logic
 import '../assets/css/index.scss'
 import 'isomorphic-fetch'
-import 'core/polyfills'
-import 'core/logger'
+import 'core/helpers/polyfills'
+import 'core/helpers/logger'
 import 'isomorphic-fetch'
 import React from 'react'
 import { render } from 'react-dom'
@@ -10,7 +10,7 @@ import { AppContainer } from 'react-hot-loader'
 import { BrowserRouter } from 'react-router'
 import stores from './stores'
 import autorun from './autorun'
-import App from './components/App'
+import App from '../pages/App'
 
 // We render our react app into this element
 const container = document.getElementById('container')

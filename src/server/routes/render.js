@@ -3,7 +3,7 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import { ServerRouter } from 'react-router'
 import createServerRenderContext from 'react-router/createServerRenderContext'
 import preload from '../../client/preload'
-import Html from '../../client/components/Common/Html'
+import Html from '../../components/common/Html'
 
 // Server-side render
 export default async(ctx, next) => {

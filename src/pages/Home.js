@@ -1,7 +1,7 @@
 import React from 'react'
 import { observer } from 'mobx-react'
-import AddTodo from './Home/AddTodo'
-import Todo from './Home/Todo'
+import AddTodo from '../components/home/AddTodo'
+import Todo from '../components/home/Todo'
 
 @observer(['todos'])
 class Home extends React.Component {

@@ -1,8 +1,8 @@
 import pathToRegExp from 'path-to-regexp-es6'
-import Home from './components/Home'
-import About from './components/About'
-import Login from './components/Account/Login'
-import Logout from './components/Account/Logout'
+import Home from '../pages/Home'
+import About from '../pages/About'
+import Login from '../components/account/Login'
+import Logout from '../components/account/Logout'
 
 // All your server side prefetching is done here
 // When a route is matched, the static function is executed
