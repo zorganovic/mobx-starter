@@ -8,7 +8,7 @@ import serve from 'koa-static'
 import config from './config'
 import context from './middleware/context'
 import catcher from './middleware/catcher'
-import render from './routes/render'
+import render from './middleware/render'
 import account from './routes/account'
 import todos from './routes/todos'
 
