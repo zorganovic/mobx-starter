@@ -165,6 +165,7 @@ Ex: `/profile/:username/overview`
 ## TODO
 
 * Initialize the routes automatically just like the models
+* Sync with changes from `inferno-starter` which is usually more up to date
 
 ## Useful links
 
