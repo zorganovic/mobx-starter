@@ -65,7 +65,7 @@ new WebpackDevServer(compiler, {
         children: false,
         chunkModules: false
     }
-}).listen(port, 'localhost', function (err, result) {
+}).listen(port, '0.0.0.0', function (err, result) {
     if (err) return logger('webpack:error', err);
 
     logger('webpack:compiler')('Running on port ' + port)
