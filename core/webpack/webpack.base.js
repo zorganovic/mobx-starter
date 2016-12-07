@@ -12,7 +12,7 @@ module.exports = {
     module: {
         loaders: [
             {
-                test: /\.js$/,
+                test: /\.jsx?$/,
                 loader: 'babel-loader',
                 include: [sources(''), sources('../core')],
                 query: {
@@ -57,6 +57,7 @@ module.exports = {
     },
 
     resolve: {
+        extensions: [".js", ".jsx"],
         alias: {
             'core': path.join(__dirname, '../')
         }
