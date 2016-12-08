@@ -1,9 +1,9 @@
 import React from 'react'
 import { observable } from 'mobx'
-import { observer } from 'mobx-react'
+import { observer, inject } from 'mobx-react'
 import Error from '../common/Error'
 
-@observer(['account'])
+@inject('account') @observer
 class Register extends React.Component {
 
     @observable form = {

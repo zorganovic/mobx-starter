@@ -1,9 +1,9 @@
 import React from 'react'
-import { observer } from 'mobx-react'
+import { observer, inject } from 'mobx-react'
 import AddTodo from '../components/home/AddTodo'
 import Todo from '../components/home/Todo'
 
-@observer(['todos'])
+@inject('todos') @observer
 class Home extends React.Component {
 
     // When route is loaded (isomorphic)

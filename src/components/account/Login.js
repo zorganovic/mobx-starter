@@ -1,9 +1,9 @@
 import React from 'react'
-import { observer } from 'mobx-react'
+import { observer, inject } from 'mobx-react'
 import Loading from '../common/Loading'
 import Error from '../common/Error'
 
-@observer(['account'])
+@inject('account') @observer
 class Login extends React.Component {
 
     // When route is loaded (isomorphic)
