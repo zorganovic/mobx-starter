@@ -3,7 +3,7 @@ import App from '../../pages/App'
 
 class Html extends React.Component {
     render() {
-        const { stores, children, dataPromise } = this.props
+        const { stores, children } = this.props
         const devServerURL = !process.env.DEV ? '' : `http://${stores.common.hostname.replace(2000, 2002)}`
 
         return <html>
@@ -25,7 +25,7 @@ class Html extends React.Component {
             <body>
                 {/* Our content rendered here */}
                 <div id="container">
-                    <App stores={stores} dataPromise={dataPromise}>
+                    <App stores={stores}>
                         {children}
                     </App>
                 </div>
