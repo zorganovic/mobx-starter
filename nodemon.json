@@ -8,12 +8,14 @@
   "ignore": [
 	".git",
 	"npm-debug.log",
-	"build",
+	"build/*",
 	"node_modules/**/node_modules",
 	"src/assets"
   ],
   "watch": [
-    "src/server",
-    "src/shared"
+	"core",
+    "src/client/stores.js",
+    "src/client/preload.js",
+    "src/server"
   ]
 }

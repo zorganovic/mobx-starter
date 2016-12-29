@@ -5,7 +5,7 @@ import { observer } from 'mobx-react'
 class About extends React.Component {
 
     // When route is loaded (isomorphic)
-    static onEnter({ common }) {
+    static onEnter({ common }, params) {
         common.title = 'About'
     }
 

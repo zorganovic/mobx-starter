@@ -1,4 +1,4 @@
-import pathToRegExp from 'path-to-regexp-es6'
+import matchPath from '../../core/helpers/matchPath'
 import Home from '../pages/Home'
 import About from '../pages/About'
 import Login from '../components/account/Login'
@@ -27,6 +27,12 @@ const routes = [
 
 // Execute server-side async methods to refetch data
 export default (stores, url) => {
-    const matches = routes.filter(r => !!pathToRegExp(r.pattern).exec(url))
-    return Promise.all(matches.map(route => route.execute(stores)))
+    for (let i in routes) {
+        const route = routes[i]
+        const match = matchPath(route.pattern, url)
+        if (match) {
+            return route.execute(stores, match.params)
+        }
+    }
+    return Promise.resolve()
 }
