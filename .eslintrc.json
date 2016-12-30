@@ -20,14 +20,8 @@
     "es6": true
   },
   "globals": {
-    "size": true,
-    "compact": true,
-    "window": true,
-    "decode": true,
     "Inferno": true,
-    "Mousetrap": true,
-    "SERVER_URL": true,
-    "STREAM_URL": true
+    "Exception": true
   },
   "rules": {
     "semi": 0,

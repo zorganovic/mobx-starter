@@ -1,7 +1,7 @@
 import jwt from 'jwt-simple'
 import crypto from 'crypto'
 import router from 'koa-router'
-import config from '../config'
+import config from '../../config'
 import Account from '../models/Account'
 
 export default router()
@@ -28,7 +28,7 @@ async function login(ctx) {
         username,
         password: sha512(password, { salt: username })
     })
-    if (!account) throw new TypeError('Wrong credentials')
+    if (!account) throw new Exception('Wrong credentials')
 
     account.token = createAuthToken(account._id)
     await account.save()
@@ -49,10 +49,10 @@ async function register(ctx) {
     const { username, password, email } = ctx.request.fields
 
     if (!isValidUsername(username)) {
-        throw new TypeError('Username cannot contain special characters')
+        throw new Exception('Username cannot contain special characters')
     }
     const exists = await Account.count({ username })
-    if (exists) throw new TypeError('Username already taken')
+    if (exists) throw new Exception('Username already taken')
 
     const account = new Account({
         username,
@@ -73,7 +73,7 @@ async function register(ctx) {
  */
 export async function checkAuthorized(ctx) {
     ctx.authorized = false
-    if (!ctx.token) throw new TypeError('Token not provided')
+    if (!ctx.token) throw new Exception('Token not provided')
     const account = await Account.findOne({ token: ctx.token }, 'token')
     if (account) {
         const decoded = jwt.decode(account.token, config.session.secret)
@@ -81,11 +81,11 @@ export async function checkAuthorized(ctx) {
             ctx.authorized = true
             return account
         } else {
-            // Add renew or redirect functionality
-            throw new TypeError('Token expired: ' + new Date(decoded.expires))
+            ctx.cookies.set('token', null)
+            throw new Exception('Token expired: ' + new Date(decoded.expires))
         }
     }
-    throw new TypeError('Invalid token')
+    throw new Exception('Invalid token')
 }
 
 /**

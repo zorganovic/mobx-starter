@@ -31,7 +31,7 @@ export default (stores, url) => {
         const route = routes[i]
         const match = matchPath(route.pattern, url)
         if (match) {
-            return route.execute(stores, match.params)
+            return Promise.resolve(route.execute(stores, match.params))
         }
     }
     return Promise.resolve()

@@ -1,4 +1,4 @@
-import { extendObservable, asFlat } from 'mobx'
+import { extendObservable } from 'mobx'
 
 /**
  * @class Todos

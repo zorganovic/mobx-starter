@@ -1,17 +1,12 @@
 /**
- * Bootstrap our server
+ * Bootstrap core and webpack
  */
-require('isomorphic-fetch')
+require('./core/compile')
 require('./core/helpers/logger')
 require('./core/helpers/polyfills')
 
-// Compile files on PROD or launch DEV server
-if (process.env.NODE_ENV === 'production') {
-    require('./core/webpack/webpack.prod.js')
-} else {
-    process.env.DEV = true
-    require('./core/webpack/webpack.dev.js')
-}
-
+/**
+ * Bootstrap our server
+ */
 require('babel-register')
 require('./src/server/server')

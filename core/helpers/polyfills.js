@@ -1,47 +1,18 @@
-const _ = require('lodash')
+const find = require('lodash/find')
+const extend = require('lodash/extend')
+const includes = require('lodash/includes')
 
 // For IE 11
 if (typeof Promise === 'undefined') {
     global.Promise = require('promise-polyfill')
 }
 
-global.size = function(obj) {
-    return (typeof obj === 'string') ? obj.length : _.size(obj)
-}
-
-/**
- * Encode spaces and other characters into +
- * @returns {string}
- */
-String.prototype.safeParam = function() {
-    return this.replace(/[\s\uFEFF\xA0]+/g, '+')
-}
-
-/**
- * Return a SEO frieldly version of a string
- * @returns {string}
- */
-String.prototype.seoName = function() {
-    return this.toLowerCase().replace(/[\s\uFEFF\xA0]+/g, '_')
-}
-
-/**
- * Remove weird characters and trim spaces
- * @returns {string}
- */
-String.prototype.cleanString = function() {
-    return this.toLowerCase()
-               .replace(/\W+|–/g, ' ')
-               .replace(/\s+/g, ' ')
-               .trim()
-}
-
-/**
- * Escape output for XSS protection
- * @returns {string}
- */
-String.prototype.escape = function() {
-    return _.escape(this)
+global.Exception = class Exception extends Error {
+    constructor(message) {
+        super(message);
+        this.message = message;
+        this.name = 'Exception';
+    }
 }
 
 /**
@@ -60,16 +31,6 @@ String.prototype.hashCode = function() {
 }
 
 /**
- * Encode into base64 without breaking utf-8
- * @returns {string}
- */
-String.prototype.base64encode = function() {
-    return btoa(encodeURIComponent(this).replace(/%([0-9A-F]{2})/g, function(match, p1) {
-        return String.fromCharCode('0x' + p1)
-    }))
-}
-
-/**
  * Here we add a few ES6 polyfills since we dont want to include whole of babel-polyfill
  */
 if (!String.prototype.startsWith) {
@@ -81,18 +42,18 @@ if (!String.prototype.startsWith) {
 
 if (!Array.prototype.find) {
     Array.prototype.find = function(predicate) {
-        return _.find(this, predicate)
+        return find(this, predicate)
     };
 }
 
 if (!Array.prototype.includes) {
     Array.prototype.includes = function(searchElement) {
-        return _.includes(this, searchElement);
+        return includes(this, searchElement);
     };
 }
 
 if (typeof Object.assign != 'function') {
-    Object.assign = _.extend;
+    Object.assign = extend;
 }
 
 if (!String.prototype.includes) {
@@ -102,15 +63,15 @@ if (!String.prototype.includes) {
 }
 if (!String.prototype.trimLeft) {
     String.prototype.trimLeft = function trimLeft(str) {
-        return remove(this, str ? new RegExp(`/^${str}+/`) : /^\s+/);
+        return remove(this, `^${str || '\\s'}+`);
     };
 }
 if (!String.prototype.trimRight) {
     String.prototype.trimRight = function trimRight(str) {
-        return remove(this, str ? new RegExp(`/${str}+$/`) : /\s+$/);
+        return remove(this, `${str || '\\s'}+$`);
     };
 }
 
 function remove(str, rx) {
-    return str.replace(rx, '');
+    return str.replace(new RegExp(rx), '');
 }
