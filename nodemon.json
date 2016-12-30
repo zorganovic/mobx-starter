@@ -2,7 +2,7 @@
   "verbose": false,
   "restartable": "rs",
   "events": {
-    "restart": "echo \"App restarted due to:\n'$FILENAME'\" with title \"nodemon\"'"
+    "restart": "echo \"App restarted due to:\n'$FILENAME'\""
   },
   "ext": "js",
   "ignore": [

@@ -22,8 +22,6 @@ app.use(convert(bodyParser({
     jsonLimit: '200kb',
     bufferLimit: '4mb'
 })))
-
-// Needed for authentication
 app.use(context)
 app.use(catcher)
 
