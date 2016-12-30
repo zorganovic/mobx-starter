@@ -1,5 +1,5 @@
-# React + Mobx Quick Starter project
-
+React + Mobx Quick Starter project
+---
 The goal of this project is to provide a starting base for an isomorphic (universal) mobx react project.
 
 Features:
@@ -8,8 +8,8 @@ Features:
 + CSS and SCSS compilation
 + MongoDB user register/login/logout
 + Token based authentication
-+ Decorators for accessing actions and state
-+ Hot reload
++ Decorators for easily accessing the state
++ Hot reloading and sourcemaps
 + Automatic restarts _(when server code changes)_
 
 
@@ -34,7 +34,7 @@ For production:
 ## Goals
 
 - Optimized for minimal bundle size.
-- Optimized for server-side speed.
+- Optimized for speed.
 - Using MobX, the easiest and insanely fast state manager.
 - Simple and minimal with routing, authentication, database and server-side rendering.
 - Good developer experience with hot-reloading and source-maps.
@@ -43,36 +43,57 @@ For production:
 # Benchmarks
 
 ```sh
-gb -G=4 -k=true -c 200 -n 10000 http://localhost:2000/about
+gb -k=true -c 300 -n 10000 http://localhost:2000/page/about
 
-Document Path:          /page/about
-Document Length:        1374 bytes
+This is GoHttpBench, Version 0.1.9, https://github.com/parkghost/gohttpbench
+Author: Brandon Chen, Email: parkghost@gmail.com
+Licensed under the MIT license
 
-Concurrency Level:      200
-Time taken for tests:   26.03 seconds
+...
+
+Concurrency Level:      300
+Time taken for tests:   11.79 seconds
 Complete requests:      10000
 Failed requests:        0
-HTML transferred:       13740000 bytes
-Requests per second:    384.16 [#/sec] (mean)
-Time per request:       520.620 [ms] (mean)
-Time per request:       2.603 [ms] (mean, across all concurrent requests)
-HTML Transfer rate:     515.42 [Kbytes/sec] received
+HTML transferred:       11510000 bytes
+Requests per second:    848.51 [#/sec] (mean)
+Time per request:       353.561 [ms] (mean)
+Time per request:       1.179 [ms] (mean, across all concurrent requests)
+HTML Transfer rate:     953.73 [Kbytes/sec] received
 
 Connection Times (ms)
               min       mean[+/-sd]     median  max
-Total:        66        2   52.84       503     783
+Total:        12        1   137.65      333     2074
 ```
 Tested on i7-6700K @ 4.00GHz 16GB RAM. **Single** node.js instance.
 
-# F.A.Q.
 
-## What are `stores` ?
+Adding database (mongodb) models
+--
+1. Goto `src/server/models`
+2. Add `[Name].js` with your model in it
+
+Adding stores
+--
+1. Goto `src/client/stores`
+2. Add `[name].js` (based on another store like `account.js`)
+3. Update `src/client/stores.js`
+
+Enabling server-side rendering
+--
+1. Goto `src/server/config`
+2. Set `server.SSR` variable to `true` or `false`
+
+
+F.A.Q.
+--
+### What are `stores` ?
 
 Stores will contain the state of your application and the methods that mutate that state.
 Basically most of your client side logic is inside stores.
 
 
-## What is `@inject()` and `@observer` ?
+### What is `@inject()` and `@observer` ?
 
 The `@inject` decorator injects stores into your components.
 Additionally by adding `@observer` your components will efficiently auto update with any changes to your stores.
@@ -81,32 +102,16 @@ _Example: If you display a `messageCount` from a `Messages` store and it gets up
 then all the visible components that display that `messageCount` will update themselves._
 
 
-## Does observing many components make my app slower?
+### Does observing many components make my app slower?
 
 **No**, it actually allows the rendering to be done more efficiently. So observe as many as you want !
 
 
-## Adding database (mongodb) models
-
-1. Goto `src/server/models`
-2. Add `[Name].js` with your model in it
-
-## Adding stores
-
-1. Goto `src/client/stores`
-2. Add `[name].js` (based on another store like `account.js`)
-3. Update `src/client/stores.js`
-
-## Enabling server-side rendering
-
-1. Goto `src/server/config`
-2. Set `server.SSR` variable to `true` or `false`
-
-## My components are not updating!
+### My components are not updating!
 
 Make sure you added the `@observer` decorator to your component.
 
-## My stateless component doesn't have access to the stores !
+### My stateless component doesn't have access to the stores !
 
 You cannot use decorators on stateless components.
 You should instead wrap your component like this:
@@ -117,15 +122,13 @@ const MyComponent = inject('myStore')(observer((props, context) => {
 }))
 ````
 
-## How do I execute async actions on the server and/or client ?
+### How do I execute async actions on the server and/or client ?
 
 Add a static `onEnter` method to your component like this:
 
 ```js
 class MyComponent extends React.Component {
     static onEnter({ myStore }, params) {
-        // Make sure to ALWAYS returns something (preferably a promise), even if its nothing!
-        // Otherwise we won't know when the method finished it's work
         return myStore.browse()
     }
     // ...
@@ -136,8 +139,8 @@ The `onEnter` method is smart, it will be executed either on the server or on th
 
 It also passes all your stores and url params as arguments as a convenience.
 
-## How it works (server)
-
+How it works (server)
+--
 1. `index.js` initializes the logger, generates a webpack bundle and runs the server
 
 2. The server runs a bunch of middleware:
@@ -148,7 +151,7 @@ It also passes all your stores and url params as arguments as a convenience.
     4. `render.js` finally renders your components.
     
 3. `server.js` also imports the routes from `server/routes` where each route can use a database model defined in `server/models`.
-Just adding a model file there is enough, we initialize the models lazily when they are used.
+Just adding a model file there is enough, the models are initialized when they are used.
 
 ## How it works (prefetching data on the server)
 
@@ -165,7 +168,7 @@ Ex: `/profile/:username/overview`
 ## TODO
 
 * Initialize the routes automatically just like the models
-* Sync with changes from `inferno-starter` which is usually more up to date
+* Fix client side `onEnter` methods, for now you can use `componentDidMount`
 
 ## Useful links
 
@@ -176,4 +179,4 @@ Ex: `/profile/:username/overview`
 
 Ryan Megidov
 
-https://github.com/nightwolfz/mobx-starter
+<https://github.com/nightwolfz/mobx-starter>
