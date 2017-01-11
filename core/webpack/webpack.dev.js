@@ -3,6 +3,7 @@ const logger = require('debug')
 const webpack = require('webpack')
 const WebpackDevServer = require('webpack-dev-server')
 const config = require('./webpack.base.js')
+const sources = (location) => path.join(__dirname, '../../src', location)
 
 // Merge with base configuration
 //-------------------------------
@@ -14,7 +15,7 @@ Object.assign(config, {
             'react-hot-loader/patch',
             'webpack-dev-server/client?http://localhost:2002',
             'webpack/hot/only-dev-server',
-            path.join(__dirname, '../../src/client/client.js')
+            sources('client/client.js')
         ]
     },
     output: {
@@ -22,6 +23,12 @@ Object.assign(config, {
         libraryTarget: 'var',
         pathinfo: true
     }
+})
+
+config.module.loaders.push({
+    test: /\.(css|scss)(\?.+)?$/,
+    loader: ['style-loader', 'css-loader?sourceMap', 'sass-loader?sourceMap'],
+    include: [sources('assets'), sources('client/components')]
 })
 
 config.plugins.push(

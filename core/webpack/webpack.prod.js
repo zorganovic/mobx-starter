@@ -2,6 +2,8 @@ const path = require('path')
 const logger = require('debug')
 const webpack = require('webpack')
 const config = require('./webpack.base.js')
+const ExtractCSS = require('extract-text-webpack-plugin')
+const sources = (location) => path.join(__dirname, '../../src', location)
 
 // Merge with base configuration
 //-------------------------------
@@ -9,11 +11,17 @@ Object.assign(config, {
     cache: false,
     devtool: 'source-map',
     entry: {
-        bundle: path.join(__dirname, '../../src/client/client.js')
+        bundle: sources('client/client.js')
     },
     output: {
         publicPath: '/build/'
     }
+})
+
+config.module.loaders.push({
+    test: /\.(css|scss)(\?.+)?$/,
+    loader: ExtractCSS.extract(['css-loader?sourceMap', 'sass-loader?sourceMap']),
+    include: [sources('assets'), sources('client/components')]
 })
 
 // Production plugins for old browsers
@@ -41,6 +49,7 @@ logger('server:webpack')('Environment: Production')
 //-------------------------------
 config.output.path = path.join(__dirname, '../../build')
 config.plugins.push(
+    new ExtractCSS({ filename: 'bundle.css', allChunks: true }),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({
