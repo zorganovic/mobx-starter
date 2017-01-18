@@ -1,6 +1,5 @@
 const path = require('path')
 const webpack = require('webpack')
-const ExtractCSS = require('extract-text-webpack-plugin')
 const sources = (location) => path.join(__dirname, '../../src', location)
 
 module.exports = {
@@ -40,11 +39,6 @@ module.exports = {
                 test: /\.(ttf|otf|eot|woff2?)(\?.+)?$/,
                 loader: 'file-loader',
                 include: [sources('assets'), sources('client/components')]
-            },
-            {
-                test: /\.(css|scss)(\?.+)?$/,
-                loader: ExtractCSS.extract(['css-loader?sourceMap', 'sass-loader?sourceMap']),
-                include: [sources('assets'), sources('client/components')]
             }
         ]
     },
@@ -61,8 +55,5 @@ module.exports = {
             'core': path.join(__dirname, '../')
         }
     },
-
-    plugins: [
-        new ExtractCSS({ filename: 'bundle.css', allChunks: true })
-    ]
+    plugins: []
 };
