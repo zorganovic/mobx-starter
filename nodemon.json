@@ -16,6 +16,6 @@
 	"core",
     "src/client/stores.js",
     "src/client/preload.js",
-    "src/server"
+    "server"
   ]
 }

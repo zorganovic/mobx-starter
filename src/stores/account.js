@@ -6,41 +6,40 @@ import { extendObservable, observable } from 'mobx'
  */
 export default class Account {
 
-    constructor(request, state = {}) {
-        this.request = request
-        extendObservable(this, {
-            username: null,
-            token: null,
-            users: observable.shallowArray([])
-        }, state)
-    }
+  constructor(request, state = {}) {
+    this.request = request
+    extendObservable(this, {
+      username: null,
+      token: null,
+      users: observable.shallowArray([])
+    }, state)
+  }
 
-    isLoggedIn() {
-        return size(this.username)
-    }
+  isLoggedIn() {
+    return size(this.username)
+  }
 
-    find(username) {
-        return find(this.users, { username })
-    }
+  find(username) {
+    return find(this.users, { username })
+  }
 
-    login(params) {
-        return this.request('api/account/login', params).then(account => {
-            extendObservable(this, account)
-        })
-    }
+  login(params) {
+    const account = this.request('api/account/login', params)
+    extendObservable(this, account)
+    return account
+  }
 
-    logout() {
-        return this.request('api/account/logout')
-                   .then(() => {
-                       this.username = null
-                       this.token = null
-                   })
-    }
+  async logout() {
+    await this.request('api/account/logout')
+    this.username = null
+    this.token = null
+    return Promise.resolve()
+  }
 
-    register(params) {
-        return this.request('api/account/register', params)
-                   .then(account => {
-                       extendObservable(this, account)
-                   })
-    }
+  register(params) {
+    return this.request('api/account/register', params)
+      .then(account => {
+        extendObservable(this, account)
+      })
+  }
 }
