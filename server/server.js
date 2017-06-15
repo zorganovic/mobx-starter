@@ -10,8 +10,7 @@ import config from './config'
 import context from './middleware/context'
 import catcher from './middleware/catcher'
 import render from './middleware/render'
-import account from './routes/account'
-import todos from './routes/todos'
+import routes from './routes'
 
 const app = new Koa()
 
@@ -26,8 +25,7 @@ app.use(context)
 app.use(catcher)
 
 // Routes
-app.use(todos.routes())
-app.use(account.routes())
+app.use(routes.routes())
 
 // Serve static files
 Object.keys(config.http.static).forEach(staticURL => {

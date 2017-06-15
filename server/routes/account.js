@@ -1,13 +1,7 @@
 import jwt from 'jwt-simple'
 import crypto from 'crypto'
-import router from 'koa-router'
 import config from '../config'
 import Account from '../models/Account'
-
-export default router()
-  .get('/api/account/logout', logout)
-  .post('/api/account/login', login)
-  .post('/api/account/register', register)
 
 /**
  * Get account by token
@@ -21,7 +15,7 @@ export async function getAccount(token) {
   }
 }
 
-async function login(ctx) {
+export async function login(ctx) {
   const { username, password } = ctx.request.fields
   const account = await Account.findOne({
     username,
@@ -36,7 +30,7 @@ async function login(ctx) {
   ctx.body = account.toJSON()
 }
 
-async function logout(ctx) {
+export async function logout(ctx) {
   const user = await Account.findOneAndUpdate({ token: ctx.token }, { token: null })
     .lean() // clear in db
 
@@ -44,7 +38,7 @@ async function logout(ctx) {
   ctx.body = user
 }
 
-async function register(ctx) {
+export async function register(ctx) {
   const { username, password, email } = ctx.request.fields
 
   if (!isValidUsername(username)) {
