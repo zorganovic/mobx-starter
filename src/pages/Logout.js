@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Redirect } from 'react-router-dom'
 import { observer, inject } from 'mobx-react'
 import { observable } from 'mobx'
 import Loading from '../components/common/Loading'
@@ -34,14 +33,16 @@ class Logout extends React.Component {
       return <Loading/>
     }
 
-    return <main>
-      <div className="account">
-        <h3>Do you want to log out ?</h3>
-        <p>This will disconnect you and you will have to login again next time.</p>
+    return (
+      <main>
+        <div className="account">
+          <h3>Do you want to log out ?</h3>
+          <p>This will disconnect you and you will have to login again next time.</p>
 
-        <button onClick={this.handleLogout}>Logout</button>
-      </div>
-    </main>
+          <button onClick={this.handleLogout}>Logout</button>
+        </div>
+      </main>
+    )
   }
 }
 

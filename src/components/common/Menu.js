@@ -2,7 +2,8 @@ import React from 'react'
 import { observer, inject } from 'mobx-react'
 import { Link } from 'react-router-dom'
 
-@inject('account') @observer
+@inject('account')
+@observer
 class Menu extends React.Component {
   render() {
     const { account } = this.props

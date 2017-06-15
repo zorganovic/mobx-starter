@@ -14,19 +14,21 @@ class Home extends React.Component {
 
   render() {
     const { todos } = this.props
-    return <main>
-      <h1>todos</h1>
-      <div className="home">
-        <AddTodo/>
-        <section className="main">
-          <ul className="todo-list">
-            {todos.items.map((item, index) => {
-              return <Todo key={index} item={item}/>
-            })}
-          </ul>
-        </section>
-      </div>
-    </main>
+    return (
+      <main>
+        <h1>todos</h1>
+        <div className="home">
+          <AddTodo/>
+          <section className="main">
+            <ul className="todo-list">
+              {todos.items.map((item, index) => {
+                return <Todo key={index} item={item}/>
+              })}
+            </ul>
+          </section>
+        </div>
+      </main>
+    )
   }
 }
 

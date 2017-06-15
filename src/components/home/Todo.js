@@ -1,7 +1,8 @@
 import React from 'react'
 import { observer, inject } from 'mobx-react'
 
-@inject('todos') @observer
+@inject('todos')
+@observer
 class Todo extends React.Component {
   render() {
     const { todos, item } = this.props

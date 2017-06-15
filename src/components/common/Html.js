@@ -6,34 +6,36 @@ class Html extends React.Component {
     const { stores, children } = this.props
     const devServerURL = !process.env.DEV ? '' : `http://${stores.common.hostname.replace(2000, 2002)}`
 
-    return <html>
-    <head>
-      <meta charSet="utf-8"/>
-      <title>{stores.common.title}</title>
-      <meta name="title" content={stores.common.title}/>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    return (
+      <html>
+      <head>
+        <meta charSet="utf-8"/>
+        <title>{stores.common.title}</title>
+        <meta name="title" content={stores.common.title}/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
 
-      {/* Favicons */}
-      <link rel="icon" href="/favicon.ico"/>
+        {/* Favicons */}
+        <link rel="icon" href="/favicon.ico"/>
 
-      {/* Bundled CSS */}
-      <link href={devServerURL + '/build/bundle.css'} rel="stylesheet"/>
+        {/* Bundled CSS */}
+        <link href={devServerURL + '/build/bundle.css'} rel="stylesheet"/>
 
-      {/* SSR State*/}
-      <script dangerouslySetInnerHTML={insertState(stores)}/>
-    </head>
-    <body>
-    {/* Our content rendered here */}
-    <div id="container">
-      <Index stores={stores}>
-        {children}
-      </Index>
-    </div>
+        {/* SSR State*/}
+        <script dangerouslySetInnerHTML={insertState(stores)}/>
+      </head>
+      <body>
+      {/* Our content rendered here */}
+      <div id="container">
+        <Index stores={stores}>
+          {children}
+        </Index>
+      </div>
 
-    {/* Bundled JS */}
-    <script async src={devServerURL + '/build/bundle.js'}/>
-    </body>
-    </html>
+      {/* Bundled JS */}
+      <script async src={devServerURL + '/build/bundle.js'}/>
+      </body>
+      </html>
+    )
   }
 }
 

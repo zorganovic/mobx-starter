@@ -15,22 +15,24 @@ class Index extends React.Component {
     const { stores } = this.props
 
     // Wrapping with provider gives children access to stores
-    return (<Provider {...stores}>
-      <div>
-        <Menu/>
-        <Switch>
-          <Route exact path="/" component={Home}/>
-          <Route exact path="/page/about" component={About}/>
+    return (
+      <Provider {...stores}>
+        <div>
+          <Menu/>
+          <Switch>
+            <Route exact path="/" component={Home}/>
+            <Route exact path="/page/about" component={About}/>
 
-          {/* User management */}
-          <Route exact path="/page/login" component={Login}/>
-          <Route exact path="/page/logout" component={Logout}/>
-          <Route exact path="/page/register" component={Register}/>
+            {/* User management */}
+            <Route exact path="/page/login" component={Login}/>
+            <Route exact path="/page/logout" component={Logout}/>
+            <Route exact path="/page/register" component={Register}/>
 
-          <Route component={NotFound}/>
-        </Switch>
-      </div>
-    </Provider>)
+            <Route component={NotFound}/>
+          </Switch>
+        </div>
+      </Provider>
+    )
   }
 }
 
