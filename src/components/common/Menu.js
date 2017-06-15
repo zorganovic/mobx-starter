@@ -1,35 +1,33 @@
 import React from 'react'
 import { observer, inject } from 'mobx-react'
-import { Link } from 'react-router'
+import { Link } from 'react-router-dom'
 
-@inject('account') @observer
+@inject('account')
+@observer
 class Menu extends React.Component {
-    render() {
-        const { account } = this.props
-        return <div>
-            {account.isLoggedIn()
-                ? <LoggedInMenu/>
-                : <LoggedOutMenu/>
-            }
-        </div>
-    }
+  render() {
+    const { account } = this.props
+    return <div>
+      {account.isLoggedIn() ? <LoggedInMenu/> : <LoggedOutMenu/>}
+    </div>
+  }
 }
 
 function LoggedInMenu() {
-    return <menu>
-        <Link activeClassName="selected" to="/">Browse</Link>
-        <Link activeClassName="selected" to="/page/about">About</Link>
-        <Link activeClassName="selected" to="/page/logout">Logout</Link>
-    </menu>
+  return <menu>
+    <Link to="/">Browse</Link>
+    <Link to="/page/about">About</Link>
+    <Link to="/page/logout">Logout</Link>
+  </menu>
 }
 
 function LoggedOutMenu() {
-    return <menu>
-        <Link activeClassName="selected" to="/">Browse</Link>
-        <Link activeClassName="selected" to="/page/about">About</Link>
-        <Link activeClassName="selected" to="/page/register">Register</Link>
-        <Link activeClassName="selected" to="/page/login">Login</Link>
-    </menu>
+  return <menu>
+    <Link to="/">Browse</Link>
+    <Link to="/page/about">About</Link>
+    <Link to="/page/register">Register</Link>
+    <Link to="/page/login">Login</Link>
+  </menu>
 }
 
 export default Menu

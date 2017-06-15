@@ -8,8 +8,6 @@
     "transform-object-rest-spread",
     "transform-react-jsx",
     ["babel-plugin-webpack-alias", {"config": "./core/webpack/webpack.base.js"}],
-    ["fast-async", {
-      "env": {"dontMapStackTraces": true}
-    }]
+    ["fast-async"]
   ]
 }

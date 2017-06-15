@@ -4,6 +4,7 @@ build/
 data/
 uploads/
 stats.json
+package-lock.json
 
 # Other
 *.log

@@ -1,3 +1,4 @@
+import request from 'core/request'
 import { extendObservable } from 'mobx'
 
 /**
@@ -5,41 +6,39 @@ import { extendObservable } from 'mobx'
  */
 export default class Todos {
 
-    constructor(request, state = {}) {
-        this.request = request
-        this.items = []
-        extendObservable(this, {
-            loading: false,
-            items: []
-        }, state)
-    }
+  constructor(state = {}) {
+    extendObservable(this, {
+      loading: false,
+      items: []
+    }, state)
+  }
 
-    map(predicate) {
-        return this.items.map(predicate)
-    }
+  map(predicate) {
+    return this.items.map(predicate)
+  }
 
-    add(text) {
-        return this.request(`api/todos/add`, { text })
-                   .then(result => {
-                       // Add to list
-                       this.items.push({
-                           _id: result._id,
-                           text: result.text
-                       })
-                   })
-    }
-
-    remove(item) {
-        console.warn('Removing', item._id)
-        return this.request(`api/todos/remove`, { _id: item._id })
-                   .then(() => {
-                       this.items.remove(item)
-                   })
-    }
-
-    browse() {
-        return this.request(`api/todos`).then(items => {
-            this.items = items
+  add(text) {
+    return request.post(`/api/todos/add`, { text })
+      .then(result => {
+        // Add to list
+        this.items.push({
+          _id: result._id,
+          text: result.text
         })
+      })
+  }
+
+  async remove(item) {
+    try {
+      console.warn('Removing', item._id)
+      await request.post(`/api/todos/remove`, { _id: item._id })
+      this.items.remove(item)
+    } catch(err) {
+      console.error(err)
     }
+  }
+
+  async browse() {
+    this.items = await request.get(`/api/todos`)
+  }
 }

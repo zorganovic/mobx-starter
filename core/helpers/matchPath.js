@@ -9,35 +9,38 @@ const cache = new Map()
  * @returns {any}
  */
 export default function matchPath(routePattern, url) {
-    const [pathToMatch = '/', search = ''] = url.split('?');
-    let regexp = cache.get(routePattern);
+  const [pathToMatch = '/', search = ''] = url.split('?');
+  let regexp = cache.get(routePattern);
 
-    if (!regexp) {
-        const keys = [];
-        regexp = { pattern: pathToRegExp(routePattern, keys), keys };
-        cache.set(routePattern, regexp);
-    }
-
-    const m = regexp.pattern.exec(pathToMatch);
-
-    if (!m) {
-        return null;
-    }
-
-    const path = m[0];
-    const params = Object.create(null);
-
-    for (let i = 1; i < m.length; i += 1) {
-        params[regexp.keys[i - 1].name] = decodeURIComponent(m[i]);
-    }
-
-    // Add querystring params
-    Object.assign(params, mapSearchParams(search))
-
-    return {
-        path: path === '' ? '/' : path,
-        params
+  if (!regexp) {
+    const keys = [];
+    regexp = {
+      pattern: pathToRegExp(routePattern, keys),
+      keys
     };
+    cache.set(routePattern, regexp);
+  }
+
+  const m = regexp.pattern.exec(pathToMatch);
+
+  if (!m) {
+    return null;
+  }
+
+  const path = m[0];
+  const params = Object.create(null);
+
+  for (let i = 1; i < m.length; i += 1) {
+    params[regexp.keys[i - 1].name] = decodeURIComponent(m[i]);
+  }
+
+  // Add querystring params
+  Object.assign(params, mapSearchParams(search))
+
+  return {
+    path: path === '' ? '/' : path,
+    params
+  };
 }
 
 /**
@@ -47,16 +50,16 @@ export default function matchPath(routePattern, url) {
  * @returns {any}
  */
 function mapSearchParams(search) {
-    let params = {};
-    let params_re = /([^?&=]+)=?([^&]*)/g;
+  let params = {};
+  let params_re = /([^?&=]+)=?([^&]*)/g;
 
-    if (search.indexOf('?') !== -1) {
-        search = search.split('?')[1];
-    }
+  if (search.indexOf('?') !== -1) {
+    search = search.split('?')[1];
+  }
 
-    search.replace(params_re, function(m, name, value) {
-        params[decodeURIComponent(name)] = decodeURIComponent(value);
-    })
+  search.replace(params_re, function(m, name, value) {
+    params[decodeURIComponent(name)] = decodeURIComponent(value);
+  })
 
-    return params;
+  return params;
 }
