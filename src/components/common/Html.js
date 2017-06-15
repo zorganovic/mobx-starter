@@ -1,5 +1,5 @@
 import React from 'react'
-import App from '../../pages/App'
+import Index from '../../pages/Index'
 
 class Html extends React.Component {
   render() {
@@ -25,9 +25,9 @@ class Html extends React.Component {
     <body>
     {/* Our content rendered here */}
     <div id="container">
-      <App stores={stores}>
+      <Index stores={stores}>
         {children}
-      </App>
+      </Index>
     </div>
 
     {/* Bundled JS */}

@@ -10,7 +10,7 @@ import Login from './Login'
 import Logout from './Logout'
 import Register from './Register'
 
-class App extends React.Component {
+class Index extends React.Component {
   render() {
     const { stores } = this.props
 
@@ -34,8 +34,8 @@ class App extends React.Component {
   }
 }
 
-App.propTypes = {
+Index.propTypes = {
   stores: PropTypes.object.isRequired
 }
 
-export default App
+export default Index

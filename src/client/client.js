@@ -10,7 +10,7 @@ import { AppContainer } from 'react-hot-loader'
 import { BrowserRouter } from 'react-router-dom'
 import stores from './stores'
 import autorun from './autorun'
-import App from '../pages/App'
+import Index from '../pages/Index'
 
 // We render our react app into this element
 const container = document.getElementById('container')
@@ -18,12 +18,10 @@ const container = document.getElementById('container')
 // React to changes
 autorun(stores)
 
-const renderProps = (<App stores={stores}/>)
-
 // Render HTML on the browser
 render(<AppContainer>
   <BrowserRouter>
-    {renderProps}
+    <Index stores={stores}/>
   </BrowserRouter>
 </AppContainer>, container)
 
