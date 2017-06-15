@@ -5,8 +5,7 @@ import { extendObservable } from 'mobx'
  */
 export default class Common {
 
-  constructor(request, state = {}) {
-    this.request = request
+  constructor(state = {}) {
     extendObservable(this, {
       title: 'Mobx-starter',
       statusCode: 200,

@@ -1,3 +1,4 @@
+import request from 'core/request'
 import { extendObservable } from 'mobx'
 
 /**
@@ -5,9 +6,7 @@ import { extendObservable } from 'mobx'
  */
 export default class Todos {
 
-  constructor(request, state = {}) {
-    this.request = request
-    this.items = []
+  constructor(state = {}) {
     extendObservable(this, {
       loading: false,
       items: []
@@ -19,7 +18,7 @@ export default class Todos {
   }
 
   add(text) {
-    return this.request(`api/todos/add`, { text })
+    return request.post(`/api/todos/add`, { text })
       .then(result => {
         // Add to list
         this.items.push({
@@ -29,17 +28,17 @@ export default class Todos {
       })
   }
 
-  remove(item) {
-    console.warn('Removing', item._id)
-    return this.request(`api/todos/remove`, { _id: item._id })
-      .then(() => {
-        this.items.remove(item)
-      })
+  async remove(item) {
+    try {
+      console.warn('Removing', item._id)
+      await request.post(`/api/todos/remove`, { _id: item._id })
+      this.items.remove(item)
+    } catch(err) {
+      console.error(err)
+    }
   }
 
-  browse() {
-    return this.request(`api/todos`).then(items => {
-      this.items = items
-    })
+  async browse() {
+    this.items = await request.get(`/api/todos`)
   }
 }

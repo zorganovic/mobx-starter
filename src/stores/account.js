@@ -1,17 +1,17 @@
+import request from 'core/request'
+import { extendObservable } from 'mobx'
 import { size, find } from 'lodash'
-import { extendObservable, observable } from 'mobx'
 
 /**
  * @class Account
  */
 export default class Account {
 
-  constructor(request, state = {}) {
-    this.request = request
+  constructor(state = {}) {
     extendObservable(this, {
       username: null,
       token: null,
-      users: observable.shallowArray([])
+      users: []
     }, state)
   }
 
@@ -24,20 +24,20 @@ export default class Account {
   }
 
   login(params) {
-    const account = this.request('api/account/login', params)
+    const account = request.post('/api/account/login', params)
     extendObservable(this, account)
     return account
   }
 
   async logout() {
-    await this.request('api/account/logout')
+    await request.get('/api/account/logout')
     this.username = null
     this.token = null
     return Promise.resolve()
   }
 
   register(params) {
-    return this.request('api/account/register', params)
+    return request.post('/api/account/register', params)
       .then(account => {
         extendObservable(this, account)
       })
