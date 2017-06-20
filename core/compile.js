@@ -1,11 +1,17 @@
 /**
  * Generate client-side bundle
  */
-require('isomorphic-fetch')
-
-// Compile files on PROD or launch DEV server
 if (process.env.NODE_ENV === 'production') {
-  require('./webpack/webpack.prod.js')
+  const {spawn} = require('child_process')
+  const child = spawn('node', ['core/webpack/webpack.prod.js'])
+
+  // Output stdout to screen
+  child.stdout.on('data', data => process.stdout.write(data.toString()))
+  child.stderr.on('data', data => process.stdout.write(data.toString()))
+
+  // Exit if children get stuck
+  process.on('exit', () => child.kill())
+
 } else {
   process.env.DEV = true
   require('./webpack/webpack.dev.js')
