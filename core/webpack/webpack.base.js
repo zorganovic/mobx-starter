@@ -63,8 +63,7 @@ module.exports = {
 
   output: {
     filename: 'bundle.js',
-    sourcePrefix: '',
-    path: path.resolve(__dirname, '../../build')
+    sourcePrefix: ''
   },
 
   resolve: {

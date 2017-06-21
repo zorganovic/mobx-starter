@@ -12,6 +12,7 @@ Object.assign(config, {
     bundle: path.join(__dirname, '../../src/client/client.js')
   },
   output: {
+    path: path.join(__dirname, '../../build'),
     publicPath: '/build/'
   }
 })
