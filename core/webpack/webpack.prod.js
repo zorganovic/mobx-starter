@@ -1,7 +1,9 @@
+const fs = require('fs-extra-promise')
 const path = require('path')
 const logger = require('debug')
 const webpack = require('webpack')
 const config = require('./webpack.base.js')
+const buildPath = path.join(__dirname, '../../build')
 
 // Merge with base configuration
 //-------------------------------
@@ -12,7 +14,7 @@ Object.assign(config, {
     bundle: path.join(__dirname, '../../src/client/client.js')
   },
   output: {
-    path: path.join(__dirname, '../../build'),
+    path: buildPath,
     publicPath: '/build/'
   }
 })
@@ -35,6 +37,10 @@ config.module.loaders.forEach(loader => {
     )
   }
 })
+
+logger('server:webpack')('Clearing Build Path')
+
+fs.emptyDirSync(buildPath)
 
 logger('server:webpack')('Environment: Production')
 
