@@ -2,7 +2,6 @@ import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { StaticRouter } from 'react-router'
 import { useStaticRendering } from 'mobx-react'
-import preload from '../../src/client/preload'
 import Html from '../../src/components/common/Html'
 
 useStaticRendering(true)
@@ -11,8 +10,6 @@ useStaticRendering(true)
 export default async(ctx, next) => {
 
   const context = {}
-
-  //await preload(ctx.stores, ctx.url)
 
   const html = <StaticRouter location={ctx.url} context={context}>
     <Html stores={ctx.stores}/>

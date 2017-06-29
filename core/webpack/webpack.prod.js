@@ -1,6 +1,5 @@
 const fs = require('fs-extra-promise')
 const path = require('path')
-const logger = require('debug')
 const webpack = require('webpack')
 const config = require('./webpack.base.js')
 const buildPath = path.join(__dirname, '../../build')
@@ -38,11 +37,11 @@ config.module.loaders.forEach(loader => {
   }
 })
 
-logger('server:webpack')('Clearing Build Path')
+console.info('Clearing Build Path')
 
 fs.emptyDirSync(buildPath)
 
-logger('server:webpack')('Environment: Production')
+console.info('Environment: Production')
 
 // Save files to disk
 //-------------------------------
@@ -96,9 +95,9 @@ compiler.run(function(err, stats) {
   //writeWebpackStats(stats)
 
   if (stats.hasErrors()) {
-    logger('webpack:error')(stats.compilation.errors.toString())
+    console.error(stats.compilation.errors.toString())
   }
-  logger('webpack:compiler')('Finished compiling')
+  console.info('Finished compiling')
 })
 
 /**
@@ -110,5 +109,5 @@ function writeWebpackStats(stats) {
   const { resolve } = require('path')
   const location = resolve(config.output.path, 'stats.json')
   require('fs').writeFileSync(location, JSON.stringify(stats.toJson()))
-  logger('webpack:compiler')(`Wrote stats.json to ${location}`)
+  console.debug(`Wrote stats.json to ${location}`)
 }

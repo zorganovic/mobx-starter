@@ -24,9 +24,9 @@ export default class Account {
   }
 
   login(params) {
-    const account = request.post('/api/account/login', params)
-    extendObservable(this, account)
-    return account
+    return request.post('/api/account/login', params).then(account => {
+      extendObservable(this, account)
+    })
   }
 
   async logout() {
@@ -37,9 +37,8 @@ export default class Account {
   }
 
   register(params) {
-    return request.post('/api/account/register', params)
-      .then(account => {
-        extendObservable(this, account)
-      })
+    return request.post('/api/account/register', params).then(account => {
+      extendObservable(this, account)
+    })
   }
 }

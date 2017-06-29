@@ -1,4 +1,3 @@
-import logger from 'debug'
 import { checkAuthorized } from '../routes/account'
 
 /**
@@ -12,7 +11,7 @@ export default async function(ctx, next) {
     if (auth) await next()
   } catch(error) {
 
-    logger('app:forbidden')(error)
+    console.error(error)
     if (ctx.headers['user-agent'].includes('node-fetch')) {
       ctx.authorized = false
       ctx.token = null

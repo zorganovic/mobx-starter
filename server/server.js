@@ -1,11 +1,7 @@
-import logger from 'debug'
 import Koa from 'koa'
 import bodyParser from 'koa-better-body'
 import favicon from 'koa-favicon'
-import mount from 'koa-mount'
-import serve from 'koa-static'
 import convert from 'koa-convert'
-
 import config from './config'
 import context from './middleware/context'
 import catcher from './middleware/catcher'
@@ -28,13 +24,18 @@ app.use(catcher)
 app.use(routes.routes())
 
 // Serve static files
-Object.keys(config.http.static).forEach(staticURL => {
-  logger('app:static')(staticURL)
-  app.use(mount(staticURL, convert(serve(config.http.static[staticURL]))))
-})
+if (process.env.NODE_ENV !== 'production') {
+  const mount = require('koa-mount')
+  const serve = require( 'koa-static')
+  // Serve static files
+  for(const staticURL in config.http.static) {
+    console.info(staticURL)
+    app.use(mount(staticURL, convert(serve(config.http.static[staticURL]))))
+  }
+}
 
 app.use(render)
 
 app.listen(config.http.port, function() {
-  logger('app:start')('Listening on port ' + config.http.port)
+  console.info('Listening on port ' + config.http.port)
 })

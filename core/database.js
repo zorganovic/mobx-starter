@@ -1,4 +1,3 @@
-import logger from 'debug'
 import mongoose from 'mongoose'
 import config from '../server/config'
 
@@ -9,7 +8,7 @@ mongoose.Promise = Promise
 mongoose.connect(config.databases.mongo)
 
 const db = mongoose.connection
-db.on('error', (err) => logger('database:error')(err))
-db.once('open', () => logger('database:info')(config.databases.mongo))
+db.on('error', (err) => console.error(err))
+db.once('open', () => console.info(config.databases.mongo))
 
 export default db

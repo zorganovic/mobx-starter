@@ -1,5 +1,4 @@
 const path = require('path')
-const logger = require('debug')
 const webpack = require('webpack')
 const WebpackDevServer = require('webpack-dev-server')
 const config = require('./webpack.base.js')
@@ -67,7 +66,7 @@ new WebpackDevServer(compiler, {
     chunkModules: false
   }
 }).listen(port, '0.0.0.0', function(err) {
-  if (err) return logger('webpack:error', err);
+  if (err) return console.info(err);
 
-  logger('webpack:compiler')('Running on port ' + port)
+  console.info('Running on port ' + port)
 })
