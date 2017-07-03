@@ -14,6 +14,9 @@ class Html extends React.Component {
         <meta name="title" content={stores.common.title}/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
 
+        {/* Latest compiled and minified CSS */}
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cerulean/bootstrap.min.css"/>
+
         {/* Favicons */}
         <link rel="icon" href="/favicon.ico"/>
 

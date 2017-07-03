@@ -9,7 +9,11 @@ export default class Todos {
   constructor(state = {}) {
     extendObservable(this, {
       loading: false,
-      items: []
+      show_modal: false,
+      month: 6,
+      year: 2016,
+      items: [],
+      selectedDays: []
     }, state)
   }
 

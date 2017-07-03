@@ -3,6 +3,10 @@ import { observer, inject } from 'mobx-react'
 import AddTodo from '../components/home/AddTodo'
 import Todo from '../components/home/Todo'
 
+import Button from 'react-bootstrap/lib/Button'
+
+import CalendarModal from '../components/home/CalendarModal'
+
 @inject('todos') @observer
 class Home extends React.Component {
 
@@ -26,6 +30,8 @@ class Home extends React.Component {
               })}
             </ul>
           </section>
+          <Button onClick={() => {todos.show_modal = true}} bsStyle="danger">Calendar</Button>
+          <CalendarModal show={todos.show_modal}/>
         </div>
       </main>
     )
